@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, Dimensions} from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ActionButton from 'react-native-action-button';
 
 import Avatar from '../../assets/avatar.jpg';
 
@@ -228,6 +229,7 @@ const Dashboard: React.FC = () => {
           </CardContainer>
         </ScrollView>
       </GoalsContainer>
+      <ActionButton buttonColor="#3587a4ff" offsetX={20} />
     </Container>
   );
 };
