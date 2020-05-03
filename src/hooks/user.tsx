@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 interface User {
   name: string;
+  avatarUri: string;
 }
 
 interface UserContext {
@@ -20,7 +21,10 @@ interface UserContext {
 const UserContext = createContext<UserContext | null>(null);
 
 const UserProvider: React.FC = ({children}) => {
-  const [user, setUser] = useState<User>({name: 'Anônimo'});
+  const [user, setUser] = useState<User>({
+    name: 'Anônimo',
+    avatarUri: 'https://api.adorable.io/avatars/70/3@adorable.png',
+  });
 
   useEffect(() => {
     async function loadUser(): Promise<void> {
@@ -29,17 +33,25 @@ const UserProvider: React.FC = ({children}) => {
       if (userLoad) {
         setUser(JSON.parse(userLoad));
       }
+
+      /*
+      if (user.avatarUri === undefined) {
+        setUser({
+          ...user,
+          avatarUri: 'https://api.adorable.io/avatars/70/3@adorable.png',
+        });
+      } */
     }
 
     loadUser();
   }, []);
 
-  const addUserName = useCallback(async (userName) => {
-    setUser(userName);
+  const addUserName = useCallback(async (userSave) => {
+    setUser(userSave);
 
     await AsyncStorage.setItem(
       '@BussolaFinanceira:user',
-      JSON.stringify(userName),
+      JSON.stringify(userSave),
     );
   }, []);
 

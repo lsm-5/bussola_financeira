@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
       <HeaderProfile onPress={() => navigate('Profile')}>
         <AvatarImage
           source={{
-            uri: `https://api.adorable.io/avatars/70/3@adorable.png`,
+            uri: user.avatarUri,
           }}
         />
         <ViewColumn>

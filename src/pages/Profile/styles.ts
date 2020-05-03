@@ -71,8 +71,10 @@ export const GoalsTitle = styled.Text`
 
 export const ViewDefault = styled.View``;
 
+export const AvatarButton = styled.TouchableOpacity``;
+
 export const ButtonBack = styled.TouchableOpacity`
   position: absolute;
-  top: 20;
-  left: 15;
+  top: 20px;
+  left: 15px;
 `;
