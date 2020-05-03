@@ -23,6 +23,8 @@ export const AvatarImage = styled.Image`
   width: 70px;
   height: 70px;
   border-radius: 35px;
+  border-width: 2px;
+  border-color: ${White};
 `;
 
 export const HeaderName = styled.Text`
@@ -35,8 +37,8 @@ export const HeaderName = styled.Text`
 `;
 
 export const HeaderGoals = styled.Text`
-  margin-top: 7;
-  margin-left: 5;
+  margin-top: 7px;
+  margin-left: 5px;
   color: ${White};
   font-size: 17px;
   justify-content: center;
@@ -54,7 +56,7 @@ export const GoalsContainer = styled.View`
 
 export const CardContainer = styled.TouchableOpacity`
   background-color: ${White};
-  border-radius: 8;
+  border-radius: 8px;
   padding: 15px;
   border-width: 3px;
   border-color: #dcdcdc;
@@ -62,22 +64,22 @@ export const CardContainer = styled.TouchableOpacity`
 
 export const CardTitle = styled.Text`
   font-weight: bold;
-  font-size: 18;
+  font-size: 18px;
   font-family: sans-serif;
   color: ${BlueMunsell};
 `;
 
 export const CardTime = styled.Text`
   color: #999;
-  margin-top: 8;
-  margin-bottom: 5;
+  margin-top: 8px;
+  margin-bottom: 5px;
 `;
 
 export const MoneyView = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 4;
-  margin-bottom: 5;
+  margin-top: 4px;
+  margin-bottom: 5px;
 `;
 
 export const MoneyCurrent = styled.Text`
@@ -86,5 +88,5 @@ export const MoneyCurrent = styled.Text`
 
 export const Amount = styled.Text`
   text-align: right;
-  margin-right: 5;
+  margin-right: 5px;
 `;
