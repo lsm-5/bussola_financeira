@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
           }}
         />
         <ViewColumn>
-          <HeaderName>{`Olá ${user ? user.name : 'Anônimo'}!`}</HeaderName>
+          <HeaderName>{`Olá ${user.name}!`}</HeaderName>
           <HeaderGoals>Abaixo estão suas metas</HeaderGoals>
         </ViewColumn>
       </HeaderProfile>

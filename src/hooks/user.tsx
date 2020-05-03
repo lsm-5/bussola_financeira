@@ -20,7 +20,7 @@ interface UserContext {
 const UserContext = createContext<UserContext | null>(null);
 
 const UserProvider: React.FC = ({children}) => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>({name: 'Anônimo'});
 
   useEffect(() => {
     async function loadUser(): Promise<void> {
@@ -43,7 +43,7 @@ const UserProvider: React.FC = ({children}) => {
     );
   }, []);
 
-  const value = React.useMemo(() => ({addUserName, user}), [user, addUserName]);
+  const value = React.useMemo(() => ({user, addUserName}), [user, addUserName]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
