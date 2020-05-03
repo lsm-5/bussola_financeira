@@ -2,11 +2,14 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
 import {UserProvider} from './user';
+import {GoalsProvider} from './goals';
 
 const AppProvider: React.FC = ({children}) => {
   return (
     <UserProvider>
-      <NavigationContainer>{children}</NavigationContainer>
+      <GoalsProvider>
+        <NavigationContainer>{children}</NavigationContainer>
+      </GoalsProvider>
     </UserProvider>
   );
 };

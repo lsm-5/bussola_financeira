@@ -1,5 +1,27 @@
 import styled from 'styled-components/native';
+import {FlatList} from 'react-native';
 import {BlueMunsell, White} from '../../styles/colors';
+
+interface TransactionsObject {
+  type: 'income' | 'outcome';
+  value: number;
+}
+
+interface Goals {
+  id: string;
+  title: string;
+  iconName: string;
+  date: Date;
+  amount: number;
+  moneyCurrent: number;
+  color: string;
+  transactions: TransactionsObject[] | null;
+  achievementAchieved: boolean;
+}
+
+interface ColorProps {
+  color: string;
+}
 
 export const Container = styled.View`
   flex: 1;
@@ -62,11 +84,11 @@ export const CardContainer = styled.TouchableOpacity`
   border-color: #dcdcdc;
 `;
 
-export const CardTitle = styled.Text`
+export const CardTitle = styled.Text<ColorProps>`
   font-weight: bold;
   font-size: 18px;
   font-family: sans-serif;
-  color: ${BlueMunsell};
+  color: ${(props) => (props.color ? props.color : BlueMunsell)};
 `;
 
 export const CardTime = styled.Text`
@@ -82,11 +104,16 @@ export const MoneyView = styled.View`
   margin-bottom: 5px;
 `;
 
-export const MoneyCurrent = styled.Text`
-  color: ${BlueMunsell};
+export const MoneyCurrent = styled.Text<ColorProps>`
+  color: ${(props) => (props.color ? props.color : BlueMunsell)};
 `;
 
-export const Amount = styled.Text`
+export const Amount = styled.Text<ColorProps>`
   text-align: right;
   margin-right: 5px;
+  color: ${(props) => (props.color ? props.color : BlueMunsell)};
+`;
+
+export const GoalsList = styled(FlatList as new () => FlatList<Goals>)`
+  flex: 1;
 `;

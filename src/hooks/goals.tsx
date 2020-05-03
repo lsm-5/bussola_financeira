@@ -1,0 +1,212 @@
+import React, {
+  createContext,
+  useState,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react';
+
+import AsyncStorage from '@react-native-community/async-storage';
+import {uuid} from 'uuidv4';
+
+interface TransactionsObject {
+  type: 'income' | 'outcome';
+  value: number;
+}
+
+interface Goals {
+  id: string;
+  title: string;
+  iconName: string;
+  date: Date;
+  amount: number;
+  moneyCurrent: number;
+  color: string;
+  transactions: TransactionsObject[] | null;
+  achievementAchieved: boolean;
+}
+
+interface GoalsContext {
+  goals: Goals[];
+  addGoals(item: Goals): Promise<void>;
+  removeGoals(id: string): Promise<void>;
+  incrementGoals(id: string, money: number): Promise<void>;
+  decrementGoals(id: string, money: number): Promise<void>;
+  getHistoric(id: string): Promise<TransactionsObject[] | null>;
+}
+
+const GoalsContext = createContext<GoalsContext | null>(null);
+
+const GoalsProvider: React.FC = ({children}) => {
+  const [goals, setGoals] = useState<Goals[]>([]);
+
+  useEffect(() => {
+    async function loadGoals(): Promise<void> {
+      const goalsLoad = await AsyncStorage.getItem('@BussolaFinanceira:goals');
+
+      if (goalsLoad) {
+        setGoals(JSON.parse(goalsLoad));
+      }
+    }
+
+    loadGoals();
+  }, []);
+
+  const addGoals = useCallback(
+    async (goalsSave) => {
+      const newGoals = {id: uuid(), achievementAchieved: false, ...goalsSave};
+
+      setGoals([newGoals, ...goals]);
+
+      await AsyncStorage.setItem(
+        '@BussolaFinanceira:goals',
+        JSON.stringify(goals),
+      );
+    },
+    [goals],
+  );
+
+  const removeGoals = useCallback(
+    async (id) => {
+      const indexGoals = goals.findIndex((g) => g.id === id);
+
+      if (indexGoals === -1) {
+        throw new Error('goals not found');
+      }
+
+      const goalsArray = [...goals];
+      const goalsNewArray = goalsArray.filter((g) => g.id !== id);
+
+      setGoals(goalsNewArray);
+
+      await AsyncStorage.setItem(
+        '@BussolaFinanceira:goals',
+        JSON.stringify(goals),
+      );
+    },
+    [goals],
+  );
+
+  const incrementGoals = useCallback(
+    async (id, money) => {
+      const indexGoals = goals.findIndex((g) => g.id === id);
+
+      if (indexGoals === -1) {
+        throw new Error('goals not found');
+      }
+
+      const goalsArray = [...goals];
+
+      goalsArray[indexGoals] = {
+        moneyCurrent: goalsArray[indexGoals].moneyCurrent + money,
+        transactions: goalsArray[indexGoals].transactions?.push({
+          type: 'income',
+          value: money,
+        }),
+        ...goalsArray[indexGoals],
+      };
+
+      if (
+        goalsArray[indexGoals].moneyCurrent >= goalsArray[indexGoals].amount
+      ) {
+        goalsArray[indexGoals] = {
+          achievementAchieved: true,
+          moneyCurrent: goalsArray[indexGoals].amount,
+          ...goalsArray[indexGoals],
+        };
+      }
+
+      setGoals(goalsArray);
+
+      await AsyncStorage.setItem(
+        '@BussolaFinanceira:goals',
+        JSON.stringify(goals),
+      );
+    },
+    [goals],
+  );
+
+  const decrementGoals = useCallback(
+    async (id, money) => {
+      const indexGoals = goals.findIndex((g) => g.id === id);
+
+      if (indexGoals === -1) {
+        throw new Error('goals not found');
+      }
+
+      const goalsArray = [...goals];
+
+      if (money <= goalsArray[indexGoals].moneyCurrent) {
+        goalsArray[indexGoals] = {
+          moneyCurrent: goalsArray[indexGoals].moneyCurrent - money,
+          transactions: goalsArray[indexGoals].transactions?.push({
+            type: 'outcome',
+            value: money,
+          }),
+          ...goalsArray[indexGoals],
+        };
+      } else {
+        throw new Error("You can't remove this value");
+      }
+
+      if (goalsArray[indexGoals].moneyCurrent < goalsArray[indexGoals].amount) {
+        goalsArray[indexGoals] = {
+          achievementAchieved: false,
+          ...goalsArray[indexGoals],
+        };
+      }
+
+      setGoals(goalsArray);
+
+      await AsyncStorage.setItem(
+        '@BussolaFinanceira:goals',
+        JSON.stringify(goals),
+      );
+    },
+    [goals],
+  );
+
+  const getHistoric = useCallback(
+    async (id) => {
+      const indexGoals = goals.findIndex((g) => g.id === id);
+
+      if (indexGoals === -1) {
+        throw new Error('goals not found');
+      }
+
+      const goalsArray = [...goals];
+      const historic = goalsArray[indexGoals].transactions;
+
+      return historic;
+    },
+    [goals],
+  );
+
+  const value = React.useMemo(
+    () => ({
+      goals,
+      addGoals,
+      removeGoals,
+      incrementGoals,
+      decrementGoals,
+      getHistoric,
+    }),
+    [goals, addGoals, removeGoals, incrementGoals, decrementGoals, getHistoric],
+  );
+
+  return (
+    <GoalsContext.Provider value={value}>{children}</GoalsContext.Provider>
+  );
+};
+
+function useGoals(): GoalsContext {
+  const context = useContext(GoalsContext);
+
+  if (!context) {
+    throw new Error(`useGoals must be used within a GoalsProvider`);
+  }
+
+  return context;
+}
+
+export {GoalsProvider, useGoals};

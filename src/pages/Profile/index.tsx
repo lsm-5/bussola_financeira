@@ -30,7 +30,7 @@ const options = {
 };
 
 const Profile: React.FC = () => {
-  const {user, addUserName} = useUser();
+  const {user, addUserNameAndAvatar} = useUser();
 
   const [userChange, setUserChange] = useState<User>({
     name: user.name,
@@ -77,7 +77,7 @@ const Profile: React.FC = () => {
             onChangeText={(text) => setUserChange({...userChange, name: text})}
           />
           <ButtonView>
-            <Button onPress={() => addUserName(userChange)}>
+            <Button onPress={() => addUserNameAndAvatar(userChange)}>
               <ButtonName>Salvar</ButtonName>
             </Button>
           </ButtonView>

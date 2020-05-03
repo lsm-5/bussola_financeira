@@ -22,11 +22,54 @@ import {
   MoneyView,
   MoneyCurrent,
   Amount,
+  GoalsList,
 } from './styles';
+
+interface TransactionsObject {
+  type: 'income' | 'outcome';
+  value: number;
+}
+
+interface Goals {
+  id: string;
+  title: string;
+  iconName: string;
+  date: Date;
+  amount: number;
+  moneyCurrent: number;
+  color: string;
+  transactions: TransactionsObject[] | null;
+  achievementAchieved: boolean;
+}
 
 const Dashboard: React.FC = () => {
   const {user} = useUser();
   const {navigate} = useNavigation();
+
+  const arrayGoals: Goals[] = [
+    {
+      id: '1',
+      title: 'Viajar',
+      iconName: 'airplane-takeoff',
+      date: new Date(),
+      amount: 1000,
+      moneyCurrent: 200,
+      color: '#c12',
+      achievementAchieved: true,
+      transactions: null,
+    },
+    {
+      id: '2',
+      title: 'Viajar',
+      iconName: 'airplane-takeoff',
+      date: new Date(),
+      amount: 1000,
+      moneyCurrent: 200,
+      color: '#3587a4ff',
+      achievementAchieved: false,
+      transactions: null,
+    },
+  ];
 
   return (
     <Container>
@@ -44,29 +87,39 @@ const Dashboard: React.FC = () => {
 
       <GoalsContainer>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <CardContainer>
-            <ViewRow>
-              <CardTitle>Viajar</CardTitle>
-              <Icon
-                name="airplane-takeoff"
-                size={20}
-                color="#3587a4ff"
-                style={{marginLeft: 10}}
-              />
-            </ViewRow>
-            <CardTime>Em 06 de agosto de 2021</CardTime>
-            <Progress.Bar
-              progress={0.2}
-              width={Dimensions.get('screen').width - 60}
-              height={12}
-              borderRadius={6}
-              color="#3587a4ff"
-            />
-            <MoneyView>
-              <MoneyCurrent>R$ 200,00</MoneyCurrent>
-              <Amount>R$ 1000,00</Amount>
-            </MoneyView>
-          </CardContainer>
+          <GoalsList
+            data={arrayGoals}
+            keyExtractor={(item) => item.id}
+            renderItem={({item}) => {
+              return item.achievementAchieved === false ? (
+                <CardContainer>
+                  <ViewRow>
+                    <CardTitle color={item.color}>{item.title}</CardTitle>
+                    <Icon
+                      name={item.iconName}
+                      size={20}
+                      color={item.color}
+                      style={{marginLeft: 10}}
+                    />
+                  </ViewRow>
+                  <CardTime>Em 06 de agosto de 2021</CardTime>
+                  <Progress.Bar
+                    progress={item.moneyCurrent / item.amount}
+                    width={Dimensions.get('screen').width - 60}
+                    height={12}
+                    borderRadius={6}
+                    color={item.color}
+                  />
+                  <MoneyView>
+                    <MoneyCurrent color={item.color}>R$ 200,00</MoneyCurrent>
+                    <Amount color={item.color}>R$ 1000,00</Amount>
+                  </MoneyView>
+                </CardContainer>
+              ) : (
+                <></>
+              );
+            }}
+          />
         </ScrollView>
       </GoalsContainer>
       <ActionButton buttonColor="#3587a4ff" offsetX={20} />

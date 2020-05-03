@@ -15,7 +15,7 @@ interface User {
 
 interface UserContext {
   user: User;
-  addUserName(item: User): Promise<void>;
+  addUserNameAndAvatar(item: User): Promise<void>;
 }
 
 const UserContext = createContext<UserContext | null>(null);
@@ -33,20 +33,12 @@ const UserProvider: React.FC = ({children}) => {
       if (userLoad) {
         setUser(JSON.parse(userLoad));
       }
-
-      /*
-      if (user.avatarUri === undefined) {
-        setUser({
-          ...user,
-          avatarUri: 'https://api.adorable.io/avatars/70/3@adorable.png',
-        });
-      } */
     }
 
     loadUser();
   }, []);
 
-  const addUserName = useCallback(async (userSave) => {
+  const addUserNameAndAvatar = useCallback(async (userSave) => {
     setUser(userSave);
 
     await AsyncStorage.setItem(
@@ -55,7 +47,10 @@ const UserProvider: React.FC = ({children}) => {
     );
   }, []);
 
-  const value = React.useMemo(() => ({user, addUserName}), [user, addUserName]);
+  const value = React.useMemo(() => ({user, addUserNameAndAvatar}), [
+    user,
+    addUserNameAndAvatar,
+  ]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
