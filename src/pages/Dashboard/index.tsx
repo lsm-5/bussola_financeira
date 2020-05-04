@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useCallback} from 'react';
 import {ScrollView, Dimensions} from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -6,6 +6,7 @@ import ActionButton from 'react-native-action-button';
 import {useNavigation} from '@react-navigation/native';
 
 import {useUser} from '../../hooks/user';
+import ModalCreateGoal from '../../components/ModalCreateGoal';
 
 import {
   Container,
@@ -46,6 +47,8 @@ const Dashboard: React.FC = () => {
   const {user} = useUser();
   const {navigate} = useNavigation();
 
+  const [loading, setLoading] = useState(false);
+
   const arrayGoals: Goals[] = [
     {
       id: '1',
@@ -55,7 +58,7 @@ const Dashboard: React.FC = () => {
       amount: 1000,
       moneyCurrent: 200,
       color: '#c12',
-      achievementAchieved: true,
+      achievementAchieved: false,
       transactions: null,
     },
     {
@@ -71,8 +74,13 @@ const Dashboard: React.FC = () => {
     },
   ];
 
+  const handleModalFalse = useCallback(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <Container>
+      <ModalCreateGoal loading={loading} setLoading={handleModalFalse} />
       <HeaderProfile onPress={() => navigate('Profile')}>
         <AvatarImage
           source={{
@@ -122,7 +130,11 @@ const Dashboard: React.FC = () => {
           />
         </ScrollView>
       </GoalsContainer>
-      <ActionButton buttonColor="#3587a4ff" offsetX={20} />
+      <ActionButton
+        buttonColor="#3587a4ff"
+        offsetX={20}
+        onPress={() => setLoading(true)}
+      />
     </Container>
   );
 };

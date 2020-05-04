@@ -30,8 +30,8 @@ export const Avatar = styled.Image`
 `;
 
 export const Name = styled.TextInput`
-  border: #ededed;
-  background-color: #dcdcdc;
+  border: ${White};
+  background-color: ${White};
   height: 40px;
   margin-left: 15px;
   min-width: 180px;
@@ -56,7 +56,7 @@ export const Button = styled(RectButton)`
 `;
 
 export const ButtonName = styled.Text`
-  color: #312e38;
+  color: ${BlueMunsell};
   font-size: 12px;
 `;
 
