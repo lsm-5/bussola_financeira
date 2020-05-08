@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {ScrollView, Dimensions} from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
   const {user} = useUser();
   const {navigate} = useNavigation();
 
-  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const arrayGoals: Goals[] = [
     {
@@ -75,12 +75,19 @@ const Dashboard: React.FC = () => {
   ];
 
   const handleModalFalse = useCallback(() => {
-    setLoading(false);
+    setShowModal(false);
   }, []);
+
+  useEffect(() => {
+    console.log(showModal);
+  }, [showModal]);
 
   return (
     <Container>
-      <ModalCreateGoal loading={loading} setLoading={handleModalFalse} />
+      <ModalCreateGoal
+        showModal={showModal}
+        showCancelModal={handleModalFalse}
+      />
       <HeaderProfile onPress={() => navigate('Profile')}>
         <AvatarImage
           source={{
@@ -133,7 +140,7 @@ const Dashboard: React.FC = () => {
       <ActionButton
         buttonColor="#3587a4ff"
         offsetX={20}
-        onPress={() => setLoading(true)}
+        onPress={() => setShowModal(true)}
       />
     </Container>
   );

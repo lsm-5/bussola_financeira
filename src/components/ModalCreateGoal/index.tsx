@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import PickerDate from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Text, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
+import NumericInput from '@wwdrew/react-native-numeric-textinput';
+import {Button} from 'react-native-elements';
+
 import {White} from '../../styles/colors';
 
 import {
@@ -15,7 +18,6 @@ import {
   DateView,
   ValueView,
   ValueText,
-  ValueTextInput,
   IconContainerView,
   IconTitle,
   IconScrollView,
@@ -27,11 +29,9 @@ import {
   PickerDateStyle,
   PickerDateCustomStyle,
   ButtonView,
-  ButtonSave,
-  ButtonSaveText,
-  ButtonCancel,
-  ButtonCancelText,
   HeaderProfile,
+  NumericInputView,
+  TextInformation,
 } from './styles';
 
 const colors = [
@@ -153,29 +153,30 @@ const icons = [
 ];
 
 interface ModalCreateGoalDTO {
-  loading: boolean;
-  setLoading: any;
+  showModal: boolean;
+  showCancelModal: any;
 }
 
 const ModalCreateGoal: React.FC<ModalCreateGoalDTO> = ({
-  loading,
-  setLoading,
+  showModal,
+  showCancelModal,
 }) => {
   const [date, setDate] = useState('');
   const [disableDate, setDisableDate] = useState(false);
-
-  useEffect(() => {
-    console.log(loading);
-  }, [loading]);
+  const [title, setTitle] = useState('');
+  const [money, setMoney] = useState('');
 
   return (
-    <Modal isVisible={loading} swipeDirection="down" animationInTiming={1500}>
+    <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
       <Container>
         <HeaderProfile />
         <Title>Nova Meta</Title>
 
         <TitleGoal>Nome da meta</TitleGoal>
-        <TitleGoalInput />
+        <TitleGoalInput
+          defaultValue={title}
+          onChangeText={(text) => setTitle(text)}
+        />
 
         <DateViewContainer>
           <DateTitle>Data</DateTitle>
@@ -195,14 +196,22 @@ const ModalCreateGoal: React.FC<ModalCreateGoalDTO> = ({
               <Icon name="calendar" size={40} color={White} />
             </TouchableOpacity>
           </DateView>
-          <Text style={{color: White}}>
+          <TextInformation>
             Clique no ícone pra desativar/ativar a data
-          </Text>
+          </TextInformation>
         </DateViewContainer>
 
         <ValueView>
           <ValueText>Valor</ValueText>
-          <ValueTextInput keyboardType="number-pad" />
+          <NumericInputView>
+            <NumericInput
+              type="currency"
+              locale="pt-BR"
+              currency="BRL"
+              value={money}
+              onUpdate={(value: any) => setMoney(value)}
+            />
+          </NumericInputView>
         </ValueView>
 
         <IconContainerView>
@@ -228,13 +237,27 @@ const ModalCreateGoal: React.FC<ModalCreateGoalDTO> = ({
         </ColorContainerView>
 
         <ButtonView>
-          <ButtonSave>
-            <ButtonSaveText>Criar</ButtonSaveText>
-          </ButtonSave>
+          <Button
+            title="Criar"
+            onPress={showCancelModal}
+            buttonStyle={{
+              backgroundColor: '#33cc99',
+              borderColor: '#33cc99',
+              height: 46,
+              width: 120,
+            }}
+          />
 
-          <ButtonCancel onPress={setLoading()}>
-            <ButtonCancelText>Cancelar</ButtonCancelText>
-          </ButtonCancel>
+          <Button
+            title="Cancelar"
+            onPress={showCancelModal}
+            buttonStyle={{
+              backgroundColor: '#FF6666',
+              borderColor: '#FF6666',
+              height: 46,
+              width: 120,
+            }}
+          />
         </ButtonView>
       </Container>
     </Modal>

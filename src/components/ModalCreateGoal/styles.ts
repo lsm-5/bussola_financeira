@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {RectButton} from 'react-native-gesture-handler';
+import {RectButton, BaseButton} from 'react-native-gesture-handler';
 import {BlueMunsell, White} from '../../styles/colors';
 
 interface ColorProps {
@@ -8,7 +8,7 @@ interface ColorProps {
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #999999;
+  background-color: ${BlueMunsell};
   padding: 5px 20px 20px 20px;
   border-radius: 8px;
   justify-content: space-between;
@@ -66,8 +66,8 @@ export const PickerDateCustomStyle = {
     borderColor: '#fff',
   },
   disabled: {
-    backgroundColor: '#888',
-    borderColor: '#888',
+    backgroundColor: '#ccc',
+    borderColor: '#ccc',
   },
 };
 
@@ -78,16 +78,6 @@ export const ValueView = styled.View`
 export const ValueText = styled.Text`
   color: ${White};
   font-size: 18px;
-`;
-
-export const ValueTextInput = styled.TextInput`
-  border-color: ${White};
-  background-color: ${White};
-  height: 40px;
-  min-width: 180px;
-  border-width: 1px;
-  margin-top: 5px;
-  border-radius: 4px;
 `;
 
 export const IconContainerView = styled.View``;
@@ -129,39 +119,8 @@ export const ColorView = styled.View<ColorProps>`
 export const ButtonView = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 7px;
   margin-bottom: 10px;
   margin-top: 20px;
-`;
-
-export const ButtonSave = styled(RectButton)`
-  height: 46px;
-  width: 35%;
-  background: #33cc99;
-  border-radius: 4px;
-
-  align-items: center;
-  justify-content: center;
-`;
-
-export const ButtonSaveText = styled.Text`
-  color: ${White};
-  font-size: 18px;
-`;
-
-export const ButtonCancel = styled(RectButton)`
-  height: 46px;
-  width: 35%;
-  background: #ff6666;
-  border-radius: 4px;
-
-  align-items: center;
-  justify-content: center;
-`;
-
-export const ButtonCancelText = styled.Text`
-  color: ${White};
-  font-size: 18px;
 `;
 
 export const HeaderProfile = styled.View`
@@ -177,4 +136,18 @@ export const HeaderProfile = styled.View`
 
   border-bottom-left-radius: 120px;
   border-bottom-right-radius: 120px;
+`;
+
+export const NumericInputView = styled.View`
+  border-color: ${White};
+  background-color: ${White};
+  height: 40px;
+  min-width: 180px;
+  border-width: 1px;
+  margin-top: 5px;
+  border-radius: 4px;
+`;
+
+export const TextInformation = styled.Text`
+  color: ${White};
 `;
