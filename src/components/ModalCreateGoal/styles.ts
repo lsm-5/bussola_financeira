@@ -1,9 +1,13 @@
 import styled from 'styled-components/native';
-import {RectButton, BaseButton} from 'react-native-gesture-handler';
 import {BlueMunsell, White} from '../../styles/colors';
 
 interface ColorProps {
   color: string;
+}
+
+interface ColorPropsSelected {
+  color: string;
+  selected: boolean;
 }
 
 export const Container = styled.View`
@@ -106,14 +110,14 @@ export const ColorText = styled.Text`
 
 export const ColorScrollView = styled.ScrollView``;
 
-export const ColorView = styled.View<ColorProps>`
+export const ColorView = styled.View<ColorPropsSelected>`
   height: 50px;
   width: 50px;
   background-color: ${(props) => props.color};
   border-radius: 25px;
   margin-right: 10px;
   border-width: 2.5px;
-  border-color: ${White};
+  border-color: ${(props) => (props.selected ? '#33cc99' : '#fff')};
 `;
 
 export const ButtonView = styled.View`
@@ -150,4 +154,8 @@ export const NumericInputView = styled.View`
 
 export const TextInformation = styled.Text`
   color: ${White};
+`;
+
+export const TextError = styled.Text`
+  color: #ff6666;
 `;

@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import 'react-native-get-random-values';
 import {uuid} from 'uuidv4';
 
 interface TransactionsObject {
@@ -17,18 +18,28 @@ interface TransactionsObject {
 interface Goals {
   id: string;
   title: string;
-  iconName: string;
-  date: Date;
+  iconName: string | null;
+  date: string | null;
   amount: number;
   moneyCurrent: number;
-  color: string;
+  color: string | null;
   transactions: TransactionsObject[] | null;
   achievementAchieved: boolean;
 }
 
+interface GoalsSave {
+  title: string;
+  iconName: string | null;
+  date: string | null;
+  amount: number;
+  moneyCurrent: number;
+  color: string | null;
+  transactions: TransactionsObject[] | null;
+}
+
 interface GoalsContext {
   goals: Goals[];
-  addGoals(item: Goals): Promise<void>;
+  addGoals(item: GoalsSave): Promise<void>;
   removeGoals(id: string): Promise<void>;
   incrementGoals(id: string, money: number): Promise<void>;
   decrementGoals(id: string, money: number): Promise<void>;
@@ -54,14 +65,19 @@ const GoalsProvider: React.FC = ({children}) => {
 
   const addGoals = useCallback(
     async (goalsSave) => {
-      const newGoals = {id: uuid(), achievementAchieved: false, ...goalsSave};
+      const id = uuid();
+      const newGoals = {id, achievementAchieved: false, ...goalsSave};
 
-      setGoals([newGoals, ...goals]);
+      setGoals([...goals, newGoals]);
 
-      await AsyncStorage.setItem(
-        '@BussolaFinanceira:goals',
-        JSON.stringify(goals),
-      );
+      try {
+        await AsyncStorage.setItem(
+          '@BussolaFinanceira:goals',
+          JSON.stringify(goals),
+        );
+      } catch (err) {
+        console.log(err);
+      }
     },
     [goals],
   );

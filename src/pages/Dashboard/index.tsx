@@ -1,11 +1,17 @@
-import React, {useState, useCallback, useEffect} from 'react';
+/* eslint-disable import/no-duplicates */
+import React, {useState, useCallback} from 'react';
 import {ScrollView, Dimensions} from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ActionButton from 'react-native-action-button';
 import {useNavigation} from '@react-navigation/native';
+import {format} from 'date-fns';
+import {pt} from 'date-fns/locale';
+import formatValue from '../../utils/formatValue';
 
 import {useUser} from '../../hooks/user';
+import {useGoals} from '../../hooks/goals';
+import {BlueMunsell} from '../../styles/colors';
 import ModalCreateGoal from '../../components/ModalCreateGoal';
 
 import {
@@ -24,6 +30,8 @@ import {
   MoneyCurrent,
   Amount,
   GoalsList,
+  TitleEmpty,
+  ViewEmpty,
 } from './styles';
 
 interface TransactionsObject {
@@ -34,11 +42,11 @@ interface TransactionsObject {
 interface Goals {
   id: string;
   title: string;
-  iconName: string;
-  date: Date;
+  iconName: string | null;
+  date: string | null;
   amount: number;
   moneyCurrent: number;
-  color: string;
+  color: string | null;
   transactions: TransactionsObject[] | null;
   achievementAchieved: boolean;
 }
@@ -46,41 +54,15 @@ interface Goals {
 const Dashboard: React.FC = () => {
   const {user} = useUser();
   const {navigate} = useNavigation();
+  const {goals} = useGoals();
 
   const [showModal, setShowModal] = useState(false);
 
-  const arrayGoals: Goals[] = [
-    {
-      id: '1',
-      title: 'Viajar',
-      iconName: 'airplane-takeoff',
-      date: new Date(),
-      amount: 1000,
-      moneyCurrent: 200,
-      color: '#c12',
-      achievementAchieved: false,
-      transactions: null,
-    },
-    {
-      id: '2',
-      title: 'Viajar',
-      iconName: 'airplane-takeoff',
-      date: new Date(),
-      amount: 1000,
-      moneyCurrent: 200,
-      color: '#3587a4ff',
-      achievementAchieved: false,
-      transactions: null,
-    },
-  ];
+  const arrayGoals: Goals[] = goals;
 
   const handleModalFalse = useCallback(() => {
     setShowModal(false);
   }, []);
-
-  useEffect(() => {
-    console.log(showModal);
-  }, [showModal]);
 
   return (
     <Container>
@@ -100,43 +82,71 @@ const Dashboard: React.FC = () => {
         </ViewColumn>
       </HeaderProfile>
 
-      <GoalsContainer>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <GoalsList
-            data={arrayGoals}
-            keyExtractor={(item) => item.id}
-            renderItem={({item}) => {
-              return item.achievementAchieved === false ? (
-                <CardContainer>
-                  <ViewRow>
-                    <CardTitle color={item.color}>{item.title}</CardTitle>
-                    <Icon
-                      name={item.iconName}
-                      size={20}
-                      color={item.color}
-                      style={{marginLeft: 10}}
+      {arrayGoals.length === 0 ? (
+        <ViewEmpty>
+          <TitleEmpty>Ops... Você ainda não possui metas</TitleEmpty>
+        </ViewEmpty>
+      ) : (
+        <GoalsContainer>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <GoalsList
+              data={arrayGoals}
+              keyExtractor={(item) => item.id}
+              renderItem={({item}) => {
+                return item.achievementAchieved === false ? (
+                  <CardContainer>
+                    <ViewRow>
+                      <ViewColumn style={{flex: 1}}>
+                        <CardTitle color={item.color}>{item.title}</CardTitle>
+                        <CardTime>
+                          {item.date !== null &&
+                            format(
+                              new Date(
+                                Number(item.date.split('-')[2]),
+                                Number(item.date.split('-')[1]),
+                                Number(item.date.split('-')[0]),
+                              ),
+                              "'Em 'dd' de 'MMMM' de 'yyyy",
+                              {locale: pt},
+                            )}
+                        </CardTime>
+                      </ViewColumn>
+                      {item.iconName !== null ? (
+                        <Icon
+                          name={item.iconName}
+                          size={50}
+                          color={item.color === null ? BlueMunsell : item.color}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </ViewRow>
+
+                    <Progress.Bar
+                      progress={item.moneyCurrent / item.amount}
+                      width={Dimensions.get('screen').width - 60}
+                      height={12}
+                      borderRadius={6}
+                      color={item.color === null ? BlueMunsell : item.color}
                     />
-                  </ViewRow>
-                  <CardTime>Em 06 de agosto de 2021</CardTime>
-                  <Progress.Bar
-                    progress={item.moneyCurrent / item.amount}
-                    width={Dimensions.get('screen').width - 60}
-                    height={12}
-                    borderRadius={6}
-                    color={item.color}
-                  />
-                  <MoneyView>
-                    <MoneyCurrent color={item.color}>R$ 200,00</MoneyCurrent>
-                    <Amount color={item.color}>R$ 1000,00</Amount>
-                  </MoneyView>
-                </CardContainer>
-              ) : (
-                <></>
-              );
-            }}
-          />
-        </ScrollView>
-      </GoalsContainer>
+                    <MoneyView>
+                      <MoneyCurrent color={item.color}>
+                        {formatValue(item.moneyCurrent)}
+                      </MoneyCurrent>
+                      <Amount color={item.color}>
+                        {formatValue(item.amount)}
+                      </Amount>
+                    </MoneyView>
+                  </CardContainer>
+                ) : (
+                  <></>
+                );
+              }}
+            />
+          </ScrollView>
+        </GoalsContainer>
+      )}
+
       <ActionButton
         buttonColor="#3587a4ff"
         offsetX={20}

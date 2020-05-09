@@ -10,17 +10,17 @@ interface TransactionsObject {
 interface Goals {
   id: string;
   title: string;
-  iconName: string;
-  date: Date;
+  iconName: string | null;
+  date: string | null;
   amount: number;
   moneyCurrent: number;
-  color: string;
+  color: string | null;
   transactions: TransactionsObject[] | null;
   achievementAchieved: boolean;
 }
 
 interface ColorProps {
-  color: string;
+  color: string | null;
 }
 
 export const Container = styled.View`
@@ -88,7 +88,8 @@ export const CardTitle = styled.Text<ColorProps>`
   font-weight: bold;
   font-size: 18px;
   font-family: sans-serif;
-  color: ${(props) => (props.color ? props.color : BlueMunsell)};
+
+  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
 `;
 
 export const CardTime = styled.Text`
@@ -105,15 +106,28 @@ export const MoneyView = styled.View`
 `;
 
 export const MoneyCurrent = styled.Text<ColorProps>`
-  color: ${(props) => (props.color ? props.color : BlueMunsell)};
+  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
 `;
 
 export const Amount = styled.Text<ColorProps>`
   text-align: right;
   margin-right: 5px;
-  color: ${(props) => (props.color ? props.color : BlueMunsell)};
+  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
 `;
 
 export const GoalsList = styled(FlatList as new () => FlatList<Goals>)`
+  flex: 1;
+`;
+
+export const TitleEmpty = styled.Text`
+  color: #999;
+  position: absolute;
+  top: 30%;
+`;
+
+export const ViewEmpty = styled.View`
+  position: relative;
+  align-items: center;
+  justify-content: center;
   flex: 1;
 `;
