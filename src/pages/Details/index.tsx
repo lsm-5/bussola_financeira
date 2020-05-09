@@ -6,7 +6,12 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Progress from 'react-native-progress';
 import {Button} from 'react-native-elements';
-import {format} from 'date-fns';
+import {
+  format,
+  differenceInCalendarDays,
+  differenceInCalendarMonths,
+  differenceInCalendarYears,
+} from 'date-fns';
 import {pt} from 'date-fns/locale';
 
 import formatValue from '../../utils/formatValue';
@@ -73,6 +78,69 @@ const Details: React.FC = () => {
   const handleModalRemoveFalse = useCallback(() => {
     setShowModalRemove(false);
   }, []);
+
+  const countDays = useCallback(() => {
+    let days;
+    if (goal.date !== null) {
+      days = differenceInCalendarDays(
+        new Date(
+          Number(goal.date.split('-')[2]),
+          Number(goal.date.split('-')[1]),
+          Number(goal.date.split('-')[0]),
+        ),
+        new Date(),
+      );
+
+      if (days <= 0) {
+        return formatValue(goal.amount - goal.moneyCurrent);
+      }
+
+      return formatValue((goal.amount - goal.moneyCurrent) / days);
+    }
+    return null;
+  }, [goal.date, goal.amount, goal.moneyCurrent]);
+
+  const countMonth = useCallback(() => {
+    let month;
+    if (goal.date !== null) {
+      month = differenceInCalendarMonths(
+        new Date(
+          Number(goal.date.split('-')[2]),
+          Number(goal.date.split('-')[1]),
+          Number(goal.date.split('-')[0]),
+        ),
+        new Date(),
+      );
+
+      if (month <= 0) {
+        return formatValue(goal.amount - goal.moneyCurrent);
+      }
+
+      return formatValue((goal.amount - goal.moneyCurrent) / month);
+    }
+    return null;
+  }, [goal.date, goal.amount, goal.moneyCurrent]);
+
+  const countYears = useCallback(() => {
+    let years;
+    if (goal.date !== null) {
+      years = differenceInCalendarYears(
+        new Date(
+          Number(goal.date.split('-')[2]),
+          Number(goal.date.split('-')[1]),
+          Number(goal.date.split('-')[0]),
+        ),
+        new Date(),
+      );
+
+      if (years <= 0) {
+        return formatValue(goal.amount - goal.moneyCurrent);
+      }
+
+      return formatValue((goal.amount - goal.moneyCurrent) / years);
+    }
+    return null;
+  }, [goal.date, goal.amount, goal.moneyCurrent]);
 
   return (
     <Container>
@@ -154,38 +222,40 @@ const Details: React.FC = () => {
           </View>
         )}
 
-        <View style={{paddingRight: 20, paddingLeft: 20, marginBottom: 20}}>
-          <Text
-            style={{
-              color: BlueMunsell,
-              fontSize: 14,
-              marginBottom: 5,
-            }}>
-            Para conseguir completar sua meta no tempo desejado você precisa
-            guardar:
-          </Text>
-          <View
-            style={{
-              justifyContent: 'space-around',
-              flexDirection: 'row',
-              paddingTop: 5,
-            }}>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{fontSize: 16}}>{formatValue(goal.amount)}</Text>
-              <Text style={{color: BlueMunsell}}>Por dia</Text>
-            </View>
+        {goal.date !== null && (
+          <View style={{paddingRight: 20, paddingLeft: 20, marginBottom: 20}}>
+            <Text
+              style={{
+                color: BlueMunsell,
+                fontSize: 14,
+                marginBottom: 5,
+              }}>
+              Para conseguir completar sua meta no tempo desejado você precisa
+              guardar:
+            </Text>
+            <View
+              style={{
+                justifyContent: 'space-around',
+                flexDirection: 'row',
+                paddingTop: 5,
+              }}>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{fontSize: 16}}>{countDays()}</Text>
+                <Text style={{color: BlueMunsell}}>Por dia</Text>
+              </View>
 
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{fontSize: 16}}>{formatValue(goal.amount)}</Text>
-              <Text style={{color: BlueMunsell}}>Por mês</Text>
-            </View>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{fontSize: 16}}>{countMonth()}</Text>
+                <Text style={{color: BlueMunsell}}>Por mês</Text>
+              </View>
 
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{fontSize: 16}}>{formatValue(goal.amount)}</Text>
-              <Text style={{color: BlueMunsell}}>Por ano</Text>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{fontSize: 16}}>{countYears()}</Text>
+                <Text style={{color: BlueMunsell}}>Por ano</Text>
+              </View>
             </View>
           </View>
-        </View>
+        )}
 
         <View style={{paddingRight: 20, paddingLeft: 20}}>
           <Text

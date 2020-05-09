@@ -2,6 +2,7 @@ import React, {useState, useCallback} from 'react';
 import Modal from 'react-native-modal';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import {Button} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 
 import {useGoals} from '../../hooks/goals';
 
@@ -26,9 +27,10 @@ const ModalAddMoney: React.FC<ModalAddMoneyDTO> = ({
   showCancelModal,
   idGoal,
 }) => {
-  const {addGoals} = useGoals();
+  const {incrementGoals} = useGoals();
   const [money, setMoney] = useState(0);
   const [submitValidation, setSubmitValidation] = useState(false);
+  const {navigate} = useNavigation();
 
   const handleSubmit = useCallback(async () => {
     setSubmitValidation(true);
@@ -37,13 +39,11 @@ const ModalAddMoney: React.FC<ModalAddMoneyDTO> = ({
       return;
     }
 
-    const value = {
-      money,
-    };
-
     setSubmitValidation(false);
+    incrementGoals(idGoal, money);
     showCancelModal();
-  }, []);
+    navigate('Dashboard');
+  }, [idGoal, incrementGoals, money, showCancelModal, navigate]);
 
   return (
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>

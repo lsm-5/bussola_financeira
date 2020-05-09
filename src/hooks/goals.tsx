@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
-
+import {Alert} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import 'react-native-get-random-values';
@@ -109,27 +109,35 @@ const GoalsProvider: React.FC = ({children}) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
-        throw new Error('goals not found');
+        Alert.alert('Falha', 'meta não encontrada');
       }
 
       const goalsArray = [...goals];
 
+      // increment money
       goalsArray[indexGoals] = {
-        moneyCurrent: goalsArray[indexGoals].moneyCurrent + money,
-        transactions: goalsArray[indexGoals].transactions?.push({
-          type: 'income',
-          value: money,
-        }),
         ...goalsArray[indexGoals],
+        moneyCurrent: goalsArray[indexGoals].moneyCurrent + money,
       };
 
+      // addTransaction
+      if (goalsArray[indexGoals].transactions !== null) {
+        goalsArray[indexGoals].transactions?.push({
+          type: 'income',
+          value: money,
+        });
+      } else {
+        goalsArray[indexGoals].transactions = [{type: 'income', value: money}];
+      }
+
+      // maybe active achievementAchieved
       if (
         goalsArray[indexGoals].moneyCurrent >= goalsArray[indexGoals].amount
       ) {
         goalsArray[indexGoals] = {
+          ...goalsArray[indexGoals],
           achievementAchieved: true,
           moneyCurrent: goalsArray[indexGoals].amount,
-          ...goalsArray[indexGoals],
         };
       }
 
@@ -148,7 +156,7 @@ const GoalsProvider: React.FC = ({children}) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
-        throw new Error('goals not found');
+        Alert.alert('Falha', 'meta não encontrada');
       }
 
       const goalsArray = [...goals];
