@@ -5,6 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
+import {Alert} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -41,10 +42,16 @@ const UserProvider: React.FC = ({children}) => {
   const addUserNameAndAvatar = useCallback(async (userSave) => {
     setUser(userSave);
 
-    await AsyncStorage.setItem(
-      '@BussolaFinanceira:user',
-      JSON.stringify(userSave),
-    );
+    try {
+      await AsyncStorage.setItem(
+        '@BussolaFinanceira:user',
+        JSON.stringify(userSave),
+      );
+
+      Alert.alert('Sucesso', 'Seu perfil foi atualizado');
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   const value = React.useMemo(() => ({user, addUserNameAndAvatar}), [

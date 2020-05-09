@@ -88,13 +88,17 @@ const Dashboard: React.FC = () => {
         </ViewEmpty>
       ) : (
         <GoalsContainer>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              height: Dimensions.get('screen').height - 160,
+            }}>
             <GoalsList
               data={arrayGoals}
               keyExtractor={(item) => item.id}
               renderItem={({item}) => {
                 return item.achievementAchieved === false ? (
-                  <CardContainer>
+                  <CardContainer onPress={() => navigate('Details', {item})}>
                     <ViewRow>
                       <ViewColumn style={{flex: 1}}>
                         <CardTitle color={item.color}>{item.title}</CardTitle>

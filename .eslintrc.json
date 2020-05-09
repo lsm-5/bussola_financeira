@@ -25,6 +25,7 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "react/jsx-closing-bracket-location": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "prettier/prettier": "error",
     "react-hooks/rules-of-hooks": "error",

@@ -1,9 +1,18 @@
+/* eslint-disable import/no-duplicates */
 import React, {useState, useCallback} from 'react';
+import {ScrollView, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker, {ImagePickerResponse} from 'react-native-image-picker';
 import ImageResizer, {Response} from 'react-native-image-resizer';
+import {format} from 'date-fns';
+import {pt} from 'date-fns/locale';
+import * as Progress from 'react-native-progress';
+import formatValue from '../../utils/formatValue';
+
 import {useUser} from '../../hooks/user';
+import {useGoals} from '../../hooks/goals';
+import {BlueMunsell} from '../../styles/colors';
 
 import {
   Container,
@@ -18,11 +27,40 @@ import {
   ViewDefault,
   ButtonBack,
   AvatarButton,
+  Amount,
+  CardContainer,
+  CardTime,
+  CardTitle,
+  GoalsContainer,
+  GoalsList,
+  MoneyCurrent,
+  MoneyView,
+  TitleEmpty,
+  ViewEmpty,
+  ViewColumn,
+  ViewRow,
 } from './styles';
 
 interface User {
   name: string;
   avatarUri: string;
+}
+
+interface TransactionsObject {
+  type: 'income' | 'outcome';
+  value: number;
+}
+
+interface Goals {
+  id: string;
+  title: string;
+  iconName: string | null;
+  date: string | null;
+  amount: number;
+  moneyCurrent: number;
+  color: string | null;
+  transactions: TransactionsObject[] | null;
+  achievementAchieved: boolean;
 }
 
 const options = {
@@ -31,6 +69,9 @@ const options = {
 
 const Profile: React.FC = () => {
   const {user, addUserNameAndAvatar} = useUser();
+  const {goals} = useGoals();
+
+  const arrayGoals: Goals[] = goals;
 
   const [userChange, setUserChange] = useState<User>({
     name: user.name,
@@ -57,6 +98,11 @@ const Profile: React.FC = () => {
       }
     });
   }, [userChange]);
+
+  const countGoalAchieved = useCallback(() => {
+    const count = arrayGoals.filter((goal) => goal.achievementAchieved);
+    return count.length;
+  }, [arrayGoals]);
 
   return (
     <Container>
@@ -86,6 +132,83 @@ const Profile: React.FC = () => {
       <Goals>
         <GoalsTitle>Aqui estão suas metas alcançadas:</GoalsTitle>
       </Goals>
+
+      {countGoalAchieved() === 0 && (
+        <ViewEmpty>
+          <TitleEmpty>Ops... você ainda não tem metas alcançadas</TitleEmpty>
+        </ViewEmpty>
+      )}
+      {arrayGoals.map(
+        (goal) =>
+          goal.achievementAchieved && (
+            <GoalsContainer>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                  height: Dimensions.get('screen').height - 260,
+                }}>
+                <GoalsList
+                  data={arrayGoals}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({item}) => {
+                    return item.achievementAchieved === false ? (
+                      <CardContainer>
+                        <ViewRow>
+                          <ViewColumn style={{flex: 1}}>
+                            <CardTitle color={item.color}>
+                              {item.title}
+                            </CardTitle>
+                            <CardTime>
+                              {item.date !== null &&
+                                format(
+                                  new Date(
+                                    Number(item.date.split('-')[2]),
+                                    Number(item.date.split('-')[1]),
+                                    Number(item.date.split('-')[0]),
+                                  ),
+                                  "'Em 'dd' de 'MMMM' de 'yyyy",
+                                  {locale: pt},
+                                )}
+                            </CardTime>
+                          </ViewColumn>
+                          {item.iconName !== null ? (
+                            <Icon
+                              name={item.iconName}
+                              size={50}
+                              color={
+                                item.color === null ? BlueMunsell : item.color
+                              }
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </ViewRow>
+
+                        <Progress.Bar
+                          progress={item.moneyCurrent / item.amount}
+                          width={Dimensions.get('screen').width - 60}
+                          height={12}
+                          borderRadius={6}
+                          color={item.color === null ? BlueMunsell : item.color}
+                        />
+                        <MoneyView>
+                          <MoneyCurrent color={item.color}>
+                            {formatValue(item.moneyCurrent)}
+                          </MoneyCurrent>
+                          <Amount color={item.color}>
+                            {formatValue(item.amount)}
+                          </Amount>
+                        </MoneyView>
+                      </CardContainer>
+                    ) : (
+                      <></>
+                    );
+                  }}
+                />
+              </ScrollView>
+            </GoalsContainer>
+          ),
+      )}
     </Container>
   );
 };
