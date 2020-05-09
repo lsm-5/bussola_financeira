@@ -1,5 +1,5 @@
 /* eslint-disable import/no-duplicates */
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {ScrollView, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
@@ -71,7 +71,7 @@ const Profile: React.FC = () => {
   const {user, addUserNameAndAvatar} = useUser();
   const {goals} = useGoals();
 
-  const arrayGoals: Goals[] = goals;
+  const arrayGoals: Goals[] = goals.filter((goal) => goal.achievementAchieved);
 
   const [userChange, setUserChange] = useState<User>({
     name: user.name,
@@ -104,6 +104,10 @@ const Profile: React.FC = () => {
     return count.length;
   }, [arrayGoals]);
 
+  useEffect(() => {
+    console.log(arrayGoals);
+  }, [arrayGoals]);
+
   return (
     <Container>
       <Header>
@@ -129,6 +133,7 @@ const Profile: React.FC = () => {
           </ButtonView>
         </ViewDefault>
       </Header>
+
       <Goals>
         <GoalsTitle>Aqui estão suas metas alcançadas:</GoalsTitle>
       </Goals>
@@ -138,77 +143,60 @@ const Profile: React.FC = () => {
           <TitleEmpty>Ops... você ainda não tem metas alcançadas</TitleEmpty>
         </ViewEmpty>
       )}
-      {arrayGoals.map(
-        (goal) =>
-          goal.achievementAchieved && (
-            <GoalsContainer>
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                  height: Dimensions.get('screen').height - 260,
-                }}>
-                <GoalsList
-                  data={arrayGoals}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({item}) => {
-                    return item.achievementAchieved === false ? (
-                      <CardContainer>
-                        <ViewRow>
-                          <ViewColumn style={{flex: 1}}>
-                            <CardTitle color={item.color}>
-                              {item.title}
-                            </CardTitle>
-                            <CardTime>
-                              {item.date !== null &&
-                                format(
-                                  new Date(
-                                    Number(item.date.split('-')[2]),
-                                    Number(item.date.split('-')[1]),
-                                    Number(item.date.split('-')[0]),
-                                  ),
-                                  "'Em 'dd' de 'MMMM' de 'yyyy",
-                                  {locale: pt},
-                                )}
-                            </CardTime>
-                          </ViewColumn>
-                          {item.iconName !== null ? (
-                            <Icon
-                              name={item.iconName}
-                              size={50}
-                              color={
-                                item.color === null ? BlueMunsell : item.color
-                              }
-                            />
-                          ) : (
-                            <></>
-                          )}
-                        </ViewRow>
 
-                        <Progress.Bar
-                          progress={item.moneyCurrent / item.amount}
-                          width={Dimensions.get('screen').width - 60}
-                          height={12}
-                          borderRadius={6}
-                          color={item.color === null ? BlueMunsell : item.color}
-                        />
-                        <MoneyView>
-                          <MoneyCurrent color={item.color}>
-                            {formatValue(item.moneyCurrent)}
-                          </MoneyCurrent>
-                          <Amount color={item.color}>
-                            {formatValue(item.amount)}
-                          </Amount>
-                        </MoneyView>
-                      </CardContainer>
-                    ) : (
-                      <></>
-                    );
-                  }}
+      <GoalsContainer>
+        <GoalsList
+          data={arrayGoals}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => {
+            return (
+              <CardContainer>
+                <ViewRow>
+                  <ViewColumn style={{flex: 1}}>
+                    <CardTitle color={item.color}>{item.title}</CardTitle>
+                    <CardTime>
+                      {item.date !== null &&
+                        format(
+                          new Date(
+                            Number(item.date.split('-')[2]),
+                            Number(item.date.split('-')[1]),
+                            Number(item.date.split('-')[0]),
+                          ),
+                          "'Em 'dd' de 'MMMM' de 'yyyy",
+                          {locale: pt},
+                        )}
+                    </CardTime>
+                  </ViewColumn>
+                  {item.iconName !== null ? (
+                    <Icon
+                      name={item.iconName}
+                      size={50}
+                      color={item.color === null ? BlueMunsell : item.color}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </ViewRow>
+
+                <Progress.Bar
+                  progress={item.moneyCurrent / item.amount}
+                  width={Dimensions.get('screen').width - 60}
+                  height={12}
+                  borderRadius={6}
+                  color={item.color === null ? BlueMunsell : item.color}
                 />
-              </ScrollView>
-            </GoalsContainer>
-          ),
-      )}
+                <MoneyView>
+                  <MoneyCurrent color={item.color}>
+                    {formatValue(item.moneyCurrent)}
+                  </MoneyCurrent>
+                  <Amount color={item.color}>{formatValue(item.amount)}</Amount>
+                </MoneyView>
+              </CardContainer>
+            );
+          }}
+        />
+      </GoalsContainer>
     </Container>
   );
 };

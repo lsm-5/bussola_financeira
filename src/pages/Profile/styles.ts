@@ -83,7 +83,7 @@ export const ButtonName = styled.Text`
 `;
 
 export const Goals = styled.View`
-  margin: 20px;
+  margin: 20px 20px 0 20px;
 `;
 
 export const GoalsTitle = styled.Text`
@@ -103,6 +103,7 @@ export const ButtonBack = styled.TouchableOpacity`
 
 export const GoalsContainer = styled.View`
   padding: 10px;
+  flex: 1;
 `;
 
 export const CardContainer = styled.TouchableOpacity`
@@ -110,7 +111,7 @@ export const CardContainer = styled.TouchableOpacity`
   border-radius: 8px;
   padding: 15px;
   border-width: 3px;
-  border-color: #dcdcdc;
+  border-color: #fff;
 `;
 
 export const CardTitle = styled.Text<ColorProps>`
