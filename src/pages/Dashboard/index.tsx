@@ -88,66 +88,62 @@ const Dashboard: React.FC = () => {
         </ViewEmpty>
       ) : (
         <GoalsContainer>
-          <ScrollView
+          <GoalsList
+            data={arrayGoals}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{paddingBottom: 90}}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              height: Dimensions.get('screen').height - 160,
-            }}>
-            <GoalsList
-              data={arrayGoals}
-              keyExtractor={(item) => item.id}
-              renderItem={({item}) => {
-                return item.achievementAchieved === false ? (
-                  <CardContainer onPress={() => navigate('Details', {item})}>
-                    <ViewRow>
-                      <ViewColumn style={{flex: 1}}>
-                        <CardTitle color={item.color}>{item.title}</CardTitle>
-                        <CardTime>
-                          {item.date !== null &&
-                            format(
-                              new Date(
-                                Number(item.date.split('-')[2]),
-                                Number(item.date.split('-')[1]),
-                                Number(item.date.split('-')[0]),
-                              ),
-                              "'Em 'dd' de 'MMMM' de 'yyyy",
-                              {locale: pt},
-                            )}
-                        </CardTime>
-                      </ViewColumn>
-                      {item.iconName !== null ? (
-                        <Icon
-                          name={item.iconName}
-                          size={50}
-                          color={item.color === null ? BlueMunsell : item.color}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </ViewRow>
+            renderItem={({item}) => {
+              return item.achievementAchieved === false ? (
+                <CardContainer onPress={() => navigate('Details', {item})}>
+                  <ViewRow>
+                    <ViewColumn style={{flex: 1}}>
+                      <CardTitle color={item.color}>{item.title}</CardTitle>
+                      <CardTime>
+                        {item.date !== null &&
+                          format(
+                            new Date(
+                              Number(item.date.split('-')[2]),
+                              Number(item.date.split('-')[1]),
+                              Number(item.date.split('-')[0]),
+                            ),
+                            "'Em 'dd' de 'MMMM' de 'yyyy",
+                            {locale: pt},
+                          )}
+                      </CardTime>
+                    </ViewColumn>
+                    {item.iconName !== null ? (
+                      <Icon
+                        name={item.iconName}
+                        size={50}
+                        color={item.color === null ? BlueMunsell : item.color}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </ViewRow>
 
-                    <Progress.Bar
-                      progress={item.moneyCurrent / item.amount}
-                      width={Dimensions.get('screen').width - 60}
-                      height={12}
-                      borderRadius={6}
-                      color={item.color === null ? BlueMunsell : item.color}
-                    />
-                    <MoneyView>
-                      <MoneyCurrent color={item.color}>
-                        {formatValue(item.moneyCurrent)}
-                      </MoneyCurrent>
-                      <Amount color={item.color}>
-                        {formatValue(item.amount)}
-                      </Amount>
-                    </MoneyView>
-                  </CardContainer>
-                ) : (
-                  <></>
-                );
-              }}
-            />
-          </ScrollView>
+                  <Progress.Bar
+                    progress={item.moneyCurrent / item.amount}
+                    width={Dimensions.get('screen').width - 60}
+                    height={12}
+                    borderRadius={6}
+                    color={item.color === null ? BlueMunsell : item.color}
+                  />
+                  <MoneyView>
+                    <MoneyCurrent color={item.color}>
+                      {formatValue(item.moneyCurrent)}
+                    </MoneyCurrent>
+                    <Amount color={item.color}>
+                      {formatValue(item.amount)}
+                    </Amount>
+                  </MoneyView>
+                </CardContainer>
+              ) : (
+                <></>
+              );
+            }}
+          />
         </GoalsContainer>
       )}
 

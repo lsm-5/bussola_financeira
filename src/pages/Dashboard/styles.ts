@@ -74,6 +74,7 @@ export const ViewRow = styled.View`
 
 export const GoalsContainer = styled.View`
   padding: 10px;
+  flex: 1;
 `;
 
 export const CardContainer = styled.TouchableOpacity`
