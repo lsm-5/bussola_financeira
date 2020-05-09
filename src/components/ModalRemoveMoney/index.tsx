@@ -2,6 +2,7 @@ import React, {useState, useCallback} from 'react';
 import Modal from 'react-native-modal';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import {Button} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
 
 import {useGoals} from '../../hooks/goals';
 
@@ -26,7 +27,9 @@ const ModalRemoveMoney: React.FC<ModalRemoveMoneyDTO> = ({
   showCancelModal,
   idGoal,
 }) => {
-  const {addGoals} = useGoals();
+  const {decrementGoals} = useGoals();
+  const {navigate} = useNavigation();
+
   const [money, setMoney] = useState(0);
   const [submitValidation, setSubmitValidation] = useState(false);
 
@@ -37,13 +40,11 @@ const ModalRemoveMoney: React.FC<ModalRemoveMoneyDTO> = ({
       return;
     }
 
-    const value = {
-      money,
-    };
-
     setSubmitValidation(false);
+    decrementGoals(idGoal, money);
     showCancelModal();
-  }, []);
+    navigate('Dashboard');
+  }, [idGoal, decrementGoals, money, showCancelModal, navigate]);
 
   return (
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
@@ -68,7 +69,7 @@ const ModalRemoveMoney: React.FC<ModalRemoveMoneyDTO> = ({
 
         <ButtonView>
           <Button
-            title="Adicionar"
+            title="Remover"
             onPress={() => handleSubmit()}
             buttonStyle={{
               backgroundColor: '#33cc99',

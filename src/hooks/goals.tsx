@@ -109,7 +109,7 @@ const GoalsProvider: React.FC = ({children}) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
-        Alert.alert('Falha', 'meta não encontrada');
+        Alert.alert('Falha', 'meta não encontrada.');
       }
 
       const goalsArray = [...goals];
@@ -156,28 +156,34 @@ const GoalsProvider: React.FC = ({children}) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
-        Alert.alert('Falha', 'meta não encontrada');
+        Alert.alert('Falha', 'meta não encontrada.');
       }
 
       const goalsArray = [...goals];
 
       if (money <= goalsArray[indexGoals].moneyCurrent) {
         goalsArray[indexGoals] = {
-          moneyCurrent: goalsArray[indexGoals].moneyCurrent - money,
-          transactions: goalsArray[indexGoals].transactions?.push({
-            type: 'outcome',
-            value: money,
-          }),
           ...goalsArray[indexGoals],
+          moneyCurrent: goalsArray[indexGoals].moneyCurrent - money,
         };
       } else {
-        throw new Error("You can't remove this value");
+        Alert.alert('Falha', 'Você não pode remover este valor.');
+      }
+
+      // addTransaction
+      if (goalsArray[indexGoals].transactions !== null) {
+        goalsArray[indexGoals].transactions?.push({
+          type: 'outcome',
+          value: money,
+        });
+      } else {
+        goalsArray[indexGoals].transactions = [{type: 'outcome', value: money}];
       }
 
       if (goalsArray[indexGoals].moneyCurrent < goalsArray[indexGoals].amount) {
         goalsArray[indexGoals] = {
-          achievementAchieved: false,
           ...goalsArray[indexGoals],
+          achievementAchieved: false,
         };
       }
 
