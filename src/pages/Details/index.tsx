@@ -206,6 +206,7 @@ const Details: React.FC = () => {
       <ModalEditGoal
         showModal={showModalEditGoal}
         showCancelModal={handleModalEditGoalCancel}
+        Goal={goal}
       />
 
       <HeaderProfile>

@@ -299,7 +299,9 @@ const ModalCreateGoal: React.FC<ModalCreateGoalDTO> = ({
           <IconScrollView showsHorizontalScrollIndicator={false} horizontal>
             {icons.map((icon) => {
               return (
-                <TouchableOpacity onPress={() => handleSelectIcon(icon)}>
+                <TouchableOpacity
+                  key={icon.iconName}
+                  onPress={() => handleSelectIcon(icon)}>
                   <IconView>
                     <Icon
                       name={icon.iconName}
@@ -318,7 +320,9 @@ const ModalCreateGoal: React.FC<ModalCreateGoalDTO> = ({
           <ColorScrollView showsHorizontalScrollIndicator={false} horizontal>
             {colors.map((color) => {
               return (
-                <TouchableOpacity onPress={() => handleSelectColor(color)}>
+                <TouchableOpacity
+                  key={color.color}
+                  onPress={() => handleSelectColor(color)}>
                   <ColorView color={color.color} selected={color.enable} />
                 </TouchableOpacity>
               );

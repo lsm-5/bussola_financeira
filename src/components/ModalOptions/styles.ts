@@ -43,5 +43,5 @@ export const Divider = styled.View`
   min-width: 100%;
   height: 1px;
   border-bottom-color: #fff;
-  border-bottom-width: 1;
+  border-bottom-width: 1px;
 `;
