@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TouchableOpacity} from 'react-native';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import {Button} from 'react-native-elements';
+import {format} from 'date-fns';
 
 import {useGoals} from '../../hooks/goals';
 
@@ -288,7 +289,9 @@ const ModalEditGoal: React.FC<ModalEditGoal> = ({
             <PickerDate
               disabled={disableDate}
               style={PickerDateStyle}
-              date={date}
+              date={
+                date !== null ? date : String(format(new Date(), 'dd-MM-yyyy'))
+              }
               mode="date"
               format="DD-MM-YYYY"
               onDateChange={(dateUpdate) => setDate(dateUpdate)}
