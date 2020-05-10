@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
-import React, {useState, useCallback, useEffect} from 'react';
-import {ScrollView, Dimensions} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker, {ImagePickerResponse} from 'react-native-image-picker';
@@ -104,10 +104,6 @@ const Profile: React.FC = () => {
     return count.length;
   }, [arrayGoals]);
 
-  useEffect(() => {
-    console.log(arrayGoals);
-  }, [arrayGoals]);
-
   return (
     <Container>
       <Header>
@@ -151,7 +147,8 @@ const Profile: React.FC = () => {
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
-              <CardContainer>
+              <CardContainer
+                onPress={() => navigation.navigate('Details', {item})}>
                 <ViewRow>
                   <ViewColumn style={{flex: 1}}>
                     <CardTitle color={item.color}>{item.title}</CardTitle>

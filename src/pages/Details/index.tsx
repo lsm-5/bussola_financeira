@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import React, {useCallback, useState} from 'react';
-import {Dimensions, View, Text} from 'react-native';
+import {Dimensions} from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,16 +17,45 @@ import {pt} from 'date-fns/locale';
 import formatValue from '../../utils/formatValue';
 import ModalAddMoney from '../../components/ModalAddMoney';
 import ModalRemoveMoney from '../../components/ModalRemoveMoney';
+import ModalOptions from '../../components/ModalOptions';
+import ModalEditGoal from '../../components/ModalEditGoal';
 
 import {
   Container,
-  ViewColumn,
   HeaderName,
   HeaderProfile,
   ButtonBack,
   Goals,
   GoalsTitle,
   ButtonView,
+  ViewGoalName,
+  ViewContent,
+  ViewGoal,
+  TextTitleGoal,
+  TextAmount,
+  ViewDate,
+  TextTitleDate,
+  TextDate,
+  ViewContainerSugestion,
+  TextTitleSugestion,
+  ViewSugestion,
+  ViewDay,
+  TextDayMoney,
+  TextDay,
+  ViewMonth,
+  TextMonthMoney,
+  TextMonth,
+  ViewYear,
+  TextYearMoney,
+  TextYear,
+  ViewProgressContainer,
+  TextTitleProgress,
+  ViewProgress,
+  TextMoneyCurrent,
+  TextPercentage,
+  ButtonAddStyle,
+  ButtonRemoveStyle,
+  ButtonOptions,
 } from './styles';
 import {BlueMunsell, White} from '../../styles/colors';
 
@@ -70,6 +99,8 @@ const Details: React.FC = () => {
 
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
+  const [showModalOptions, setShowModalOptions] = useState(false);
+  const [showModalEditGoal, setModalEditGoal] = useState(false);
 
   const handleModalAddFalse = useCallback(() => {
     setShowModalAdd(false);
@@ -77,6 +108,18 @@ const Details: React.FC = () => {
 
   const handleModalRemoveFalse = useCallback(() => {
     setShowModalRemove(false);
+  }, []);
+
+  const handleModalOptionsFalse = useCallback(() => {
+    setShowModalOptions(false);
+  }, []);
+
+  const handleModalEditGoalCancel = useCallback(() => {
+    setModalEditGoal(false);
+  }, []);
+
+  const handleModalEditGoalShow = useCallback(() => {
+    setModalEditGoal(true);
   }, []);
 
   const countDays = useCallback(() => {
@@ -144,6 +187,12 @@ const Details: React.FC = () => {
 
   return (
     <Container>
+      <ModalOptions
+        showModal={showModalOptions}
+        showCancelModal={handleModalOptionsFalse}
+        Goal={goal}
+        showEditModal={handleModalEditGoalShow}
+      />
       <ModalAddMoney
         idGoal={goal.id}
         showModal={showModalAdd}
@@ -154,6 +203,11 @@ const Details: React.FC = () => {
         showModal={showModalRemove}
         showCancelModal={handleModalRemoveFalse}
       />
+      <ModalEditGoal
+        showModal={showModalEditGoal}
+        showCancelModal={handleModalEditGoalCancel}
+      />
+
       <HeaderProfile>
         <ButtonBack onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={25} color="#fff" />
@@ -168,47 +222,31 @@ const Details: React.FC = () => {
         ) : (
           <></>
         )}
-        <ViewColumn
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            flex: 1,
-            marginLeft: goal.iconName ? 0 : 25,
-          }}>
+        <ViewGoalName iconExists={!!goal.iconName}>
           <HeaderName iconExists={!!goal.iconName} numberOfLines={2}>
             {goal.title}
           </HeaderName>
-        </ViewColumn>
+        </ViewGoalName>
+
+        <ButtonOptions onPress={() => setShowModalOptions(true)}>
+          <Icon name="dots-vertical" size={25} color="#fff" />
+        </ButtonOptions>
       </HeaderProfile>
 
       <Goals>
         <GoalsTitle>Aqui está seu progresso:</GoalsTitle>
       </Goals>
 
-      <View style={{justifyContent: 'space-around', flex: 1}}>
-        <View style={{paddingRight: 20, paddingLeft: 20, marginBottom: 20}}>
-          <Text
-            style={{
-              color: BlueMunsell,
-              fontSize: 14,
-              marginBottom: 5,
-            }}>
-            Meta:
-          </Text>
-          <Text style={{fontSize: 20}}>{formatValue(goal.amount)}</Text>
-        </View>
+      <ViewContent>
+        <ViewGoal>
+          <TextTitleGoal>Meta:</TextTitleGoal>
+          <TextAmount>{formatValue(goal.amount)}</TextAmount>
+        </ViewGoal>
 
         {goal.date !== null && (
-          <View style={{paddingRight: 20, paddingLeft: 20, marginBottom: 20}}>
-            <Text
-              style={{
-                color: BlueMunsell,
-                fontSize: 14,
-                marginBottom: 5,
-              }}>
-              Data limite:
-            </Text>
-            <Text style={{fontSize: 20}}>
+          <ViewDate>
+            <TextTitleDate>Data limite:</TextTitleDate>
+            <TextDate>
               {format(
                 new Date(
                   Number(goal.date.split('-')[2]),
@@ -218,65 +256,45 @@ const Details: React.FC = () => {
                 "'Em 'dd' de 'MMMM' de 'yyyy",
                 {locale: pt},
               )}
-            </Text>
-          </View>
+            </TextDate>
+          </ViewDate>
         )}
 
         {goal.date !== null && (
-          <View style={{paddingRight: 20, paddingLeft: 20, marginBottom: 20}}>
-            <Text
-              style={{
-                color: BlueMunsell,
-                fontSize: 14,
-                marginBottom: 5,
-              }}>
+          <ViewContainerSugestion>
+            <TextTitleSugestion>
               Para conseguir completar sua meta no tempo desejado você precisa
               guardar:
-            </Text>
-            <View
-              style={{
-                justifyContent: 'space-around',
-                flexDirection: 'row',
-                paddingTop: 5,
-              }}>
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{fontSize: 16}}>{countDays()}</Text>
-                <Text style={{color: BlueMunsell}}>Por dia</Text>
-              </View>
+            </TextTitleSugestion>
+            <ViewSugestion>
+              <ViewDay>
+                <TextDayMoney>{countDays()}</TextDayMoney>
+                <TextDay>Por dia</TextDay>
+              </ViewDay>
 
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{fontSize: 16}}>{countMonth()}</Text>
-                <Text style={{color: BlueMunsell}}>Por mês</Text>
-              </View>
+              <ViewMonth>
+                <TextMonthMoney>{countMonth()}</TextMonthMoney>
+                <TextMonth>Por mês</TextMonth>
+              </ViewMonth>
 
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Text style={{fontSize: 16}}>{countYears()}</Text>
-                <Text style={{color: BlueMunsell}}>Por ano</Text>
-              </View>
-            </View>
-          </View>
+              <ViewYear>
+                <TextYearMoney>{countYears()}</TextYearMoney>
+                <TextYear>Por ano</TextYear>
+              </ViewYear>
+            </ViewSugestion>
+          </ViewContainerSugestion>
         )}
 
-        <View style={{paddingRight: 20, paddingLeft: 20}}>
-          <Text
-            style={{
-              color: BlueMunsell,
-              fontSize: 14,
-              marginBottom: 5,
-            }}>
-            Você já guardou:
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginBottom: 5,
-            }}>
-            <Text style={{fontSize: 20}}>{formatValue(goal.moneyCurrent)}</Text>
-            <Text style={{fontSize: 20}}>
+        <ViewProgressContainer>
+          <TextTitleProgress>Você já guardou:</TextTitleProgress>
+          <ViewProgress>
+            <TextMoneyCurrent>
+              {formatValue(goal.moneyCurrent)}
+            </TextMoneyCurrent>
+            <TextPercentage>
               {`${Math.floor((goal.moneyCurrent / goal.amount) * 100)}%`}
-            </Text>
-          </View>
+            </TextPercentage>
+          </ViewProgress>
           <Progress.Bar
             progress={goal.moneyCurrent / goal.amount}
             width={Dimensions.get('screen').width - 40}
@@ -284,34 +302,24 @@ const Details: React.FC = () => {
             borderRadius={6}
             color={BlueMunsell}
           />
-        </View>
+        </ViewProgressContainer>
 
         <ButtonView>
           <Button
             title="Adicionar"
             onPress={() => setShowModalAdd(true)}
-            buttonStyle={{
-              backgroundColor: '#33cc99',
-              borderColor: '#33cc99',
-              height: 46,
-              width: 120,
-            }}
-            titleStyle={{fontSize: 18}}
+            buttonStyle={ButtonAddStyle.buttonStyle}
+            titleStyle={ButtonAddStyle.tittleStyle}
           />
 
           <Button
             title="Remover"
             onPress={() => setShowModalRemove(true)}
-            buttonStyle={{
-              backgroundColor: '#FF6666',
-              borderColor: '#FF6666',
-              height: 46,
-              width: 120,
-            }}
-            titleStyle={{fontSize: 18}}
+            buttonStyle={ButtonRemoveStyle.buttonStyle}
+            titleStyle={ButtonRemoveStyle.tittleStyle}
           />
         </ButtonView>
-      </View>
+      </ViewContent>
     </Container>
   );
 };
