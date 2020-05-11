@@ -1,6 +1,7 @@
 /* eslint-disable import/no-duplicates */
 import React, {useState, useCallback} from 'react';
-import {ScrollView, Dimensions} from 'react-native';
+import {Dimensions} from 'react-native';
+
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ActionButton from 'react-native-action-button';
@@ -70,6 +71,7 @@ const Dashboard: React.FC = () => {
         showModal={showModal}
         showCancelModal={handleModalFalse}
       />
+
       <HeaderProfile onPress={() => navigate('Profile')}>
         <AvatarImage
           source={{

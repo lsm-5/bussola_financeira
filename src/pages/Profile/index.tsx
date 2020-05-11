@@ -8,8 +8,8 @@ import ImageResizer, {Response} from 'react-native-image-resizer';
 import {format} from 'date-fns';
 import {pt} from 'date-fns/locale';
 import * as Progress from 'react-native-progress';
-import formatValue from '../../utils/formatValue';
 
+import formatValue from '../../utils/formatValue';
 import {useUser} from '../../hooks/user';
 import {useGoals} from '../../hooks/goals';
 import {BlueMunsell} from '../../styles/colors';

@@ -6,6 +6,7 @@ import {TouchableOpacity} from 'react-native';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import {Button} from 'react-native-elements';
 import {format} from 'date-fns';
+import {useNavigation} from '@react-navigation/native';
 
 import {useGoals} from '../../hooks/goals';
 
@@ -66,7 +67,8 @@ const ModalEditGoal: React.FC<ModalEditGoal> = ({
   showCancelModal,
   Goal,
 }) => {
-  const {addGoals} = useGoals();
+  const {navigate} = useNavigation();
+  const {editGoals} = useGoals();
 
   const [title, setTitle] = useState(Goal.title);
   const [date, setDate] = useState(Goal.date);
@@ -245,26 +247,26 @@ const ModalEditGoal: React.FC<ModalEditGoal> = ({
     const dateOn = disableDate ? null : date;
 
     const goal = {
+      id: Goal.id,
       title,
       iconName: icon.length > 0 ? icon[0].iconName : null,
       color: color.length > 0 ? color[0].color : null,
       date: dateOn,
       amount: money,
-      moneyCurrent: 0,
-      transactions: null,
     };
 
-    addGoals(goal);
+    editGoals(goal);
     setSubmitValidation(false);
     showCancelModal();
   }, [
+    Goal.id,
     colors,
     icons,
     date,
     disableDate,
     money,
     title,
-    addGoals,
+    editGoals,
     showCancelModal,
   ]);
 
@@ -272,7 +274,7 @@ const ModalEditGoal: React.FC<ModalEditGoal> = ({
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
       <Container>
         <HeaderProfile />
-        <Title>Nova Meta</Title>
+        <Title>Alterar Meta</Title>
 
         <TitleGoal>Nome da meta</TitleGoal>
         <TitleGoalInput
@@ -366,8 +368,8 @@ const ModalEditGoal: React.FC<ModalEditGoal> = ({
 
         <ButtonView>
           <Button
-            title="Criar"
-            onPress={() => handleSubmit()}
+            title="Alterar"
+            onPress={() => handleSubmit() && navigate('Dashboard')}
             buttonStyle={{
               backgroundColor: '#33cc99',
               borderColor: '#33cc99',

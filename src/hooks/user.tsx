@@ -5,8 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
-import {Alert} from 'react-native';
-
+import {showMessage} from 'react-native-flash-message';
 import AsyncStorage from '@react-native-community/async-storage';
 
 interface User {
@@ -48,9 +47,15 @@ const UserProvider: React.FC = ({children}) => {
         JSON.stringify(userSave),
       );
 
-      Alert.alert('Sucesso', 'Seu perfil foi atualizado');
+      showMessage({
+        message: 'Seu perfil foi atualizado',
+        type: 'success',
+      });
     } catch (err) {
-      console.log(err);
+      showMessage({
+        message: 'Erro ao atualizar, tente novamente',
+        type: 'danger',
+      });
     }
   }, []);
 

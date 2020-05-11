@@ -63,7 +63,7 @@ export const ViewGoalName = styled.View<IconExistsProps>`
 `;
 
 export const ViewContent = styled.View`
-  justify-content: space-around;
+  justify-content: space-between;
   flex: 1;
 `;
 

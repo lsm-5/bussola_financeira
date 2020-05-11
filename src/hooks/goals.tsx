@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
-import {Alert} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import 'react-native-get-random-values';
@@ -38,9 +38,19 @@ interface GoalsSave {
   transactions: TransactionsObject[] | null;
 }
 
+interface GoalsEdit {
+  id: string;
+  title: string;
+  iconName: string | null;
+  date: string | null;
+  amount: number;
+  color: string | null;
+}
+
 interface GoalsContext {
   goals: Goals[];
   addGoals(item: GoalsSave): Promise<void>;
+  editGoals(item: GoalsEdit): Promise<void>;
   removeGoals(id: string): Promise<void>;
   incrementGoals(id: string, money: number): Promise<void>;
   decrementGoals(id: string, money: number): Promise<void>;
@@ -69,15 +79,59 @@ const GoalsProvider: React.FC = ({children}) => {
       const id = uuid();
       const newGoals = {id, achievementAchieved: false, ...goalsSave};
 
-      setGoals([...goals, newGoals]);
-
       try {
+        setGoals([...goals, newGoals]);
+
         await AsyncStorage.setItem(
           '@BussolaFinanceira:goals',
           JSON.stringify(goals),
         );
+
+        showMessage({
+          message: 'Sua meta foi criada',
+          type: 'success',
+        });
       } catch (err) {
-        console.log(err);
+        showMessage({
+          message: 'Sua meta não pôde ser criada, tente novamente',
+          type: 'danger',
+        });
+      }
+    },
+    [goals],
+  );
+
+  const editGoals = useCallback(
+    async (goalEdit) => {
+      const goalsArray = [...goals];
+      const indexGoals = goalsArray.findIndex((g) => g.id === goalEdit.id);
+      try {
+        if (indexGoals === -1) {
+          showMessage({
+            message: 'Meta não encontrada',
+            type: 'danger',
+          });
+          return;
+        }
+
+        goalsArray[indexGoals] = {...goalsArray[indexGoals], ...goalEdit};
+
+        setGoals(goalsArray);
+
+        await AsyncStorage.setItem(
+          '@BussolaFinanceira:goals',
+          JSON.stringify(goals),
+        );
+
+        showMessage({
+          message: 'Sua meta foi alterada',
+          type: 'success',
+        });
+      } catch (err) {
+        showMessage({
+          message: 'Meta não pôde ser alterada',
+          type: 'danger',
+        });
       }
     },
     [goals],
@@ -88,18 +142,33 @@ const GoalsProvider: React.FC = ({children}) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
-        throw new Error('goals not found');
+        showMessage({
+          message: 'Meta não encontrada',
+          type: 'danger',
+        });
+        return;
       }
 
       const goalsArray = [...goals];
       const goalsNewArray = goalsArray.filter((g) => g.id !== id);
 
-      setGoals(goalsNewArray);
+      try {
+        setGoals(goalsNewArray);
 
-      await AsyncStorage.setItem(
-        '@BussolaFinanceira:goals',
-        JSON.stringify(goals),
-      );
+        await AsyncStorage.setItem(
+          '@BussolaFinanceira:goals',
+          JSON.stringify(goals),
+        );
+        showMessage({
+          message: 'Sua meta foi removida',
+          type: 'success',
+        });
+      } catch (err) {
+        showMessage({
+          message: 'Sua meta não pôde ser removida, tente novamente',
+          type: 'danger',
+        });
+      }
     },
     [goals],
   );
@@ -109,44 +178,62 @@ const GoalsProvider: React.FC = ({children}) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
-        Alert.alert('Falha', 'meta não encontrada.');
-      }
-
-      const goalsArray = [...goals];
-
-      // increment money
-      goalsArray[indexGoals] = {
-        ...goalsArray[indexGoals],
-        moneyCurrent: goalsArray[indexGoals].moneyCurrent + money,
-      };
-
-      // addTransaction
-      if (goalsArray[indexGoals].transactions !== null) {
-        goalsArray[indexGoals].transactions?.push({
-          type: 'income',
-          value: money,
+        showMessage({
+          message: 'Meta não encontrada',
+          type: 'danger',
         });
-      } else {
-        goalsArray[indexGoals].transactions = [{type: 'income', value: money}];
+        return;
       }
 
-      // maybe active achievementAchieved
-      if (
-        goalsArray[indexGoals].moneyCurrent >= goalsArray[indexGoals].amount
-      ) {
+      try {
+        const goalsArray = [...goals];
+
+        // increment money
         goalsArray[indexGoals] = {
           ...goalsArray[indexGoals],
-          achievementAchieved: true,
-          moneyCurrent: goalsArray[indexGoals].amount,
+          moneyCurrent: goalsArray[indexGoals].moneyCurrent + money,
         };
+
+        // addTransaction
+        if (goalsArray[indexGoals].transactions !== null) {
+          goalsArray[indexGoals].transactions?.push({
+            type: 'income',
+            value: money,
+          });
+        } else {
+          goalsArray[indexGoals].transactions = [
+            {type: 'income', value: money},
+          ];
+        }
+
+        // maybe active achievementAchieved
+        if (
+          goalsArray[indexGoals].moneyCurrent >= goalsArray[indexGoals].amount
+        ) {
+          goalsArray[indexGoals] = {
+            ...goalsArray[indexGoals],
+            achievementAchieved: true,
+            moneyCurrent: goalsArray[indexGoals].amount,
+          };
+        }
+
+        setGoals(goalsArray);
+
+        await AsyncStorage.setItem(
+          '@BussolaFinanceira:goals',
+          JSON.stringify(goals),
+        );
+
+        showMessage({
+          message: 'Operação realizada',
+          type: 'success',
+        });
+      } catch (err) {
+        showMessage({
+          message: 'Operação não pôde ser realizada',
+          type: 'danger',
+        });
       }
-
-      setGoals(goalsArray);
-
-      await AsyncStorage.setItem(
-        '@BussolaFinanceira:goals',
-        JSON.stringify(goals),
-      );
     },
     [goals],
   );
@@ -156,43 +243,68 @@ const GoalsProvider: React.FC = ({children}) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
-        Alert.alert('Falha', 'meta não encontrada.');
-      }
-
-      const goalsArray = [...goals];
-
-      if (money <= goalsArray[indexGoals].moneyCurrent) {
-        goalsArray[indexGoals] = {
-          ...goalsArray[indexGoals],
-          moneyCurrent: goalsArray[indexGoals].moneyCurrent - money,
-        };
-      } else {
-        Alert.alert('Falha', 'Você não pode remover este valor.');
-      }
-
-      // addTransaction
-      if (goalsArray[indexGoals].transactions !== null) {
-        goalsArray[indexGoals].transactions?.push({
-          type: 'outcome',
-          value: money,
+        showMessage({
+          message: 'Meta não encontrada',
+          type: 'danger',
         });
-      } else {
-        goalsArray[indexGoals].transactions = [{type: 'outcome', value: money}];
+
+        return;
       }
 
-      if (goalsArray[indexGoals].moneyCurrent < goalsArray[indexGoals].amount) {
-        goalsArray[indexGoals] = {
-          ...goalsArray[indexGoals],
-          achievementAchieved: false,
-        };
+      try {
+        const goalsArray = [...goals];
+
+        if (money <= goalsArray[indexGoals].moneyCurrent) {
+          goalsArray[indexGoals] = {
+            ...goalsArray[indexGoals],
+            moneyCurrent: goalsArray[indexGoals].moneyCurrent - money,
+          };
+        } else {
+          showMessage({
+            message: 'Você não pode remover esse valor',
+            type: 'danger',
+          });
+          return;
+        }
+
+        // addTransaction
+        if (goalsArray[indexGoals].transactions !== null) {
+          goalsArray[indexGoals].transactions?.push({
+            type: 'outcome',
+            value: money,
+          });
+        } else {
+          goalsArray[indexGoals].transactions = [
+            {type: 'outcome', value: money},
+          ];
+        }
+
+        if (
+          goalsArray[indexGoals].moneyCurrent < goalsArray[indexGoals].amount
+        ) {
+          goalsArray[indexGoals] = {
+            ...goalsArray[indexGoals],
+            achievementAchieved: false,
+          };
+        }
+
+        setGoals(goalsArray);
+
+        await AsyncStorage.setItem(
+          '@BussolaFinanceira:goals',
+          JSON.stringify(goals),
+        );
+
+        showMessage({
+          message: 'Operação realizada',
+          type: 'success',
+        });
+      } catch (err) {
+        showMessage({
+          message: 'Operação não pôde ser realizada',
+          type: 'danger',
+        });
       }
-
-      setGoals(goalsArray);
-
-      await AsyncStorage.setItem(
-        '@BussolaFinanceira:goals',
-        JSON.stringify(goals),
-      );
     },
     [goals],
   );
@@ -217,12 +329,21 @@ const GoalsProvider: React.FC = ({children}) => {
     () => ({
       goals,
       addGoals,
+      editGoals,
       removeGoals,
       incrementGoals,
       decrementGoals,
       getHistoric,
     }),
-    [goals, addGoals, removeGoals, incrementGoals, decrementGoals, getHistoric],
+    [
+      goals,
+      addGoals,
+      editGoals,
+      removeGoals,
+      incrementGoals,
+      decrementGoals,
+      getHistoric,
+    ],
   );
 
   return (

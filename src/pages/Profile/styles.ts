@@ -112,6 +112,7 @@ export const CardContainer = styled.TouchableOpacity`
   padding: 15px;
   border-width: 3px;
   border-color: #fff;
+  margin-bottom: 5px;
 `;
 
 export const CardTitle = styled.Text<ColorProps>`
