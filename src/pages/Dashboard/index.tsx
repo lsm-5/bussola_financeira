@@ -98,7 +98,12 @@ const Dashboard: React.FC = () => {
             renderItem={({item}) => {
               return item.achievementAchieved === false ? (
                 <CardContainer
-                  onPress={() => navigate('DetailsAndHistoric', {item})}>
+                  onPress={() =>
+                    navigate('DetailsAndHistoric', {
+                      screen: 'Details',
+                      params: {item},
+                    })
+                  }>
                   <ViewRow>
                     <ViewColumn style={{flex: 1}}>
                       <CardTitle color={item.color}>{item.title}</CardTitle>

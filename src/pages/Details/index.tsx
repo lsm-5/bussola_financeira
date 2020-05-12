@@ -210,7 +210,7 @@ const Details: React.FC = () => {
       />
 
       <HeaderProfile>
-        <ButtonBack onPress={() => navigation.goBack()}>
+        <ButtonBack onPress={() => navigation.navigate('Dashboard')}>
           <Icon name="arrow-left" size={25} color="#fff" />
         </ButtonBack>
         {goal.iconName !== null ? (

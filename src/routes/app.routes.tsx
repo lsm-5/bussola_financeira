@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {BlueMunsell} from '../styles/colors';
 
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
@@ -12,9 +13,24 @@ const App = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 const TabRoutes: React.FC = () => (
-  <Tab.Navigator initialRouteName="Details">
-    <Tab.Screen name="Details" component={Details} />
-    <Tab.Screen name="Historic" component={Historic} />
+  <Tab.Navigator
+    initialRouteName="Details"
+    tabBarPosition="bottom"
+    tabBarOptions={{
+      activeTintColor: '#fff',
+      inactiveTintColor: '#c3c3c3',
+      contentContainerStyle: {backgroundColor: BlueMunsell},
+    }}>
+    <Tab.Screen
+      name="Details"
+      component={Details}
+      options={{title: 'Detalhes'}}
+    />
+    <Tab.Screen
+      name="Historic"
+      component={Historic}
+      options={{title: 'Extrato'}}
+    />
   </Tab.Navigator>
 );
 
