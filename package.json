@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.9.0",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/material-top-tabs": "^5.2.2",
     "@react-navigation/native": "^5.2.3",
     "@react-navigation/stack": "^5.2.18",
     "@wwdrew/react-native-numeric-textinput": "^1.1.0",
@@ -32,6 +33,7 @@
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.7.0",
+    "react-native-tab-view": "^2.14.0",
     "react-native-vector-icons": "^6.6.0",
     "styled-components": "^5.1.0",
     "uuidv4": "^6.0.8"

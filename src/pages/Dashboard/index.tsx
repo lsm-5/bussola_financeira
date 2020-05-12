@@ -97,7 +97,8 @@ const Dashboard: React.FC = () => {
             showsVerticalScrollIndicator={false}
             renderItem={({item}) => {
               return item.achievementAchieved === false ? (
-                <CardContainer onPress={() => navigate('Details', {item})}>
+                <CardContainer
+                  onPress={() => navigate('DetailsAndHistoric', {item})}>
                   <ViewRow>
                     <ViewColumn style={{flex: 1}}>
                       <CardTitle color={item.color}>{item.title}</CardTitle>
