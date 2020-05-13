@@ -49,6 +49,7 @@ interface User {
 interface TransactionsObject {
   type: 'income' | 'outcome';
   value: number;
+  date: string;
 }
 
 interface Goals {

@@ -5,6 +5,7 @@ import {BlueMunsell, White} from '../../styles/colors';
 interface TransactionsObject {
   type: 'income' | 'outcome';
   value: number;
+  date: string;
 }
 
 interface Goals {

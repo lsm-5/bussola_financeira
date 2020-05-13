@@ -10,10 +10,12 @@ import {showMessage} from 'react-native-flash-message';
 import AsyncStorage from '@react-native-community/async-storage';
 import 'react-native-get-random-values';
 import {uuid} from 'uuidv4';
+import {format} from 'date-fns';
 
 interface TransactionsObject {
   type: 'income' | 'outcome';
   value: number;
+  date: string;
 }
 
 interface Goals {
@@ -54,13 +56,17 @@ interface GoalsContext {
   removeGoals(id: string): Promise<void>;
   incrementGoals(id: string, money: number): Promise<void>;
   decrementGoals(id: string, money: number): Promise<void>;
-  getHistoric(id: string): Promise<TransactionsObject[] | null>;
+  setHistoric(historic: TransactionsObject[] | null): void;
+  getHistoric(): TransactionsObject[];
 }
 
 const GoalsContext = createContext<GoalsContext | null>(null);
 
 const GoalsProvider: React.FC = ({children}) => {
   const [goals, setGoals] = useState<Goals[]>([]);
+  const [historicCurrent, setHistoricCurrent] = useState<TransactionsObject[]>(
+    [],
+  );
 
   useEffect(() => {
     async function loadGoals(): Promise<void> {
@@ -72,6 +78,7 @@ const GoalsProvider: React.FC = ({children}) => {
     }
 
     loadGoals();
+    setHistoricCurrent([]);
   }, []);
 
   const addGoals = useCallback(
@@ -194,18 +201,6 @@ const GoalsProvider: React.FC = ({children}) => {
           moneyCurrent: goalsArray[indexGoals].moneyCurrent + money,
         };
 
-        // addTransaction
-        if (goalsArray[indexGoals].transactions !== null) {
-          goalsArray[indexGoals].transactions?.push({
-            type: 'income',
-            value: money,
-          });
-        } else {
-          goalsArray[indexGoals].transactions = [
-            {type: 'income', value: money},
-          ];
-        }
-
         // maybe active achievementAchieved
         if (
           goalsArray[indexGoals].moneyCurrent >= goalsArray[indexGoals].amount
@@ -215,6 +210,27 @@ const GoalsProvider: React.FC = ({children}) => {
             achievementAchieved: true,
             moneyCurrent: goalsArray[indexGoals].amount,
           };
+        }
+
+        // addTransaction
+        const value = goalsArray[indexGoals].achievementAchieved
+          ? goalsArray[indexGoals].amount
+          : money;
+
+        if (goalsArray[indexGoals].transactions !== null) {
+          goalsArray[indexGoals].transactions?.push({
+            type: 'income',
+            value,
+            date: `${format(new Date(), 'dd/MM')}`,
+          });
+        } else {
+          goalsArray[indexGoals].transactions = [
+            {
+              type: 'income',
+              value,
+              date: `${format(new Date(), 'dd/MM')}`,
+            },
+          ];
         }
 
         setGoals(goalsArray);
@@ -272,10 +288,15 @@ const GoalsProvider: React.FC = ({children}) => {
           goalsArray[indexGoals].transactions?.push({
             type: 'outcome',
             value: money,
+            date: `${format(new Date(), 'dd/MM')}`,
           });
         } else {
           goalsArray[indexGoals].transactions = [
-            {type: 'outcome', value: money},
+            {
+              type: 'outcome',
+              value: money,
+              date: `${format(new Date(), 'dd/MM')}`,
+            },
           ];
         }
 
@@ -309,21 +330,13 @@ const GoalsProvider: React.FC = ({children}) => {
     [goals],
   );
 
-  const getHistoric = useCallback(
-    async (id) => {
-      const indexGoals = goals.findIndex((g) => g.id === id);
+  const setHistoric = useCallback((historic) => {
+    if (historic !== null) setHistoricCurrent(historic);
+  }, []);
 
-      if (indexGoals === -1) {
-        throw new Error('goals not found');
-      }
-
-      const goalsArray = [...goals];
-      const historic = goalsArray[indexGoals].transactions;
-
-      return historic;
-    },
-    [goals],
-  );
+  const getHistoric = useCallback(() => {
+    return historicCurrent;
+  }, [historicCurrent]);
 
   const value = React.useMemo(
     () => ({
@@ -333,6 +346,7 @@ const GoalsProvider: React.FC = ({children}) => {
       removeGoals,
       incrementGoals,
       decrementGoals,
+      setHistoric,
       getHistoric,
     }),
     [
@@ -342,6 +356,7 @@ const GoalsProvider: React.FC = ({children}) => {
       removeGoals,
       incrementGoals,
       decrementGoals,
+      setHistoric,
       getHistoric,
     ],
   );

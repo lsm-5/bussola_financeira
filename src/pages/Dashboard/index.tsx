@@ -1,5 +1,5 @@
 /* eslint-disable import/no-duplicates */
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {Dimensions} from 'react-native';
 
 import * as Progress from 'react-native-progress';
@@ -38,6 +38,7 @@ import {
 interface TransactionsObject {
   type: 'income' | 'outcome';
   value: number;
+  date: string;
 }
 
 interface Goals {
@@ -55,7 +56,7 @@ interface Goals {
 const Dashboard: React.FC = () => {
   const {user} = useUser();
   const {navigate} = useNavigation();
-  const {goals} = useGoals();
+  const {goals, setHistoric} = useGoals();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -98,12 +99,13 @@ const Dashboard: React.FC = () => {
             renderItem={({item}) => {
               return item.achievementAchieved === false ? (
                 <CardContainer
-                  onPress={() =>
+                  onPress={() => {
+                    setHistoric(item.transactions);
                     navigate('DetailsAndHistoric', {
                       screen: 'Details',
                       params: {item},
-                    })
-                  }>
+                    });
+                  }}>
                   <ViewRow>
                     <ViewColumn style={{flex: 1}}>
                       <CardTitle color={item.color}>{item.title}</CardTitle>
