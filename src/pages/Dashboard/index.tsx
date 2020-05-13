@@ -114,7 +114,7 @@ const Dashboard: React.FC = () => {
                           format(
                             new Date(
                               Number(item.date.split('-')[2]),
-                              Number(item.date.split('-')[1]),
+                              Number(item.date.split('-')[1]) - 1,
                               Number(item.date.split('-')[0]),
                             ),
                             "'Em 'dd' de 'MMMM' de 'yyyy",

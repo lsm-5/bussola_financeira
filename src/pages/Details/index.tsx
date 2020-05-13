@@ -129,14 +129,14 @@ const Details: React.FC = () => {
       days = differenceInCalendarDays(
         new Date(
           Number(goal.date.split('-')[2]),
-          Number(goal.date.split('-')[1]),
+          Number(goal.date.split('-')[1]) - 1,
           Number(goal.date.split('-')[0]),
         ),
         new Date(),
       );
 
-      if (days <= 0) {
-        return formatValue(goal.amount - goal.moneyCurrent);
+      if (days <= 1) {
+        return null;
       }
 
       return formatValue((goal.amount - goal.moneyCurrent) / days);
@@ -156,8 +156,8 @@ const Details: React.FC = () => {
         new Date(),
       );
 
-      if (month <= 0) {
-        return formatValue(goal.amount - goal.moneyCurrent);
+      if (month <= 1) {
+        return null;
       }
 
       return formatValue((goal.amount - goal.moneyCurrent) / month);
@@ -170,15 +170,15 @@ const Details: React.FC = () => {
     if (goal.date !== null) {
       years = differenceInCalendarYears(
         new Date(
-          Number(goal.date.split('-')[2]),
+          Number(goal.date.split('-')[2]) + 1,
           Number(goal.date.split('-')[1]),
           Number(goal.date.split('-')[0]),
         ),
         new Date(),
       );
 
-      if (years <= 0) {
-        return formatValue(goal.amount - goal.moneyCurrent);
+      if (years <= 1) {
+        return null;
       }
 
       return formatValue((goal.amount - goal.moneyCurrent) / years);
@@ -252,7 +252,7 @@ const Details: React.FC = () => {
               {format(
                 new Date(
                   Number(goal.date.split('-')[2]),
-                  Number(goal.date.split('-')[1]),
+                  Number(goal.date.split('-')[1]) - 1,
                   Number(goal.date.split('-')[0]),
                 ),
                 "'Em 'dd' de 'MMMM' de 'yyyy",
@@ -262,30 +262,37 @@ const Details: React.FC = () => {
           </ViewDate>
         )}
 
-        {goal.date !== null && (
-          <ViewContainerSugestion>
-            <TextTitleSugestion>
-              Para conseguir completar sua meta no tempo desejado você precisa
-              guardar:
-            </TextTitleSugestion>
-            <ViewSugestion>
-              <ViewDay>
-                <TextDayMoney>{countDays()}</TextDayMoney>
-                <TextDay>Por dia</TextDay>
-              </ViewDay>
+        {goal.date !== null &&
+          (countDays() !== null || countMonth() !== null || countYears()) && (
+            <ViewContainerSugestion>
+              <TextTitleSugestion>
+                Para conseguir completar sua meta no tempo desejado você precisa
+                guardar:
+              </TextTitleSugestion>
+              <ViewSugestion>
+                {countDays() !== null && (
+                  <ViewDay>
+                    <TextDayMoney>{countDays()}</TextDayMoney>
+                    <TextDay>Por dia</TextDay>
+                  </ViewDay>
+                )}
 
-              <ViewMonth>
-                <TextMonthMoney>{countMonth()}</TextMonthMoney>
-                <TextMonth>Por mês</TextMonth>
-              </ViewMonth>
+                {countMonth() !== null && (
+                  <ViewMonth>
+                    <TextMonthMoney>{countMonth()}</TextMonthMoney>
+                    <TextMonth>Por mês</TextMonth>
+                  </ViewMonth>
+                )}
 
-              <ViewYear>
-                <TextYearMoney>{countYears()}</TextYearMoney>
-                <TextYear>Por ano</TextYear>
-              </ViewYear>
-            </ViewSugestion>
-          </ViewContainerSugestion>
-        )}
+                {countYears() !== null && (
+                  <ViewYear>
+                    <TextYearMoney>{countYears()}</TextYearMoney>
+                    <TextYear>Por ano</TextYear>
+                  </ViewYear>
+                )}
+              </ViewSugestion>
+            </ViewContainerSugestion>
+          )}
 
         <ViewProgressContainer>
           <TextTitleProgress>Você já guardou:</TextTitleProgress>

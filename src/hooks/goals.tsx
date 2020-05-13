@@ -98,6 +98,8 @@ const GoalsProvider: React.FC = ({children}) => {
           message: 'Sua meta foi criada',
           type: 'success',
         });
+
+        console.log(goals);
       } catch (err) {
         showMessage({
           message: 'Sua meta não pôde ser criada, tente novamente',
