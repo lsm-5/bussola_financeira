@@ -62,6 +62,7 @@ const Profile: React.FC = () => {
   const [avatar, setAvatar] = useState(userChange.avatarUri);
 
   const navigation = useNavigation();
+  const {navigate} = useNavigation();
 
   const handleChooseAvatar = useCallback(() => {
     ImagePicker.launchImageLibrary(options, (response: ImagePickerResponse) => {
@@ -129,7 +130,12 @@ const Profile: React.FC = () => {
           renderItem={({item}) => {
             return (
               <CardContainer
-                onPress={() => navigation.navigate('Details', {item})}>
+                onPress={() =>
+                  navigate('DetailsAndHistoric', {
+                    screen: 'Details',
+                    params: {item},
+                  })
+                }>
                 <ViewRow>
                   <ViewColumn style={{flex: 1}}>
                     <CardTitle color={item.color}>{item.title}</CardTitle>
