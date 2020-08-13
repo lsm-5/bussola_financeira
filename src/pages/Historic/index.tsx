@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 
 import formatValue from '../../utils/formatValue';
 import {useGoals} from '../../hooks/goals';
@@ -29,7 +30,11 @@ interface TransactionsObject {
 
 const Historic: React.FC = () => {
   const {getHistoric} = useGoals();
-  const historic: TransactionsObject[] = getHistoric();
+  const [historic, setHistoric] = useState<TransactionsObject[]>();
+
+  useEffect(() => {
+    setHistoric(getHistoric());
+  }, [getHistoric]);
 
   return (
     <Container>
@@ -43,7 +48,7 @@ const Historic: React.FC = () => {
         </ViewTitle>
         <TextTitleDate>Data</TextTitleDate>
       </ViewHeader>
-      {historic.length === 0 ? (
+      {historic && historic.length === 0 ? (
         <TextEmpty>Ainda não possui extrato</TextEmpty>
       ) : (
         <FlatListHistoric

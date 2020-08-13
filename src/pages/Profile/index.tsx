@@ -1,5 +1,5 @@
 /* eslint-disable import/no-duplicates */
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
@@ -78,6 +78,10 @@ const Profile: React.FC = () => {
     name: user.name,
     avatarUri: user.avatarUri,
   });
+
+  useEffect(() => {
+    console.log(goals);
+  }, [goals]);
 
   const [avatar, setAvatar] = useState(userChange.avatarUri);
 

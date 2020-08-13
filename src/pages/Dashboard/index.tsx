@@ -1,5 +1,5 @@
 /* eslint-disable import/no-duplicates */
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Dimensions} from 'react-native';
 
 import * as Progress from 'react-native-progress';

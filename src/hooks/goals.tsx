@@ -337,7 +337,7 @@ const GoalsProvider: React.FC = ({children}) => {
   }, []);
 
   const getHistoric = useCallback(() => {
-    return historicCurrent;
+    return historicCurrent.reverse();
   }, [historicCurrent]);
 
   const value = React.useMemo(
