@@ -311,10 +311,6 @@ const GoalsProvider: React.FC = ({children}) => {
     }
   }, [goals, saveGoals]);
 
-  useEffect(() => {
-    console.log(goals);
-  }, [goals]);
-
   const value = React.useMemo(
     () => ({
       goals,

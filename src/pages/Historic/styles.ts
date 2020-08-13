@@ -104,8 +104,6 @@ export const TextValue = styled.Text`
   font-size: 14px;
   min-width: 150px;
   max-width: 150px;
-
-  background-color: #c12;
 `;
 
 export const TextDate = styled.Text`
