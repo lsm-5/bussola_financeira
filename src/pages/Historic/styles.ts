@@ -86,9 +86,9 @@ export const ViewCard = styled.View<IndexProp>`
 export const ViewTransactionAndValue = styled.View`
   flex-direction: row;
   align-items: center;
-  width: 60%;
+  width: 85%;
   justify-content: space-evenly;
-  padding-left: 5%;
+  padding-left: 10%;
 `;
 
 export const ViewTypeTransaction = styled.View<TypeProp>`
@@ -102,6 +102,10 @@ export const ViewTypeTransaction = styled.View<TypeProp>`
 
 export const TextValue = styled.Text`
   font-size: 14px;
+  min-width: 150px;
+  max-width: 150px;
+
+  background-color: #c12;
 `;
 
 export const TextDate = styled.Text`
