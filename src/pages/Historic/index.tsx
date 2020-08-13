@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
 
 import formatValue from '../../utils/formatValue';
 import {useGoals} from '../../hooks/goals';
@@ -13,7 +12,8 @@ import {
   TextTransactionTwo,
   TextTitleValue,
   TextTitleDate,
-  TextEmpty,
+  TitleEmpty,
+  ViewEmpty,
   FlatListHistoric,
   ViewCard,
   ViewTransactionAndValue,
@@ -45,7 +45,9 @@ const Historic: React.FC = () => {
         <TextTitleDate>Data</TextTitleDate>
       </ViewHeader>
       {historic && historic.length === 0 ? (
-        <TextEmpty>Ainda não possui extrato</TextEmpty>
+        <ViewEmpty>
+          <TitleEmpty>Ainda não possui extrato</TitleEmpty>
+        </ViewEmpty>
       ) : (
         <FlatListHistoric
           keyExtractor={(item) => String(item.id)}

@@ -62,10 +62,17 @@ export const TextTitleDate = styled.Text`
   font-size: 15px;
 `;
 
-export const TextEmpty = styled.Text`
+export const TitleEmpty = styled.Text`
   color: #999;
   position: absolute;
   top: 30%;
+`;
+
+export const ViewEmpty = styled.View`
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 `;
 
 export const FlatListHistoric = styled(
