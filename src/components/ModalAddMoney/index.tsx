@@ -16,13 +16,13 @@ import {
   TextError,
 } from './styles';
 
-interface ModalAddMoneyDTO {
+interface ModalAddMoneyProps {
   showModal: boolean;
   showCancelModal: any;
   idGoal: string;
 }
 
-const ModalAddMoney: React.FC<ModalAddMoneyDTO> = ({
+const ModalAddMoney: React.FC<ModalAddMoneyProps> = ({
   showModal,
   showCancelModal,
   idGoal,

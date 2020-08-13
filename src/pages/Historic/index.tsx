@@ -22,11 +22,7 @@ import {
   TextDate,
 } from './styles';
 
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-  date: string;
-}
+import {TransactionsObject} from '../../interfaces/goals';
 
 const Historic: React.FC = () => {
   const {getHistoric} = useGoals();

@@ -41,28 +41,8 @@ import {
   ViewRow,
 } from './styles';
 
-interface User {
-  name: string;
-  avatarUri: string;
-}
-
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-  date: string;
-}
-
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
+import {Goals as IGoals} from '../../interfaces/goals';
+import {User} from '../../interfaces/user';
 
 const options = {
   noData: true,
@@ -72,16 +52,12 @@ const Profile: React.FC = () => {
   const {user, addUserNameAndAvatar} = useUser();
   const {goals} = useGoals();
 
-  const arrayGoals: Goals[] = goals.filter((goal) => goal.achievementAchieved);
+  const arrayGoals: IGoals[] = goals.filter((goal) => goal.achievementAchieved);
 
   const [userChange, setUserChange] = useState<User>({
     name: user.name,
     avatarUri: user.avatarUri,
   });
-
-  useEffect(() => {
-    console.log(goals);
-  }, [goals]);
 
   const [avatar, setAvatar] = useState(userChange.avatarUri);
 

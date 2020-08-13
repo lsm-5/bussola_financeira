@@ -59,26 +59,10 @@ import {
 } from './styles';
 import {BlueMunsell, White} from '../../styles/colors';
 
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-  date: string;
-}
-
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
+import {Goals as IGoals} from '../../interfaces/goals';
 
 type RootStackParamList = {
-  item: {item: Goals};
+  item: {item: IGoals};
 };
 
 type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'item'>;
@@ -95,7 +79,7 @@ type Props = {
 
 const Details: React.FC = () => {
   const {params} = useRoute<ProfileScreenRouteProp>();
-  const goal: Goals = params.item;
+  const goal: IGoals = params.item;
   const navigation = useNavigation();
 
   const [showModalAdd, setShowModalAdd] = useState(false);

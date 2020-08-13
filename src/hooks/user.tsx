@@ -8,10 +8,7 @@ import React, {
 import {showMessage} from 'react-native-flash-message';
 import AsyncStorage from '@react-native-community/async-storage';
 
-interface User {
-  name: string;
-  avatarUri: string;
-}
+import {User} from '../interfaces/user';
 
 interface UserContext {
   user: User;

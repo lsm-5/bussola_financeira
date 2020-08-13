@@ -38,12 +38,12 @@ import {
   TextError,
 } from './styles';
 
-interface ModalCreateGoalDTO {
+interface ModalCreateGoalProps {
   showModal: boolean;
   showCancelModal: any;
 }
 
-const ModalCreateGoal: React.FC<ModalCreateGoalDTO> = ({
+const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
   showModal,
   showCancelModal,
 }) => {

@@ -1,12 +1,7 @@
 import styled from 'styled-components/native';
 import {FlatList} from 'react-native';
 import {BlueMunsell} from '../../styles/colors';
-
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-  date: string;
-}
+import {TransactionsObject} from '../../interfaces/goals';
 
 interface IndexProp {
   index: number;

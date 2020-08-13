@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import Modal from 'react-native-modal';
 
 import {useNavigation} from '@react-navigation/native';
@@ -14,31 +14,16 @@ import {
   Divider,
 } from './styles';
 
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-}
+import {Goals} from '../../interfaces/goals';
 
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
-
-interface ModalOptionsDTO {
+interface ModalOptionsProps {
   showModal: boolean;
   showCancelModal: any;
   Goal: Goals;
   showEditModal: any;
 }
 
-const ModalOptions: React.FC<ModalOptionsDTO> = ({
+const ModalOptions: React.FC<ModalOptionsProps> = ({
   showModal,
   showCancelModal,
   Goal,

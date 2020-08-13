@@ -3,22 +3,7 @@ import {RectButton} from 'react-native-gesture-handler';
 import {FlatList} from 'react-native';
 import {BlueMunsell, White} from '../../styles/colors';
 
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-}
-
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
+import {Goals as IGoals} from '../../interfaces/goals';
 
 interface ColorProps {
   color: string | null;
@@ -146,7 +131,7 @@ export const Amount = styled.Text<ColorProps>`
   color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
 `;
 
-export const GoalsList = styled(FlatList as new () => FlatList<Goals>)`
+export const GoalsList = styled(FlatList as new () => FlatList<IGoals>)`
   flex: 1;
 `;
 

@@ -35,23 +35,7 @@ import {
   ViewEmpty,
 } from './styles';
 
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-  date: string;
-}
-
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
+import {Goals} from '../../interfaces/goals';
 
 const Dashboard: React.FC = () => {
   const {user} = useUser();

@@ -39,30 +39,15 @@ import {
   TextError,
 } from './styles';
 
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-}
+import {Goals} from '../../interfaces/goals';
 
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
-
-interface ModalEditGoal {
+interface ModalEditGoalProps {
   showModal: boolean;
   showCancelModal: any;
   Goal: Goals;
 }
 
-const ModalEditGoal: React.FC<ModalEditGoal> = ({
+const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
   showModal,
   showCancelModal,
   Goal,

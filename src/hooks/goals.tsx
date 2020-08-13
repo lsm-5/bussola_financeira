@@ -12,43 +12,12 @@ import 'react-native-get-random-values';
 import {uuid} from 'uuidv4';
 import {format} from 'date-fns';
 
-interface TransactionsObject {
-  id: number;
-  type: 'income' | 'outcome';
-  value: number;
-  date: string;
-}
-
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
-
-interface GoalsSave {
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-}
-
-interface GoalsEdit {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  color: string | null;
-}
+import {
+  Goals,
+  TransactionsObject,
+  GoalsEdit,
+  GoalsSave,
+} from '../interfaces/goals';
 
 interface GoalsContext {
   goals: Goals[];

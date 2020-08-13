@@ -2,23 +2,7 @@ import styled from 'styled-components/native';
 import {FlatList} from 'react-native';
 import {BlueMunsell, White} from '../../styles/colors';
 
-interface TransactionsObject {
-  type: 'income' | 'outcome';
-  value: number;
-  date: string;
-}
-
-interface Goals {
-  id: string;
-  title: string;
-  iconName: string | null;
-  date: string | null;
-  amount: number;
-  moneyCurrent: number;
-  color: string | null;
-  transactions: TransactionsObject[] | null;
-  achievementAchieved: boolean;
-}
+import {Goals} from '../../interfaces/goals';
 
 interface ColorProps {
   color: string | null;
