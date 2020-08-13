@@ -26,7 +26,7 @@ interface GoalsContext {
   removeGoals(id: string): Promise<void>;
   incrementGoals(id: string, money: number): Promise<void>;
   decrementGoals(id: string, money: number): Promise<void>;
-  setHistoric(historic: TransactionsObject[] | null): void;
+  setHistoric(historic: TransactionsObject[]): void;
   getHistoric(): TransactionsObject[];
 }
 
@@ -281,7 +281,7 @@ const GoalsProvider: React.FC = ({children}) => {
   );
 
   const setHistoric = useCallback((historic) => {
-    if (historic !== null) setHistoricCurrent(historic);
+    setHistoricCurrent(historic);
   }, []);
 
   function compare(a: TransactionsObject, b: TransactionsObject): number {
@@ -295,6 +295,7 @@ const GoalsProvider: React.FC = ({children}) => {
   }
 
   const getHistoric = useCallback(() => {
+    if (historicCurrent.length === 0) return [];
     return historicCurrent.sort(compare);
   }, [historicCurrent]);
 

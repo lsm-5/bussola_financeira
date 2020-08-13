@@ -35,7 +35,7 @@ import {
   ViewEmpty,
 } from './styles';
 
-import {Goals} from '../../interfaces/goals';
+import {Goals, TransactionsObject} from '../../interfaces/goals';
 
 const Dashboard: React.FC = () => {
   const {user} = useUser();
@@ -84,7 +84,11 @@ const Dashboard: React.FC = () => {
               return item.achievementAchieved === false ? (
                 <CardContainer
                   onPress={() => {
-                    setHistoric(item.transactions);
+                    setHistoric(
+                      item.transactions === null
+                        ? ([] as TransactionsObject[])
+                        : item.transactions,
+                    );
                     navigate('DetailsAndHistoric', {
                       screen: 'Details',
                       params: {item},
