@@ -52,7 +52,7 @@ const Historic: React.FC = () => {
         <TextEmpty>Ainda não possui extrato</TextEmpty>
       ) : (
         <FlatListHistoric
-          keyExtractor={(item) => `${item.date}-${item.value}-${item.type}`}
+          keyExtractor={(item) => String(item.id)}
           data={historic}
           renderItem={({item, index}) => (
             <ViewCard index={index}>

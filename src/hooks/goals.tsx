@@ -90,11 +90,6 @@ const GoalsProvider: React.FC = ({children}) => {
       try {
         setGoals([...goals, newGoals]);
 
-        await AsyncStorage.setItem(
-          '@BussolaFinanceira:goals',
-          JSON.stringify(goals),
-        );
-
         showMessage({
           message: 'Sua meta foi criada',
           type: 'success',
@@ -125,11 +120,6 @@ const GoalsProvider: React.FC = ({children}) => {
         goalsArray[indexGoals] = {...goalsArray[indexGoals], ...goalEdit};
 
         setGoals(goalsArray);
-
-        await AsyncStorage.setItem(
-          '@BussolaFinanceira:goals',
-          JSON.stringify(goals),
-        );
 
         showMessage({
           message: 'Sua meta foi alterada',
@@ -163,10 +153,6 @@ const GoalsProvider: React.FC = ({children}) => {
       try {
         setGoals(goalsNewArray);
 
-        await AsyncStorage.setItem(
-          '@BussolaFinanceira:goals',
-          JSON.stringify(goals),
-        );
         showMessage({
           message: 'Sua meta foi removida',
           type: 'success',
@@ -237,11 +223,6 @@ const GoalsProvider: React.FC = ({children}) => {
         }
 
         setGoals(goalsArray);
-
-        await AsyncStorage.setItem(
-          '@BussolaFinanceira:goals',
-          JSON.stringify(goals),
-        );
 
         showMessage({
           message: 'Operação realizada',
@@ -316,11 +297,6 @@ const GoalsProvider: React.FC = ({children}) => {
 
         setGoals(goalsArray);
 
-        await AsyncStorage.setItem(
-          '@BussolaFinanceira:goals',
-          JSON.stringify(goals),
-        );
-
         showMessage({
           message: 'Operação realizada',
           type: 'success',
@@ -352,6 +328,19 @@ const GoalsProvider: React.FC = ({children}) => {
   const getHistoric = useCallback(() => {
     return historicCurrent.sort(compare);
   }, [historicCurrent]);
+
+  const saveGoals = useCallback(async () => {
+    await AsyncStorage.setItem(
+      '@BussolaFinanceira:goals',
+      JSON.stringify(goals),
+    );
+  }, [goals]);
+
+  useEffect(() => {
+    if (goals.length !== 0) {
+      saveGoals();
+    }
+  }, [goals, saveGoals]);
 
   useEffect(() => {
     console.log(goals);
