@@ -13,6 +13,7 @@ import {uuid} from 'uuidv4';
 import {format} from 'date-fns';
 
 interface TransactionsObject {
+  id: number;
   type: 'income' | 'outcome';
   value: number;
   date: string;
@@ -98,8 +99,6 @@ const GoalsProvider: React.FC = ({children}) => {
           message: 'Sua meta foi criada',
           type: 'success',
         });
-
-        console.log(goals);
       } catch (err) {
         showMessage({
           message: 'Sua meta não pôde ser criada, tente novamente',
@@ -221,6 +220,7 @@ const GoalsProvider: React.FC = ({children}) => {
 
         if (goalsArray[indexGoals].transactions !== null) {
           goalsArray[indexGoals].transactions?.push({
+            id: new Date().getTime(),
             type: 'income',
             value,
             date: `${format(new Date(), 'dd/MM')}`,
@@ -228,6 +228,7 @@ const GoalsProvider: React.FC = ({children}) => {
         } else {
           goalsArray[indexGoals].transactions = [
             {
+              id: new Date().getTime(),
               type: 'income',
               value,
               date: `${format(new Date(), 'dd/MM')}`,
@@ -288,6 +289,7 @@ const GoalsProvider: React.FC = ({children}) => {
         // addTransaction
         if (goalsArray[indexGoals].transactions !== null) {
           goalsArray[indexGoals].transactions?.push({
+            id: new Date().getTime(),
             type: 'outcome',
             value: money,
             date: `${format(new Date(), 'dd/MM')}`,
@@ -295,6 +297,7 @@ const GoalsProvider: React.FC = ({children}) => {
         } else {
           goalsArray[indexGoals].transactions = [
             {
+              id: new Date().getTime(),
               type: 'outcome',
               value: money,
               date: `${format(new Date(), 'dd/MM')}`,
@@ -336,9 +339,23 @@ const GoalsProvider: React.FC = ({children}) => {
     if (historic !== null) setHistoricCurrent(historic);
   }, []);
 
+  function compare(a: TransactionsObject, b: TransactionsObject): number {
+    if (a.id < b.id) {
+      return 1;
+    }
+    if (b.id < a.id) {
+      return -1;
+    }
+    return 0;
+  }
+
   const getHistoric = useCallback(() => {
-    return historicCurrent.reverse();
+    return historicCurrent.sort(compare);
   }, [historicCurrent]);
+
+  useEffect(() => {
+    console.log(goals);
+  }, [goals]);
 
   const value = React.useMemo(
     () => ({
