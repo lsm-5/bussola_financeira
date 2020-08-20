@@ -21,6 +21,7 @@
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-action-button": "^2.8.5",
+    "react-native-coachmark": "^0.0.4",
     "react-native-datepicker": "^1.7.2",
     "react-native-elements": "^2.0.0",
     "react-native-flash-message": "^0.1.15",
