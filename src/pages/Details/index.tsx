@@ -82,6 +82,8 @@ const Details: React.FC = () => {
   const goal: IGoals = params.item;
   const navigation = useNavigation();
 
+  console.log(goal);
+
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalRemove, setShowModalRemove] = useState(false);
   const [showModalOptions, setShowModalOptions] = useState(false);
@@ -119,7 +121,7 @@ const Details: React.FC = () => {
         new Date(),
       );
 
-      if (days <= 1) {
+      if (days <= 0) {
         return null;
       }
 

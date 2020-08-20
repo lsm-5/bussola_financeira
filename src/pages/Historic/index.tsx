@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
+import {View} from 'react-native';
 import formatValue from '../../utils/formatValue';
 import {useGoals} from '../../hooks/goals';
 
@@ -35,13 +36,12 @@ const Historic: React.FC = () => {
   return (
     <Container>
       <ViewHeader>
-        <ViewTitle>
-          <ViewTransaction>
-            <TextTransactionOne numberOfLines={2}>Tipo de</TextTransactionOne>
-            <TextTransactionTwo>Transação</TextTransactionTwo>
-          </ViewTransaction>
-          <TextTitleValue>Valor</TextTitleValue>
-        </ViewTitle>
+        <ViewTransaction>
+          <TextTransactionOne numberOfLines={2}>Tipo de</TextTransactionOne>
+          <TextTransactionTwo>Transação</TextTransactionTwo>
+        </ViewTransaction>
+
+        <TextTitleValue>Valor</TextTitleValue>
         <TextTitleDate>Data</TextTitleDate>
       </ViewHeader>
       {historic && historic.length === 0 ? (
@@ -54,10 +54,14 @@ const Historic: React.FC = () => {
           data={historic}
           renderItem={({item, index}) => (
             <ViewCard index={index}>
-              <ViewTransactionAndValue>
+              <View
+                style={{
+                  width: 75,
+                  alignItems: 'center',
+                }}>
                 <ViewTypeTransaction type={item.type} />
-                <TextValue>{formatValue(item.value)}</TextValue>
-              </ViewTransactionAndValue>
+              </View>
+              <TextValue>{formatValue(item.value)}</TextValue>
               <TextDate>{item.date}</TextDate>
             </ViewCard>
           )}

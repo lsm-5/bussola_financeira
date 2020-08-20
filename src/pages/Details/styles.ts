@@ -81,6 +81,7 @@ export const TextTitleGoal = styled.Text`
 
 export const TextAmount = styled.Text`
   font-size: 20px;
+  color: #777;
 `;
 
 export const ViewDate = styled.View`
@@ -97,6 +98,7 @@ export const TextTitleDate = styled.Text`
 
 export const TextDate = styled.Text`
   font-size: 20px;
+  color: #777;
 `;
 
 export const ViewContainerSugestion = styled.View`
@@ -124,6 +126,7 @@ export const ViewDay = styled.View`
 
 export const TextDayMoney = styled.Text`
   font-size: 16px;
+  color: #777;
 `;
 
 export const TextDay = styled.Text`
@@ -137,6 +140,7 @@ export const ViewMonth = styled.View`
 
 export const TextMonthMoney = styled.Text`
   font-size: 16px;
+  color: #777;
 `;
 
 export const TextMonth = styled.Text`
@@ -149,6 +153,7 @@ export const ViewYear = styled.View`
 
 export const TextYearMoney = styled.Text`
   font-size: 16px;
+  color: #777;
 `;
 
 export const TextYear = styled.Text`
@@ -174,10 +179,12 @@ export const ViewProgress = styled.View`
 
 export const TextMoneyCurrent = styled.Text`
   font-size: 20px;
+  color: #777;
 `;
 
 export const TextPercentage = styled.Text`
   font-size: 20px;
+  color: #777;
 `;
 
 export const ButtonAddStyle = {

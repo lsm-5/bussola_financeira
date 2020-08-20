@@ -19,9 +19,9 @@ export const Container = styled.View`
 export const ViewHeader = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-left: 20px;
-  padding-right: 30px;
+  padding-right: 20px;
   background-color: ${BlueMunsell};
   height: 50px;
   border-bottom-left-radius: 80px;
@@ -54,12 +54,15 @@ export const TextTransactionTwo = styled.Text`
 export const TextTitleValue = styled.Text`
   color: #fff;
   font-size: 15px;
+  width: 100px;
+  text-align: center;
 `;
 
 export const TextTitleDate = styled.Text`
   color: #fff;
-  padding-right: 6px;
   font-size: 15px;
+  width: 50px;
+  text-align: center;
 `;
 
 export const TitleEmpty = styled.Text`
@@ -80,39 +83,34 @@ export const FlatListHistoric = styled(
 )``;
 
 export const ViewCard = styled.View<IndexProp>`
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: row;
-  padding-left: 20px;
-  padding-right: 30px;
   padding-top: 25px;
   padding-bottom: 25px;
   background-color: ${(props) => (props.index % 2 === 0 ? '#fff' : '#ededed')};
   align-items: center;
-`;
-
-export const ViewTransactionAndValue = styled.View`
-  flex-direction: row;
-  align-items: center;
-  width: 85%;
-  justify-content: space-evenly;
-  padding-left: 10%;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const ViewTypeTransaction = styled.View<TypeProp>`
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  margin-right: 30px;
   background-color: ${(props) =>
     props.type === 'income' ? '#33cc99' : '#ff6666'};
 `;
 
 export const TextValue = styled.Text`
   font-size: 14px;
-  min-width: 150px;
-  max-width: 150px;
+  color: #777;
+  width: 100px;
+  text-align: center;
 `;
 
 export const TextDate = styled.Text`
   font-size: 14px;
+  color: #777;
+  width: 50px;
+  text-align: center;
 `;

@@ -11,7 +11,7 @@ const App: React.FC = () => {
     <AppContainer>
       <StatusBar barStyle="light-content" backgroundColor="#3587a4ff" />
       <Routes />
-      <FlashMessage position="top" />
+      <FlashMessage position="bottom" />
     </AppContainer>
   );
 };
