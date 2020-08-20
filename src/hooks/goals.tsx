@@ -164,20 +164,15 @@ const GoalsProvider: React.FC = ({children}) => {
           goalsArray[indexGoals] = {
             ...goalsArray[indexGoals],
             achievementAchieved: true,
-            moneyCurrent: goalsArray[indexGoals].amount,
           };
         }
 
         // addTransaction
-        const value = goalsArray[indexGoals].achievementAchieved
-          ? goalsArray[indexGoals].amount
-          : money;
-
         if (goalsArray[indexGoals].transactions !== null) {
           goalsArray[indexGoals].transactions?.push({
             id: new Date().getTime(),
             type: 'income',
-            value,
+            value: money,
             date: `${format(new Date(), 'dd/MM')}`,
           });
         } else {
@@ -185,7 +180,7 @@ const GoalsProvider: React.FC = ({children}) => {
             {
               id: new Date().getTime(),
               type: 'income',
-              value,
+              value: money,
               date: `${format(new Date(), 'dd/MM')}`,
             },
           ];

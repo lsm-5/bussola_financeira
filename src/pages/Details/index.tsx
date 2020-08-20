@@ -247,6 +247,7 @@ const Details: React.FC = () => {
         )}
 
         {goal.date !== null &&
+          goal.achievementAchieved === false &&
           (countDays() !== null || countMonth() !== null || countYears()) && (
             <ViewContainerSugestion>
               <TextTitleSugestion>
