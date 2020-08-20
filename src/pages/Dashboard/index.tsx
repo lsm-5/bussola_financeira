@@ -1,7 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import React, {useState, useCallback} from 'react';
 import {Dimensions} from 'react-native';
-import {Coachmark} from 'react-native-coachmark';
 
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

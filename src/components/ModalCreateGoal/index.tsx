@@ -89,6 +89,19 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
     [colors],
   );
 
+  const clearFields = useCallback(() => {
+    setTitle('');
+    setDate(String(format(new Date(), 'dd-MM-yyyy')));
+    setDisableDate(false);
+    setMoney(0);
+    setColors(() =>
+      colorsGoal.map((color) => color && {color: color.color, enable: false}),
+    );
+    setIcons(() =>
+      iconGoal.map((icon) => icon && {iconName: icon.iconName, enable: false}),
+    );
+  }, []);
+
   const handleSubmit = useCallback(async () => {
     setSubmitValidation(true);
 
@@ -117,6 +130,7 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
     addGoals(goal);
     setSubmitValidation(false);
     showCancelModal();
+    clearFields();
   }, [
     colors,
     icons,
@@ -126,6 +140,7 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
     title,
     addGoals,
     showCancelModal,
+    clearFields,
   ]);
 
   return (
