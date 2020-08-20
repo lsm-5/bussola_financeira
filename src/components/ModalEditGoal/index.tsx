@@ -41,6 +41,8 @@ import {
 
 import {Goals} from '../../interfaces/goals';
 
+import {colorsGoal, iconGoal} from '../OptionGoals';
+
 interface ModalEditGoalProps {
   showModal: boolean;
   showCancelModal: any;
@@ -60,132 +62,16 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
   const [disableDate, setDisableDate] = useState(Goal.date === null);
   const [money, setMoney] = useState(Goal.amount);
   const [colors, setColors] = useState(() => {
-    const color = [
-      {
-        color: '#000',
-        enable: false,
-      },
-      {
-        color: '#4169E1',
-        enable: false,
-      },
-      {
-        color: '#4682B4',
-        enable: false,
-      },
-      {
-        color: '#32CD32',
-        enable: false,
-      },
-      {
-        color: '#ADFF2F',
-        enable: false,
-      },
-      {
-        color: '#DAA520',
-        enable: false,
-      },
-      {
-        color: '#8B4513',
-        enable: false,
-      },
-      {
-        color: '#4B0082',
-        enable: false,
-      },
-      {
-        color: '#DC143C',
-        enable: false,
-      },
-      {
-        color: '#8B0000',
-        enable: false,
-      },
-    ];
-
-    return color.map((c) =>
-      c.color === Goal.color ? {...c, enable: true} : c,
+    return colorsGoal.map((c) =>
+      c.color === Goal.color ? {...c, enable: true} : {...c, enable: false},
     );
   });
 
   const [icons, setIcons] = useState(() => {
-    const icon = [
-      {
-        iconName: 'account',
-        enable: false,
-      },
-      {
-        iconName: 'airplane',
-        enable: false,
-      },
-      {
-        iconName: 'anchor',
-        enable: false,
-      },
-      {
-        iconName: 'bike',
-        enable: false,
-      },
-      {
-        iconName: 'boombox',
-        enable: false,
-      },
-      {
-        iconName: 'brightness-5',
-        enable: false,
-      },
-      {
-        iconName: 'bus-side',
-        enable: false,
-      },
-      {
-        iconName: 'cake-variant',
-        enable: false,
-      },
-      {
-        iconName: 'calculator',
-        enable: false,
-      },
-      {
-        iconName: 'city',
-        enable: false,
-      },
-      {
-        iconName: 'compass-outline',
-        enable: false,
-      },
-      {
-        iconName: 'cow',
-        enable: false,
-      },
-      {
-        iconName: 'desktop-mac',
-        enable: false,
-      },
-      {
-        iconName: 'dog-side',
-        enable: false,
-      },
-      {
-        iconName: 'emoticon-excited-outline',
-        enable: false,
-      },
-      {
-        iconName: 'heart',
-        enable: false,
-      },
-      {
-        iconName: 'rocket',
-        enable: false,
-      },
-      {
-        iconName: 'tshirt-crew-outline',
-        enable: false,
-      },
-    ];
-
-    return icon.map((i) =>
-      i.iconName === Goal.iconName ? {...i, enable: true} : i,
+    return iconGoal.map((i) =>
+      i.iconName === Goal.iconName
+        ? {...i, enable: true}
+        : {...i, enable: false},
     );
   });
   const [submitValidation, setSubmitValidation] = useState(false);

@@ -11,6 +11,8 @@ import {useGoals} from '../../hooks/goals';
 
 import {White} from '../../styles/colors';
 
+import {colorsGoal, iconGoal} from '../OptionGoals';
+
 import {
   Container,
   Title,
@@ -53,122 +55,12 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
   const [date, setDate] = useState(String(format(new Date(), 'dd-MM-yyyy')));
   const [disableDate, setDisableDate] = useState(false);
   const [money, setMoney] = useState(0);
-  const [colors, setColors] = useState([
-    {
-      color: '#000',
-      enable: false,
-    },
-    {
-      color: '#4169E1',
-      enable: false,
-    },
-    {
-      color: '#4682B4',
-      enable: false,
-    },
-    {
-      color: '#32CD32',
-      enable: false,
-    },
-    {
-      color: '#ADFF2F',
-      enable: false,
-    },
-    {
-      color: '#DAA520',
-      enable: false,
-    },
-    {
-      color: '#8B4513',
-      enable: false,
-    },
-    {
-      color: '#4B0082',
-      enable: false,
-    },
-    {
-      color: '#DC143C',
-      enable: false,
-    },
-    {
-      color: '#8B0000',
-      enable: false,
-    },
-  ]);
-  const [icons, setIcons] = useState([
-    {
-      iconName: 'account',
-      enable: false,
-    },
-    {
-      iconName: 'airplane',
-      enable: false,
-    },
-    {
-      iconName: 'anchor',
-      enable: false,
-    },
-    {
-      iconName: 'bike',
-      enable: false,
-    },
-    {
-      iconName: 'boombox',
-      enable: false,
-    },
-    {
-      iconName: 'brightness-5',
-      enable: false,
-    },
-    {
-      iconName: 'bus-side',
-      enable: false,
-    },
-    {
-      iconName: 'cake-variant',
-      enable: false,
-    },
-    {
-      iconName: 'calculator',
-      enable: false,
-    },
-    {
-      iconName: 'city',
-      enable: false,
-    },
-    {
-      iconName: 'compass-outline',
-      enable: false,
-    },
-    {
-      iconName: 'cow',
-      enable: false,
-    },
-    {
-      iconName: 'desktop-mac',
-      enable: false,
-    },
-    {
-      iconName: 'dog-side',
-      enable: false,
-    },
-    {
-      iconName: 'emoticon-excited-outline',
-      enable: false,
-    },
-    {
-      iconName: 'heart',
-      enable: false,
-    },
-    {
-      iconName: 'rocket',
-      enable: false,
-    },
-    {
-      iconName: 'tshirt-crew-outline',
-      enable: false,
-    },
-  ]);
+  const [colors, setColors] = useState(() =>
+    colorsGoal.map((color) => color && {color: color.color, enable: false}),
+  );
+  const [icons, setIcons] = useState(() =>
+    iconGoal.map((icon) => icon && {iconName: icon.iconName, enable: false}),
+  );
   const [submitValidation, setSubmitValidation] = useState(false);
 
   const handleSelectIcon = useCallback(
