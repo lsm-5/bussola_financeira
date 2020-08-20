@@ -300,12 +300,14 @@ const Details: React.FC = () => {
         </ViewProgressContainer>
 
         <ButtonView>
-          <Button
-            title="Adicionar"
-            onPress={() => setShowModalAdd(true)}
-            buttonStyle={ButtonAddStyle.buttonStyle}
-            titleStyle={ButtonAddStyle.tittleStyle}
-          />
+          {goal.achievementAchieved === false && (
+            <Button
+              title="Adicionar"
+              onPress={() => setShowModalAdd(true)}
+              buttonStyle={ButtonAddStyle.buttonStyle}
+              titleStyle={ButtonAddStyle.tittleStyle}
+            />
+          )}
 
           <Button
             title="Remover"

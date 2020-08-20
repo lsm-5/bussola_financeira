@@ -4984,12 +4984,7 @@ lodash.throttle@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
-lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.3.0:
-  version "4.17.19"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
-  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
-
-lodash@^4.17.19:
+lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.19"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
@@ -6249,11 +6244,6 @@ react-native-flipper@^0.37.0:
   version "0.37.0"
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.37.0.tgz#15187696e7361553952a83c77dcf53e508261662"
   integrity sha512-ZnL31EfUoXpFY4zddm/8hW6hh7+wr1VXFV+2s9TWx5F9XQ/bNVFsP+2/bbTVwYE678caZOpmHxkWebkVb2PTtA==
-
-react-native-flipper@^0.52.1:
-  version "0.52.1"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.52.1.tgz#068eb5cd1da4c896ea43923f570f1c74ce5b5ca8"
-  integrity sha512-+Rje0uRUuk/k32odEHsaAXC1CmQ/jKn8h3RBBZlVi3GFAWYpbIZpPspE/s7yFa9B7rcS6fHZbewrf9IfM7FiWA==
 
 react-native-gesture-handler@^1.6.1:
   version "1.6.1"
