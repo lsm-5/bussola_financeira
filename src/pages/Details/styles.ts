@@ -59,7 +59,7 @@ export const ViewGoalName = styled.View<IconExistsProps>`
   align-items: center;
   justify-content: center;
   flex: 1;
-  margin-left: ${(props) => (props.iconExists ? 0 : 25)};
+  margin-left: ${(props) => (props.iconExists ? 0 : '25px')};
 `;
 
 export const ViewContent = styled.View`

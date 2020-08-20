@@ -41,7 +41,7 @@ import {
   ViewRow,
 } from './styles';
 
-import {Goals as IGoals} from '../../interfaces/goals';
+import {Goals as IGoals, TransactionsObject} from '../../interfaces/goals';
 import {User} from '../../interfaces/user';
 
 const options = {
@@ -50,7 +50,7 @@ const options = {
 
 const Profile: React.FC = () => {
   const {user, addUserNameAndAvatar} = useUser();
-  const {goals} = useGoals();
+  const {goals, setHistoric} = useGoals();
 
   const arrayGoals: IGoals[] = goals.filter((goal) => goal.achievementAchieved);
 
@@ -130,12 +130,17 @@ const Profile: React.FC = () => {
           renderItem={({item}) => {
             return (
               <CardContainer
-                onPress={() =>
+                onPress={() => {
+                  setHistoric(
+                    item.transactions === null
+                      ? ([] as TransactionsObject[])
+                      : item.transactions,
+                  );
                   navigate('DetailsAndHistoric', {
                     screen: 'Details',
                     params: {item},
-                  })
-                }>
+                  });
+                }}>
                 <ViewRow>
                   <ViewColumn style={{flex: 1}}>
                     <CardTitle color={item.color}>{item.title}</CardTitle>
