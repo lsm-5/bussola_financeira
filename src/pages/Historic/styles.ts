@@ -1,6 +1,7 @@
+/* eslint-disable no-nested-ternary */
 import styled from 'styled-components/native';
 import {FlatList} from 'react-native';
-import {BlueMunsell} from '../../styles/colors';
+import {lighten} from 'polished';
 import {TransactionsObject} from '../../interfaces/goals';
 
 interface IndexProp {
@@ -13,7 +14,7 @@ interface TypeProp {
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.background2};
 `;
 
 export const ViewHeader = styled.View`
@@ -22,7 +23,7 @@ export const ViewHeader = styled.View`
   justify-content: space-around;
   padding-left: 20px;
   padding-right: 20px;
-  background-color: ${BlueMunsell};
+  background-color: ${(props) => props.theme.primary};
   height: 50px;
   border-bottom-left-radius: 80px;
   border-bottom-right-radius: 80px;
@@ -66,7 +67,7 @@ export const TextTitleDate = styled.Text`
 `;
 
 export const TitleEmpty = styled.Text`
-  color: #999;
+  color: #777;
   position: absolute;
   top: 30%;
 `;
@@ -87,7 +88,12 @@ export const ViewCard = styled.View<IndexProp>`
   flex-direction: row;
   padding-top: 25px;
   padding-bottom: 25px;
-  background-color: ${(props) => (props.index % 2 === 0 ? '#fff' : '#ededed')};
+  background-color: ${(props) =>
+    props.index % 2 === 0
+      ? props.theme.background2
+      : props.theme.title === 'dark'
+      ? lighten(0.04, props.theme.background2)
+      : '#ededed'};
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;

@@ -1,6 +1,8 @@
 /* eslint-disable import/no-duplicates */
 import React, {useCallback, useState} from 'react';
 import {Dimensions} from 'react-native';
+import {useContext} from 'react';
+import {ThemeContext} from 'styled-components';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -57,7 +59,6 @@ import {
   ButtonRemoveStyle,
   ButtonOptions,
 } from './styles';
-import {BlueMunsell, White} from '../../styles/colors';
 
 import {Goals as IGoals} from '../../interfaces/goals';
 
@@ -78,6 +79,8 @@ type Props = {
 };
 
 const Details: React.FC = () => {
+  const themeContext = useContext(ThemeContext);
+
   const {params} = useRoute<ProfileScreenRouteProp>();
   const goal: IGoals = params.item;
   const navigation = useNavigation();
@@ -202,7 +205,7 @@ const Details: React.FC = () => {
           <Icon
             name={goal.iconName}
             size={50}
-            color={White}
+            color="#fff"
             style={{marginLeft: 40, marginRight: 10}}
           />
         ) : (
@@ -294,7 +297,7 @@ const Details: React.FC = () => {
             width={Dimensions.get('screen').width - 40}
             height={16}
             borderRadius={6}
-            color={BlueMunsell}
+            color={themeContext.primary}
           />
         </ViewProgressContainer>
 

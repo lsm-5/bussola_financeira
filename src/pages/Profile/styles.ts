@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import {RectButton} from 'react-native-gesture-handler';
 import {FlatList} from 'react-native';
-import {BlueMunsell, White} from '../../styles/colors';
 
 import {Goals as IGoals} from '../../interfaces/goals';
 
@@ -11,12 +10,13 @@ interface ColorProps {
 
 export const Container = styled.View`
   flex: 1;
+  background-color: ${(props) => props.theme.background};
 `;
 
 export const Header = styled.View`
   min-width: 100%;
   height: 150px;
-  background-color: ${BlueMunsell};
+  background-color: ${(props) => props.theme.primary};
   padding: 20px;
   flex-direction: row;
   align-items: center;
@@ -33,12 +33,12 @@ export const Avatar = styled.Image`
   height: 70px;
   border-radius: 35px;
   border-width: 2px;
-  border-color: ${White};
+  border-color: #fff;};
 `;
 
 export const Name = styled.TextInput`
-  border: ${White};
-  background-color: ${White};
+  border: #fff;};
+  background-color: #fff;};
   height: 40px;
   margin-left: 15px;
   min-width: 180px;
@@ -55,7 +55,7 @@ export const ButtonView = styled.View`
 export const Button = styled(RectButton)`
   height: 30px;
   width: 50px;
-  background: ${White};
+  background: #fff;
   border-radius: 5px;
 
   justify-content: center;
@@ -63,7 +63,7 @@ export const Button = styled(RectButton)`
 `;
 
 export const ButtonName = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 12px;
 `;
 
@@ -72,7 +72,7 @@ export const Goals = styled.View`
 `;
 
 export const GoalsTitle = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 18px;
 `;
 
@@ -92,12 +92,12 @@ export const GoalsContainer = styled.View`
 `;
 
 export const CardContainer = styled.TouchableOpacity`
-  background-color: ${White};
+  background-color: ${(props) => props.theme.card};
   border-radius: 8px;
   padding: 15px;
   border-width: 3px;
-  border-color: #fff;
-  margin-bottom: 5px;
+  border-color: ${(props) => props.theme.card};
+  margin-top: 5px;
 `;
 
 export const CardTitle = styled.Text<ColorProps>`
@@ -105,7 +105,8 @@ export const CardTitle = styled.Text<ColorProps>`
   font-size: 18px;
   font-family: sans-serif;
 
-  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
+  color: ${(props) =>
+    props.color !== null ? props.color : props.theme.primary};
 `;
 
 export const CardTime = styled.Text`
@@ -122,16 +123,18 @@ export const MoneyView = styled.View`
 `;
 
 export const MoneyCurrent = styled.Text<ColorProps>`
-  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
+  color: ${(props) =>
+    props.color !== null ? props.color : props.theme.primary};
 `;
 
 export const Amount = styled.Text<ColorProps>`
   text-align: right;
   margin-right: 5px;
-  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
+  color: ${(props) =>
+    props.color !== null ? props.color : props.theme.primary};
 `;
 
-export const GoalsList = styled(FlatList as new () => FlatList<IGoals>)`
+export const GoalsList = styled(FlatList as new () => FlatList<Goals>)`
   flex: 1;
 `;
 

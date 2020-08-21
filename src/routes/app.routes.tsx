@@ -19,7 +19,9 @@ const TabRoutes: React.FC = () => (
     tabBarOptions={{
       activeTintColor: '#fff',
       inactiveTintColor: '#c3c3c3',
-      contentContainerStyle: {backgroundColor: BlueMunsell},
+      contentContainerStyle: {
+        backgroundColor: '#3587a4',
+      },
     }}>
     <Tab.Screen
       name="Details"
@@ -34,7 +36,7 @@ const TabRoutes: React.FC = () => (
   </Tab.Navigator>
 );
 
-const AppRoutes: React.FC = () => (
+const AppRoutes: React.FC = (colorScheme) => (
   <App.Navigator screenOptions={{headerShown: false}}>
     <App.Screen name="Dashboard" component={Dashboard} />
     <App.Screen name="Profile" component={Profile} />

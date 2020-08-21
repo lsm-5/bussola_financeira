@@ -10,8 +10,6 @@ import {useNavigation} from '@react-navigation/native';
 
 import {useGoals} from '../../hooks/goals';
 
-import {White} from '../../styles/colors';
-
 import {
   Container,
   Title,
@@ -179,7 +177,7 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
                 <Icon
                   name="calendar"
                   size={40}
-                  color={disableDate ? '#ccc' : White}
+                  color={disableDate ? '#ccc' : '#fff'}
                 />
               </TouchableOpacity>
             </DateView>

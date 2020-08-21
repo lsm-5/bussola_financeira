@@ -1,12 +1,12 @@
 import styled from 'styled-components/native';
-import {BlueMunsell, White} from '../../styles/colors';
+import {lighten} from 'polished';
 
 export const Container = styled.View`
   width: 100px;
   height: 80px;
-  background-color: #ededed;
+  background-color: ${(props) => props.theme.background2};
 
-  border-color: #fff;
+  border-color: ${(props) => lighten(0.04, props.theme.background)};
   border-width: 1px;
 
   align-items: center;
@@ -24,7 +24,7 @@ export const TouchableEdit = styled.TouchableOpacity`
 `;
 
 export const TextEdit = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 16px;
 `;
 
@@ -35,13 +35,13 @@ export const TouchableRemove = styled.TouchableOpacity`
 `;
 
 export const TextRemove = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 16px;
 `;
 
 export const Divider = styled.View`
   min-width: 100%;
   height: 1px;
-  border-bottom-color: #fff;
+  border-bottom-color: ${(props) => lighten(0.04, props.theme.background)};
   border-bottom-width: 1px;
 `;

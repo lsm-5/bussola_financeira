@@ -1,6 +1,8 @@
 /* eslint-disable import/no-duplicates */
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Dimensions} from 'react-native';
+import {useContext} from 'react';
+import {ThemeContext} from 'styled-components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker, {ImagePickerResponse} from 'react-native-image-picker';
@@ -8,11 +10,9 @@ import ImageResizer, {Response} from 'react-native-image-resizer';
 import {format} from 'date-fns';
 import {pt} from 'date-fns/locale';
 import * as Progress from 'react-native-progress';
-
 import formatValue from '../../utils/formatValue';
 import {useUser} from '../../hooks/user';
 import {useGoals} from '../../hooks/goals';
-import {BlueMunsell} from '../../styles/colors';
 
 import {
   Container,
@@ -49,6 +49,8 @@ const options = {
 };
 
 const Profile: React.FC = () => {
+  const themeContext = useContext(ThemeContext);
+
   const {user, addUserNameAndAvatar} = useUser();
   const {goals, setHistoric} = useGoals();
 
@@ -161,7 +163,9 @@ const Profile: React.FC = () => {
                     <Icon
                       name={item.iconName}
                       size={50}
-                      color={item.color === null ? BlueMunsell : item.color}
+                      color={
+                        item.color === null ? themeContext.primary : item.color
+                      }
                     />
                   ) : (
                     <></>
@@ -173,7 +177,9 @@ const Profile: React.FC = () => {
                   width={Dimensions.get('screen').width - 60}
                   height={12}
                   borderRadius={6}
-                  color={item.color === null ? BlueMunsell : item.color}
+                  color={
+                    item.color === null ? themeContext.primary : item.color
+                  }
                 />
                 <MoneyView>
                   <MoneyCurrent color={item.color}>

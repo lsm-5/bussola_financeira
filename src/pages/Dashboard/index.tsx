@@ -1,6 +1,8 @@
 /* eslint-disable import/no-duplicates */
 import React, {useState, useCallback} from 'react';
 import {Dimensions} from 'react-native';
+import {useContext} from 'react';
+import {ThemeContext} from 'styled-components';
 
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,7 +14,6 @@ import formatValue from '../../utils/formatValue';
 
 import {useUser} from '../../hooks/user';
 import {useGoals} from '../../hooks/goals';
-import {BlueMunsell} from '../../styles/colors';
 import ModalCreateGoal from '../../components/ModalCreateGoal';
 
 import {
@@ -38,6 +39,8 @@ import {
 import {Goals, TransactionsObject} from '../../interfaces/goals';
 
 const Dashboard: React.FC = () => {
+  const themeContext = useContext(ThemeContext);
+
   const {user} = useUser();
   const {navigate} = useNavigation();
   const {goals, setHistoric} = useGoals();
@@ -114,7 +117,11 @@ const Dashboard: React.FC = () => {
                       <Icon
                         name={item.iconName}
                         size={50}
-                        color={item.color === null ? BlueMunsell : item.color}
+                        color={
+                          item.color === null
+                            ? themeContext.primary
+                            : item.color
+                        }
                       />
                     ) : (
                       <></>
@@ -126,7 +133,9 @@ const Dashboard: React.FC = () => {
                     width={Dimensions.get('screen').width - 60}
                     height={12}
                     borderRadius={6}
-                    color={item.color === null ? BlueMunsell : item.color}
+                    color={
+                      item.color === null ? themeContext.primary : item.color
+                    }
                   />
                   <MoneyView>
                     <MoneyCurrent color={item.color}>
@@ -144,8 +153,9 @@ const Dashboard: React.FC = () => {
           />
         </GoalsContainer>
       )}
+
       <ActionButton
-        buttonColor="#3587a4ff"
+        buttonColor={themeContext.primary}
         offsetX={20}
         onPress={() => setShowModal(true)}
       />

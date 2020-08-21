@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import {BlueMunsell, White} from '../../styles/colors';
 
 interface ColorProps {
   color: string;
@@ -12,27 +11,27 @@ interface ColorPropsSelected {
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${BlueMunsell};
+  background-color: ${(props) => props.theme.primary};
   padding: 5px 20px 20px 20px;
   border-radius: 8px;
   justify-content: space-between;
 `;
 
 export const Title = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 25px;
   align-self: center;
   margin-bottom: 10px;
 `;
 
 export const TitleGoal = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 18px;
 `;
 
 export const TitleGoalInput = styled.TextInput`
-  border-color: ${White};
-  background-color: ${White};
+  border-color: #fff;
+  background-color: #fff;
   height: 40px;
   min-width: 180px;
   border-width: 1px;
@@ -45,7 +44,7 @@ export const DateViewContainer = styled.View`
 `;
 
 export const DateTitle = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 18px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -80,14 +79,14 @@ export const ValueView = styled.View`
 `;
 
 export const ValueText = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 18px;
 `;
 
 export const IconContainerView = styled.View``;
 
 export const IconTitle = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 18px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -102,7 +101,7 @@ export const IconView = styled.View`
 export const ColorContainerView = styled.View``;
 
 export const ColorText = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 18px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -130,7 +129,7 @@ export const ButtonView = styled.View`
 export const HeaderProfile = styled.View`
   min-width: 100%;
   height: 50px;
-  background-color: ${BlueMunsell};
+  background-color: ${(props) => props.theme.primary};
   position: absolute;
   top: 0;
   right: 0;
@@ -143,8 +142,8 @@ export const HeaderProfile = styled.View`
 `;
 
 export const NumericInputView = styled.View`
-  border-color: ${White};
-  background-color: ${White};
+  border-color: #fff;
+  background-color: #fff;
   height: 40px;
   min-width: 180px;
   border-width: 1px;
@@ -153,7 +152,7 @@ export const NumericInputView = styled.View`
 `;
 
 export const TextInformation = styled.Text`
-  color: ${White};
+  color: #fff;
 `;
 
 export const TextError = styled.Text`

@@ -1,10 +1,9 @@
 import styled from 'styled-components/native';
-import {BlueMunsell, White} from '../../styles/colors';
 
 export const Container = styled.View`
   width: 320px;
   height: 230px;
-  background-color: ${BlueMunsell};
+  background-color: ${(props) => props.theme.primary};
   padding: 5px 20px 20px 20px;
   border-radius: 8px;
 
@@ -12,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 25px;
   align-self: center;
   margin-bottom: 10px;
@@ -23,7 +22,7 @@ export const ValueView = styled.View`
 `;
 
 export const ValueText = styled.Text`
-  color: ${White};
+  color: #fff;
   font-size: 18px;
 `;
 
@@ -35,8 +34,8 @@ export const ButtonView = styled.View`
 `;
 
 export const NumericInputView = styled.View`
-  border-color: ${White};
-  background-color: ${White};
+  border-color: #fff;
+  background-color: #fff;
   height: 40px;
   min-width: 180px;
   border-width: 1px;

@@ -9,8 +9,6 @@ import {format} from 'date-fns';
 
 import {useGoals} from '../../hooks/goals';
 
-import {White} from '../../styles/colors';
-
 import {colorsGoal, iconGoal} from '../OptionGoals';
 
 import {
@@ -177,7 +175,7 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
                 <Icon
                   name="calendar"
                   size={40}
-                  color={disableDate ? '#ccc' : White}
+                  color={disableDate ? '#ccc' : '#fff'}
                 />
               </TouchableOpacity>
             </DateView>

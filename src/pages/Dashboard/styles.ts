@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import {FlatList} from 'react-native';
-import {BlueMunsell, White} from '../../styles/colors';
 
 import {Goals} from '../../interfaces/goals';
 
@@ -10,13 +9,13 @@ interface ColorProps {
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #dcdcdc;
+  background-color: ${(props) => props.theme.background};
 `;
 
 export const HeaderProfile = styled.TouchableOpacity`
   min-width: 100%;
   height: 120px;
-  background-color: ${BlueMunsell};
+  background-color: ${(props) => props.theme.primary};
   padding: 20px;
 
   flex-direction: row;
@@ -31,13 +30,13 @@ export const AvatarImage = styled.Image`
   height: 70px;
   border-radius: 35px;
   border-width: 2px;
-  border-color: ${White};
+  border-color: #fff;
 `;
 
 export const HeaderName = styled.Text`
   margin-top: 10px;
   margin-left: 15px;
-  color: ${White};
+  color: #fff;
   font-size: 17px;
   justify-content: center;
   align-self: center;
@@ -46,7 +45,7 @@ export const HeaderName = styled.Text`
 export const HeaderGoals = styled.Text`
   margin-top: 7px;
   margin-left: 5px;
-  color: ${White};
+  color: #fff;
   font-size: 17px;
   justify-content: center;
   align-self: center;
@@ -63,11 +62,12 @@ export const GoalsContainer = styled.View`
 `;
 
 export const CardContainer = styled.TouchableOpacity`
-  background-color: ${White};
+  background-color: ${(props) => props.theme.card};
   border-radius: 8px;
   padding: 15px;
   border-width: 3px;
-  border-color: #dcdcdc;
+  border-color: ${(props) => props.theme.card};
+  margin-top: 5px;
 `;
 
 export const CardTitle = styled.Text<ColorProps>`
@@ -75,7 +75,8 @@ export const CardTitle = styled.Text<ColorProps>`
   font-size: 18px;
   font-family: sans-serif;
 
-  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
+  color: ${(props) =>
+    props.color !== null ? props.color : props.theme.primary};
 `;
 
 export const CardTime = styled.Text`
@@ -92,13 +93,15 @@ export const MoneyView = styled.View`
 `;
 
 export const MoneyCurrent = styled.Text<ColorProps>`
-  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
+  color: ${(props) =>
+    props.color !== null ? props.color : props.theme.primary};
 `;
 
 export const Amount = styled.Text<ColorProps>`
   text-align: right;
   margin-right: 5px;
-  color: ${(props) => (props.color !== null ? props.color : BlueMunsell)};
+  color: ${(props) =>
+    props.color !== null ? props.color : props.theme.primary};
 `;
 
 export const GoalsList = styled(FlatList as new () => FlatList<Goals>)`

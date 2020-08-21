@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import {BlueMunsell, White} from '../../styles/colors';
 
 interface IconExistsProps {
   iconExists: boolean;
@@ -7,13 +6,13 @@ interface IconExistsProps {
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.background2};
 `;
 
 export const HeaderProfile = styled.View`
   min-width: 100%;
   height: 60px;
-  background-color: ${BlueMunsell};
+  background-color: ${(props) => props.theme.primary};
   padding: 20px;
 
   flex-direction: row;
@@ -25,7 +24,7 @@ export const HeaderProfile = styled.View`
 
 export const HeaderName = styled.Text<IconExistsProps>`
   margin-top: 10px;
-  color: ${White};
+  color: #fff;
   font-size: 20px;
   min-width: 100%;
   padding-right: 5%;
@@ -44,7 +43,7 @@ export const Goals = styled.View`
 `;
 
 export const GoalsTitle = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 18px;
 `;
 
@@ -74,7 +73,7 @@ export const ViewGoal = styled.View`
 `;
 
 export const TextTitleGoal = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 14px;
   margin-bottom: 5px;
 `;
@@ -91,7 +90,7 @@ export const ViewDate = styled.View`
 `;
 
 export const TextTitleDate = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 14px;
   margin-bottom: 5px;
 `;
@@ -108,7 +107,7 @@ export const ViewContainerSugestion = styled.View`
 `;
 
 export const TextTitleSugestion = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 14px;
   margin-bottom: 5px;
 `;
@@ -130,7 +129,7 @@ export const TextDayMoney = styled.Text`
 `;
 
 export const TextDay = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
 `;
 
 export const ViewMonth = styled.View`
@@ -144,7 +143,7 @@ export const TextMonthMoney = styled.Text`
 `;
 
 export const TextMonth = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
 `;
 export const ViewYear = styled.View`
   align-items: center;
@@ -157,7 +156,7 @@ export const TextYearMoney = styled.Text`
 `;
 
 export const TextYear = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
 `;
 
 export const ViewProgressContainer = styled.View`
@@ -166,7 +165,7 @@ export const ViewProgressContainer = styled.View`
 `;
 
 export const TextTitleProgress = styled.Text`
-  color: ${BlueMunsell};
+  color: ${(props) => props.theme.primary};
   font-size: 14px;
   margin-bottom: 5px;
 `;
