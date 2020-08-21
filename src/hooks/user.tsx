@@ -13,6 +13,8 @@ import {User} from '../interfaces/user';
 interface UserContext {
   user: User;
   addUserNameAndAvatar(item: User): Promise<void>;
+  theme: 'light' | 'dark';
+  changeTheme(): Promise<void>;
 }
 
 const UserContext = createContext<UserContext | null>(null);
@@ -23,17 +25,47 @@ const UserProvider: React.FC = ({children}) => {
     avatarUri: 'https://api.adorable.io/avatars/70/3@adorable.png',
   });
 
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
   useEffect(() => {
     async function loadUser(): Promise<void> {
       const userLoad = await AsyncStorage.getItem('@BussolaFinanceira:user');
+      const themeLoad = await AsyncStorage.getItem('@BussolaFinanceira:theme');
 
       if (userLoad) {
         setUser(JSON.parse(userLoad));
       }
+
+      if (themeLoad) {
+        setTheme(JSON.parse(themeLoad));
+      }
+    }
+
+    async function loadTheme(): Promise<void> {
+      const themeLoad = await AsyncStorage.getItem('@BussolaFinanceira:theme');
+      if (themeLoad) {
+        setTheme(JSON.parse(themeLoad));
+      }
     }
 
     loadUser();
+    loadTheme();
   }, []);
+
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]);
+
+  const changeTheme = useCallback(async () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+
+    try {
+      await AsyncStorage.setItem(
+        '@BussolaFinanceira:theme',
+        JSON.stringify(theme),
+      );
+    } catch (err) {}
+  }, [theme]);
 
   const addUserNameAndAvatar = useCallback(async (userSave) => {
     setUser(userSave);
@@ -56,10 +88,10 @@ const UserProvider: React.FC = ({children}) => {
     }
   }, []);
 
-  const value = React.useMemo(() => ({user, addUserNameAndAvatar}), [
-    user,
-    addUserNameAndAvatar,
-  ]);
+  const value = React.useMemo(
+    () => ({user, theme, addUserNameAndAvatar, changeTheme}),
+    [user, theme, addUserNameAndAvatar, changeTheme],
+  );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

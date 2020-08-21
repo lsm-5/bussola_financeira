@@ -4,6 +4,8 @@ import {Dimensions} from 'react-native';
 import {useContext} from 'react';
 import {ThemeContext} from 'styled-components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon2 from 'react-native-vector-icons/FontAwesome5';
+
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker, {ImagePickerResponse} from 'react-native-image-picker';
 import ImageResizer, {Response} from 'react-native-image-resizer';
@@ -39,6 +41,7 @@ import {
   ViewEmpty,
   ViewColumn,
   ViewRow,
+  ButtonTheme,
 } from './styles';
 
 import {Goals as IGoals, TransactionsObject} from '../../interfaces/goals';
@@ -51,7 +54,7 @@ const options = {
 const Profile: React.FC = () => {
   const themeContext = useContext(ThemeContext);
 
-  const {user, addUserNameAndAvatar} = useUser();
+  const {user, addUserNameAndAvatar, theme, changeTheme} = useUser();
   const {goals, setHistoric} = useGoals();
 
   const arrayGoals: IGoals[] = goals.filter((goal) => goal.achievementAchieved);
@@ -94,6 +97,15 @@ const Profile: React.FC = () => {
         <ButtonBack onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={25} color="#fff" />
         </ButtonBack>
+
+        <ButtonTheme onPress={() => changeTheme()}>
+          <Icon2
+            name={theme === 'light' ? 'moon' : 'sun'}
+            size={25}
+            color="#fff"
+          />
+        </ButtonTheme>
+
         <AvatarButton onPress={handleChooseAvatar}>
           <Avatar
             source={{

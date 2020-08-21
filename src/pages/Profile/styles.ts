@@ -86,6 +86,12 @@ export const ButtonBack = styled.TouchableOpacity`
   left: 15px;
 `;
 
+export const ButtonTheme = styled.TouchableOpacity`
+  position: absolute;
+  top: 20px;
+  right: 15px;
+`;
+
 export const GoalsContainer = styled.View`
   padding: 10px;
   flex: 1;

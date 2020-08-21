@@ -1,7 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {BlueMunsell} from '../styles/colors';
 
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
@@ -36,7 +35,7 @@ const TabRoutes: React.FC = () => (
   </Tab.Navigator>
 );
 
-const AppRoutes: React.FC = (colorScheme) => (
+const AppRoutes: React.FC<RoutesProps> = () => (
   <App.Navigator screenOptions={{headerShown: false}}>
     <App.Screen name="Dashboard" component={Dashboard} />
     <App.Screen name="Profile" component={Profile} />
