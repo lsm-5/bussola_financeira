@@ -52,19 +52,16 @@ const UserProvider: React.FC = ({children}) => {
     loadTheme();
   }, []);
 
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
-
   const changeTheme = useCallback(async () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    const themeCurrent = theme;
+    const themeSave = themeCurrent === 'light' ? 'dark' : 'light';
 
-    try {
-      await AsyncStorage.setItem(
-        '@BussolaFinanceira:theme',
-        JSON.stringify(theme),
-      );
-    } catch (err) {}
+    setTheme(themeSave);
+
+    await AsyncStorage.setItem(
+      '@BussolaFinanceira:theme',
+      JSON.stringify(themeSave),
+    );
   }, [theme]);
 
   const addUserNameAndAvatar = useCallback(async (userSave) => {
