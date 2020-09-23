@@ -50,7 +50,6 @@ export const GoalsTitle = styled.Text`
 export const ButtonView = styled.View`
   flex-direction: row;
   justify-content: space-evenly;
-  margin-bottom: 10px;
   margin-top: 20px;
 `;
 

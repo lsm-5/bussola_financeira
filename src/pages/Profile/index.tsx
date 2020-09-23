@@ -16,6 +16,8 @@ import formatValue from '../../utils/formatValue';
 import {useUser} from '../../hooks/user';
 import {useGoals} from '../../hooks/goals';
 
+import BannerAdmob from '../../components/BannerAdmob';
+
 import {
   Container,
   Header,
@@ -203,6 +205,7 @@ const Profile: React.FC = () => {
             );
           }}
         />
+        <BannerAdmob/>
       </GoalsContainer>
     </Container>
   );

@@ -17,11 +17,12 @@ import {
   ViewEmpty,
   FlatListHistoric,
   ViewCard,
-  ViewTransactionAndValue,
   ViewTypeTransaction,
   TextValue,
   TextDate,
 } from './styles';
+
+import BannerAdmob from '../../components/BannerAdmob';
 
 import {TransactionsObject} from '../../interfaces/goals';
 
@@ -67,6 +68,8 @@ const Historic: React.FC = () => {
           )}
         />
       )}
+
+      <BannerAdmob/>
     </Container>
   );
 };

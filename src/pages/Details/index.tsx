@@ -22,6 +22,8 @@ import ModalRemoveMoney from '../../components/ModalRemoveMoney';
 import ModalOptions from '../../components/ModalOptions';
 import ModalEditGoal from '../../components/ModalEditGoal';
 
+import BannerAdmob from '../../components/BannerAdmob';
+
 import {
   Container,
   HeaderName,
@@ -318,6 +320,9 @@ const Details: React.FC = () => {
             titleStyle={ButtonRemoveStyle.tittleStyle}
           />
         </ButtonView>
+
+        <BannerAdmob/>
+
       </ViewContent>
     </Container>
   );

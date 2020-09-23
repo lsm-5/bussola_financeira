@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {format} from 'date-fns';
 import {pt} from 'date-fns/locale';
 import formatValue from '../../utils/formatValue';
+import BannerAdmob from '../../components/BannerAdmob';
 
 import {useUser} from '../../hooks/user';
 import {useGoals} from '../../hooks/goals';
@@ -154,9 +155,12 @@ const Dashboard: React.FC = () => {
         </GoalsContainer>
       )}
 
+      <BannerAdmob />
+
       <ActionButton
         buttonColor={themeContext.primary}
         offsetX={20}
+        offsetY={65}
         onPress={() => setShowModal(true)}
       />
     </Container>
