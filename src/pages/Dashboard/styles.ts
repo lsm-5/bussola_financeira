@@ -51,7 +51,11 @@ export const HeaderGoals = styled.Text`
   align-self: center;
 `;
 
-export const ViewColumn = styled.View``;
+export const ViewColumn = styled.View`
+  flex: 1;
+  padding-right: 8%;
+`;
+
 export const ViewRow = styled.View`
   flex-direction: row;
 `;
