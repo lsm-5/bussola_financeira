@@ -222,7 +222,7 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
           </IconContainerView>
 
           <ColorContainerView>
-            <ColorText>color</ColorText>
+            <ColorText>Cor</ColorText>
             <ColorScrollView showsHorizontalScrollIndicator={false} horizontal>
               {colors.map((color) => {
                 return (

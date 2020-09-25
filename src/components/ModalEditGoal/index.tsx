@@ -224,7 +224,7 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
           </IconContainerView>
 
           <ColorContainerView>
-            <ColorText>color</ColorText>
+            <ColorText>Cor</ColorText>
             <ColorScrollView showsHorizontalScrollIndicator={false} horizontal>
               {colors.map((color) => {
                 return (
