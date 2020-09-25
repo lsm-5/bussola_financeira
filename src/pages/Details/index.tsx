@@ -225,7 +225,7 @@ const Details: React.FC = () => {
       </HeaderProfile>
 
       <ScrollView
-        automaticallyAdjustContentInsets
+        contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
         <Goals>
           <GoalsTitle>Aqui está seu progresso:</GoalsTitle>
@@ -323,10 +323,9 @@ const Details: React.FC = () => {
               titleStyle={ButtonRemoveStyle.tittleStyle}
             />
           </ButtonView>
-
-          <BannerAdmob />
         </ViewContent>
       </ScrollView>
+      <BannerAdmob />
     </Container>
   );
 };
