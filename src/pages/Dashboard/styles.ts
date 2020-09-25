@@ -25,7 +25,7 @@ export const HeaderProfile = styled.TouchableOpacity`
 `;
 
 export const AvatarImage = styled.Image`
-  margin-left: 22px;
+  margin-left: 15px;
   width: 70px;
   height: 70px;
   border-radius: 35px;
@@ -40,6 +40,7 @@ export const HeaderName = styled.Text`
   font-size: 17px;
   justify-content: center;
   align-self: center;
+  max-height: 40px;
 `;
 
 export const HeaderGoals = styled.Text`
@@ -53,7 +54,7 @@ export const HeaderGoals = styled.Text`
 
 export const ViewColumn = styled.View`
   flex: 1;
-  padding-right: 8%;
+  padding-right: 11%;
 `;
 
 export const ViewRow = styled.View`
