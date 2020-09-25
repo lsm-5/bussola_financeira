@@ -69,7 +69,7 @@ const Historic: React.FC = () => {
         />
       )}
 
-      <BannerAdmob/>
+      <BannerAdmob />
     </Container>
   );
 };

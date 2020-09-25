@@ -33,12 +33,12 @@ export const Avatar = styled.Image`
   height: 70px;
   border-radius: 35px;
   border-width: 2px;
-  border-color: #fff;};
+  border-color: #fff;
 `;
 
 export const Name = styled.TextInput`
-  border: #fff;};
-  background-color: #fff;};
+  border: #fff;
+  background-color: #fff;
   height: 40px;
   margin-left: 15px;
   min-width: 180px;
@@ -76,7 +76,10 @@ export const GoalsTitle = styled.Text`
   font-size: 18px;
 `;
 
-export const ViewDefault = styled.View``;
+export const ViewDefault = styled.View`
+  flex: 1;
+  padding-right: 12%;
+`;
 
 export const AvatarButton = styled.TouchableOpacity``;
 

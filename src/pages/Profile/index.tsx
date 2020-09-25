@@ -205,7 +205,7 @@ const Profile: React.FC = () => {
             );
           }}
         />
-        <BannerAdmob/>
+        <BannerAdmob />
       </GoalsContainer>
     </Container>
   );

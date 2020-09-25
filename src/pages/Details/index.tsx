@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import React, {useCallback, useState} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, ScrollView} from 'react-native';
 import {useContext} from 'react';
 import {ThemeContext} from 'styled-components';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
@@ -224,106 +224,109 @@ const Details: React.FC = () => {
         </ButtonOptions>
       </HeaderProfile>
 
-      <Goals>
-        <GoalsTitle>Aqui está seu progresso:</GoalsTitle>
-      </Goals>
+      <ScrollView
+        automaticallyAdjustContentInsets
+        showsVerticalScrollIndicator={false}>
+        <Goals>
+          <GoalsTitle>Aqui está seu progresso:</GoalsTitle>
+        </Goals>
 
-      <ViewContent>
-        <ViewGoal>
-          <TextTitleGoal>Meta:</TextTitleGoal>
-          <TextAmount>{formatValue(goal.amount)}</TextAmount>
-        </ViewGoal>
+        <ViewContent>
+          <ViewGoal>
+            <TextTitleGoal>Meta:</TextTitleGoal>
+            <TextAmount>{formatValue(goal.amount)}</TextAmount>
+          </ViewGoal>
 
-        {goal.date !== null && (
-          <ViewDate>
-            <TextTitleDate>Data limite:</TextTitleDate>
-            <TextDate>
-              {format(
-                new Date(
-                  Number(goal.date.split('-')[2]),
-                  Number(goal.date.split('-')[1]) - 1,
-                  Number(goal.date.split('-')[0]),
-                ),
-                "'Em 'dd' de 'MMMM' de 'yyyy",
-                {locale: pt},
-              )}
-            </TextDate>
-          </ViewDate>
-        )}
-
-        {goal.date !== null &&
-          goal.achievementAchieved === false &&
-          (countDays() !== null || countMonth() !== null || countYears()) && (
-            <ViewContainerSugestion>
-              <TextTitleSugestion>
-                Para conseguir completar sua meta no tempo desejado você precisa
-                guardar:
-              </TextTitleSugestion>
-              <ViewSugestion>
-                {countDays() !== null && (
-                  <ViewDay>
-                    <TextDayMoney>{countDays()}</TextDayMoney>
-                    <TextDay>Por dia</TextDay>
-                  </ViewDay>
+          {goal.date !== null && (
+            <ViewDate>
+              <TextTitleDate>Data limite:</TextTitleDate>
+              <TextDate>
+                {format(
+                  new Date(
+                    Number(goal.date.split('-')[2]),
+                    Number(goal.date.split('-')[1]) - 1,
+                    Number(goal.date.split('-')[0]),
+                  ),
+                  "'Em 'dd' de 'MMMM' de 'yyyy",
+                  {locale: pt},
                 )}
-
-                {countMonth() !== null && (
-                  <ViewMonth>
-                    <TextMonthMoney>{countMonth()}</TextMonthMoney>
-                    <TextMonth>Por mês</TextMonth>
-                  </ViewMonth>
-                )}
-
-                {countYears() !== null && (
-                  <ViewYear>
-                    <TextYearMoney>{countYears()}</TextYearMoney>
-                    <TextYear>Por ano</TextYear>
-                  </ViewYear>
-                )}
-              </ViewSugestion>
-            </ViewContainerSugestion>
+              </TextDate>
+            </ViewDate>
           )}
 
-        <ViewProgressContainer>
-          <TextTitleProgress>Você já guardou:</TextTitleProgress>
-          <ViewProgress>
-            <TextMoneyCurrent>
-              {formatValue(goal.moneyCurrent)}
-            </TextMoneyCurrent>
-            <TextPercentage>
-              {`${Math.floor((goal.moneyCurrent / goal.amount) * 100)}%`}
-            </TextPercentage>
-          </ViewProgress>
-          <Progress.Bar
-            progress={goal.moneyCurrent / goal.amount}
-            width={Dimensions.get('screen').width - 40}
-            height={16}
-            borderRadius={6}
-            color={themeContext.primary}
-          />
-        </ViewProgressContainer>
+          {goal.date !== null &&
+            goal.achievementAchieved === false &&
+            (countDays() !== null || countMonth() !== null || countYears()) && (
+              <ViewContainerSugestion>
+                <TextTitleSugestion>
+                  Para conseguir completar sua meta no tempo desejado você
+                  precisa guardar:
+                </TextTitleSugestion>
+                <ViewSugestion>
+                  {countDays() !== null && (
+                    <ViewDay>
+                      <TextDayMoney>{countDays()}</TextDayMoney>
+                      <TextDay>Por dia</TextDay>
+                    </ViewDay>
+                  )}
 
-        <ButtonView>
-          {goal.achievementAchieved === false && (
-            <Button
-              title="Adicionar"
-              onPress={() => setShowModalAdd(true)}
-              buttonStyle={ButtonAddStyle.buttonStyle}
-              titleStyle={ButtonAddStyle.tittleStyle}
+                  {countMonth() !== null && (
+                    <ViewMonth>
+                      <TextMonthMoney>{countMonth()}</TextMonthMoney>
+                      <TextMonth>Por mês</TextMonth>
+                    </ViewMonth>
+                  )}
+
+                  {countYears() !== null && (
+                    <ViewYear>
+                      <TextYearMoney>{countYears()}</TextYearMoney>
+                      <TextYear>Por ano</TextYear>
+                    </ViewYear>
+                  )}
+                </ViewSugestion>
+              </ViewContainerSugestion>
+            )}
+
+          <ViewProgressContainer>
+            <TextTitleProgress>Você já guardou:</TextTitleProgress>
+            <ViewProgress>
+              <TextMoneyCurrent>
+                {formatValue(goal.moneyCurrent)}
+              </TextMoneyCurrent>
+              <TextPercentage>
+                {`${Math.floor((goal.moneyCurrent / goal.amount) * 100)}%`}
+              </TextPercentage>
+            </ViewProgress>
+            <Progress.Bar
+              progress={goal.moneyCurrent / goal.amount}
+              width={Dimensions.get('screen').width - 40}
+              height={16}
+              borderRadius={6}
+              color={themeContext.primary}
             />
-          )}
+          </ViewProgressContainer>
 
-          <Button
-            title="Remover"
-            onPress={() => setShowModalRemove(true)}
-            buttonStyle={ButtonRemoveStyle.buttonStyle}
-            titleStyle={ButtonRemoveStyle.tittleStyle}
-          />
-        </ButtonView>
+          <ButtonView>
+            {goal.achievementAchieved === false && (
+              <Button
+                title="Adicionar"
+                onPress={() => setShowModalAdd(true)}
+                buttonStyle={ButtonAddStyle.buttonStyle}
+                titleStyle={ButtonAddStyle.tittleStyle}
+              />
+            )}
 
-        <BannerAdmob/>
+            <Button
+              title="Remover"
+              onPress={() => setShowModalRemove(true)}
+              buttonStyle={ButtonRemoveStyle.buttonStyle}
+              titleStyle={ButtonRemoveStyle.tittleStyle}
+            />
+          </ButtonView>
 
-      </ViewContent>
+          <BannerAdmob />
+        </ViewContent>
+      </ScrollView>
     </Container>
   );
 };
