@@ -16,6 +16,7 @@ import BannerAdmob from '../../components/BannerAdmob';
 import {useUser} from '../../hooks/user';
 import {useGoals} from '../../hooks/goals';
 import ModalCreateGoal from '../../components/ModalCreateGoal';
+import ModalAnimation from '../../components/ModalAnimation';
 
 import {
   Container,
@@ -44,7 +45,7 @@ const Dashboard: React.FC = () => {
 
   const {user} = useUser();
   const {navigate} = useNavigation();
-  const {goals, setHistoric} = useGoals();
+  const {goals, setHistoric, showAnimation} = useGoals();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -60,6 +61,8 @@ const Dashboard: React.FC = () => {
         showModal={showModal}
         showCancelModal={handleModalFalse}
       />
+
+      <ModalAnimation visible={showAnimation} />
 
       <HeaderProfile onPress={() => navigate('Profile')}>
         <AvatarImage

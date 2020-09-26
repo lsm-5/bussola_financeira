@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React, {
   createContext,
   useState,
@@ -28,12 +29,15 @@ interface GoalsContext {
   decrementGoals(id: string, money: number): Promise<void>;
   setHistoric(historic: TransactionsObject[]): void;
   getHistoric(): TransactionsObject[];
+  showAnimation: boolean;
 }
 
 const GoalsContext = createContext<GoalsContext | null>(null);
 
 const GoalsProvider: React.FC = ({children}) => {
   const [goals, setGoals] = useState<Goals[]>([]);
+  const [showAnimation, setShowAnimation] = useState<boolean>(false);
+
   const [historicCurrent, setHistoricCurrent] = useState<TransactionsObject[]>(
     [],
   );
@@ -165,6 +169,7 @@ const GoalsProvider: React.FC = ({children}) => {
             ...goalsArray[indexGoals],
             achievementAchieved: true,
           };
+          setShowAnimation(true);
         }
 
         // addTransaction
@@ -192,6 +197,10 @@ const GoalsProvider: React.FC = ({children}) => {
           message: 'Operação realizada',
           type: 'success',
         });
+
+        setTimeout(() => {
+          setShowAnimation(false);
+        }, 5000);
       } catch (err) {
         showMessage({
           message: 'Operação não pôde ser realizada',
@@ -317,6 +326,7 @@ const GoalsProvider: React.FC = ({children}) => {
       decrementGoals,
       setHistoric,
       getHistoric,
+      showAnimation,
     }),
     [
       goals,
@@ -327,6 +337,7 @@ const GoalsProvider: React.FC = ({children}) => {
       decrementGoals,
       setHistoric,
       getHistoric,
+      showAnimation,
     ],
   );
 
