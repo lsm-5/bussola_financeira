@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable import/no-duplicates */
+
 import React, {useState, useCallback} from 'react';
 import {Dimensions} from 'react-native';
 import {useContext} from 'react';
 import {ThemeContext} from 'styled-components';
+import * as Sentry from '@sentry/react';
 
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -170,4 +173,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Sentry.withProfiler(Dashboard);

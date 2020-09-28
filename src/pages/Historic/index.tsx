@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import * as Sentry from '@sentry/react';
 
 import {View} from 'react-native';
 import formatValue from '../../utils/formatValue';
@@ -74,4 +75,4 @@ const Historic: React.FC = () => {
   );
 };
 
-export default Historic;
+export default Sentry.withProfiler(Historic);

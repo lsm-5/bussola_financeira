@@ -15,6 +15,7 @@ import {
   differenceInCalendarYears,
 } from 'date-fns';
 import {pt} from 'date-fns/locale';
+import * as Sentry from '@sentry/react';
 
 import formatValue from '../../utils/formatValue';
 import ModalAddMoney from '../../components/ModalAddMoney';
@@ -330,4 +331,4 @@ const Details: React.FC = () => {
   );
 };
 
-export default Details;
+export default Sentry.withProfiler(Details);

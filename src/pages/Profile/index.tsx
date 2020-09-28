@@ -1,10 +1,12 @@
 /* eslint-disable import/no-duplicates */
 import React, {useState, useCallback} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions, Alert} from 'react-native';
 import {useContext} from 'react';
 import {ThemeContext} from 'styled-components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
+import * as Sentry from '@sentry/react-native';
+import * as Sentry2 from '@sentry/react';
 
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker, {ImagePickerResponse} from 'react-native-image-picker';
@@ -72,20 +74,31 @@ const Profile: React.FC = () => {
   const {navigate} = useNavigation();
 
   const handleChooseAvatar = useCallback(() => {
-    ImagePicker.launchImageLibrary(options, (response: ImagePickerResponse) => {
-      if (response.uri) {
-        ImageResizer.createResizedImage(
-          response.uri,
-          200,
-          200,
-          'JPEG',
-          100,
-        ).then(({uri}: Response) => {
-          setUserChange({...userChange, avatarUri: uri});
-          setAvatar(uri);
-        });
-      }
-    });
+    try {
+      ImagePicker.launchImageLibrary(
+        options,
+        (response: ImagePickerResponse) => {
+          if (response.error) {
+            throw new Error(response.error);
+          }
+
+          if (response.path) {
+            ImageResizer.createResizedImage(
+              response.path,
+              200,
+              200,
+              'PNG',
+              100,
+            ).then(({uri}: Response) => {
+              setUserChange({...userChange, avatarUri: uri});
+              setAvatar(uri);
+            });
+          }
+        },
+      );
+    } catch (err) {
+      Sentry.captureException(err);
+    }
   }, [userChange]);
 
   const countGoalAchieved = useCallback(() => {
@@ -211,4 +224,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default Sentry2.withProfiler(Profile);
