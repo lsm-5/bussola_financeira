@@ -144,7 +144,12 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
   return (
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
       <Container>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'space-between',
+          }}>
           <HeaderProfile />
           <Title>Nova Meta</Title>
 

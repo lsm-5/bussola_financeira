@@ -142,10 +142,14 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
   return (
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
       <Container>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'space-between',
+          }}>
           <HeaderProfile />
           <Title>Alterar Meta</Title>
-
           <TitleGoal>Nome da meta</TitleGoal>
           <TitleGoalInput
             defaultValue={title}
@@ -154,7 +158,6 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
           {submitValidation && title === '' && (
             <TextError>Por favor insira um nome para sua meta</TextError>
           )}
-
           <DateViewContainer>
             <DateTitle>Data</DateTitle>
             <DateView>
@@ -185,7 +188,6 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
               Clique no ícone pra desativar/ativar a data
             </TextInformation>
           </DateViewContainer>
-
           <ValueView>
             <ValueText>Valor</ValueText>
             <NumericInputView>
@@ -201,7 +203,6 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
               <TextError>Por favor insira um valor para sua meta</TextError>
             )}
           </ValueView>
-
           <IconContainerView>
             <IconTitle>Icone</IconTitle>
             <IconScrollView showsHorizontalScrollIndicator={false} horizontal>
@@ -222,7 +223,6 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
               })}
             </IconScrollView>
           </IconContainerView>
-
           <ColorContainerView>
             <ColorText>Cor</ColorText>
             <ColorScrollView showsHorizontalScrollIndicator={false} horizontal>
@@ -237,7 +237,6 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
               })}
             </ColorScrollView>
           </ColorContainerView>
-
           <ButtonView>
             <Button
               title="Alterar"
