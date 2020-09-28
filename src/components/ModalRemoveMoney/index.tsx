@@ -69,7 +69,7 @@ const ModalRemoveMoney: React.FC<ModalRemoveMoneyProps> = ({
 
         <ButtonView>
           <Button
-            title="Remover"
+            title="Retirar"
             onPress={() => handleSubmit()}
             buttonStyle={{
               backgroundColor: '#33cc99',

@@ -68,7 +68,7 @@ const ModalAddMoney: React.FC<ModalAddMoneyProps> = ({
 
         <ButtonView>
           <Button
-            title="Adicionar"
+            title="Guardar"
             onPress={() => handleSubmit()}
             buttonStyle={{
               backgroundColor: '#33cc99',

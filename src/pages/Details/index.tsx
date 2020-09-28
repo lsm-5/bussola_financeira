@@ -310,7 +310,7 @@ const Details: React.FC = () => {
           <ButtonView>
             {goal.achievementAchieved === false && (
               <Button
-                title="Adicionar"
+                title="Guardar"
                 onPress={() => setShowModalAdd(true)}
                 buttonStyle={ButtonAddStyle.buttonStyle}
                 titleStyle={ButtonAddStyle.tittleStyle}
@@ -318,7 +318,7 @@ const Details: React.FC = () => {
             )}
 
             <Button
-              title="Remover"
+              title="Retirar"
               onPress={() => setShowModalRemove(true)}
               buttonStyle={ButtonRemoveStyle.buttonStyle}
               titleStyle={ButtonRemoveStyle.tittleStyle}
