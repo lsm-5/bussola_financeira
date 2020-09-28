@@ -1,9 +1,8 @@
 import React from 'react';
-import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
 import loading_animation from '../../assets/congratulation.json';
 
-import {TextAnimation} from './styles';
+import {TextAnimation, ModalView} from './styles';
 
 interface ModalAnimationProps {
   visible: boolean;
@@ -11,15 +10,7 @@ interface ModalAnimationProps {
 
 const ModalAnimation: React.FC<ModalAnimationProps> = ({visible}) => {
   return (
-    <Modal
-      isVisible={visible}
-      style={{
-        backgroundColor: (props) => props.theme.primary,
-        height: '70%',
-        width: '90%',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+    <ModalView isVisible={visible}>
       <LottieView
         resizeMode="contain"
         autoSize
@@ -29,7 +20,7 @@ const ModalAnimation: React.FC<ModalAnimationProps> = ({visible}) => {
         speed={1.5}
       />
       <TextAnimation>Parabéns! Você alcançou um meta.</TextAnimation>
-    </Modal>
+    </ModalView>
   );
 };
 

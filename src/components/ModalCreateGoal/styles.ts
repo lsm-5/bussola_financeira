@@ -158,3 +158,45 @@ export const TextInformation = styled.Text`
 export const TextError = styled.Text`
   color: #ff6666;
 `;
+
+export const ViewRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
+export const ModalDropdownStyle = {
+  TextStyle: {color: '#fff', fontSize: 15},
+  ModalStyle: {
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderRadius: 4,
+    paddingLeft: 4,
+    paddingRight: 4,
+    padding: 2,
+  },
+  dropdownTextHighlightStyle: {fontWeight: 'bold', color: '#fff'},
+  dropdownTextStyle: {
+    backgroundColor: '#3587a4',
+    color: '#fff',
+    fontSize: 13,
+  },
+};
+
+export const ButtonStyle = {
+  SaveButtonStyle: {
+    backgroundColor: '#33cc99',
+    borderColor: '#33cc99',
+    height: 46,
+    width: 120,
+  },
+  TextButtonStyle: {
+    fontSize: 18,
+  },
+  CancelButtonStyle: {
+    backgroundColor: '#FF6666',
+    borderColor: '#FF6666',
+    height: 46,
+    width: 120,
+  },
+};

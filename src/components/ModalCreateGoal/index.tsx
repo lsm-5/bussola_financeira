@@ -1,15 +1,19 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
+import {ScrollView, TouchableOpacity} from 'react-native';
+
 import Modal from 'react-native-modal';
 import PickerDate from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity, ScrollView} from 'react-native';
+
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
+import ModalDropdown from 'react-native-modal-dropdown';
+
 import {Button} from 'react-native-elements';
 import {format} from 'date-fns';
 
 import {useGoals} from '../../hooks/goals';
 
-import {colorsGoal, iconGoal} from '../OptionGoals';
+import {colorsGoal, iconGoal, categories} from '../OptionGoals';
 
 import {
   Container,
@@ -36,6 +40,9 @@ import {
   NumericInputView,
   TextInformation,
   TextError,
+  ViewRow,
+  ModalDropdownStyle,
+  ButtonStyle,
 } from './styles';
 
 interface ModalCreateGoalProps {
@@ -47,6 +54,8 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
   showModal,
   showCancelModal,
 }) => {
+  const scrollEl = useRef(null);
+
   const {addGoals} = useGoals();
 
   const [title, setTitle] = useState('');
@@ -57,7 +66,9 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
     colorsGoal.map((color) => color && {color: color.color, enable: false}),
   );
   const [icons, setIcons] = useState(() =>
-    iconGoal.map((icon) => icon && {iconName: icon.iconName, enable: false}),
+    iconGoal.Todos.map(
+      (icon) => icon && {iconName: icon.iconName, enable: false},
+    ),
   );
   const [submitValidation, setSubmitValidation] = useState(false);
 
@@ -87,6 +98,15 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
     [colors],
   );
 
+  const handleSelectCategory = useCallback((nameCategory: string) => {
+    const categoryArray: [] = iconGoal[`${nameCategory}`];
+    setIcons(
+      categoryArray.map(
+        (item: any) => item.iconName && {...item, enable: false},
+      ),
+    );
+  }, []);
+
   const clearFields = useCallback(() => {
     setTitle('');
     setDate(String(format(new Date(), 'dd-MM-yyyy')));
@@ -96,7 +116,9 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
       colorsGoal.map((color) => color && {color: color.color, enable: false}),
     );
     setIcons(() =>
-      iconGoal.map((icon) => icon && {iconName: icon.iconName, enable: false}),
+      iconGoal.Todos.map(
+        (icon) => icon && {iconName: icon.iconName, enable: false},
+      ),
     );
   }, []);
 
@@ -206,8 +228,30 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
           </ValueView>
 
           <IconContainerView>
-            <IconTitle>Icone</IconTitle>
-            <IconScrollView showsHorizontalScrollIndicator={false} horizontal>
+            <ViewRow>
+              <IconTitle>Ícone</IconTitle>
+              <ModalDropdown
+                onSelect={(index: number) => {
+                  handleSelectCategory(categories[index]);
+                  if (scrollEl !== null) {
+                    scrollEl.current?.scrollTo({y: 0});
+                  }
+                }}
+                defaultValue="Selecione categoria"
+                options={categories}
+                textStyle={ModalDropdownStyle.TextStyle}
+                style={ModalDropdownStyle.ModalStyle}
+                dropdownTextHighlightStyle={
+                  ModalDropdownStyle.dropdownTextHighlightStyle
+                }
+                dropdownTextStyle={ModalDropdownStyle.dropdownTextStyle}
+              />
+            </ViewRow>
+
+            <IconScrollView
+              showsHorizontalScrollIndicator
+              horizontal
+              ref={scrollEl}>
               {icons.map((icon) => {
                 return (
                   <TouchableOpacity
@@ -245,25 +289,15 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
             <Button
               title="Criar"
               onPress={() => handleSubmit()}
-              buttonStyle={{
-                backgroundColor: '#33cc99',
-                borderColor: '#33cc99',
-                height: 46,
-                width: 120,
-              }}
-              titleStyle={{fontSize: 18}}
+              buttonStyle={ButtonStyle.SaveButtonStyle}
+              titleStyle={ButtonStyle.TextButtonStyle}
             />
 
             <Button
               title="Cancelar"
               onPress={showCancelModal}
-              buttonStyle={{
-                backgroundColor: '#FF6666',
-                borderColor: '#FF6666',
-                height: 46,
-                width: 120,
-              }}
-              titleStyle={{fontSize: 18}}
+              buttonStyle={ButtonStyle.CancelButtonStyle}
+              titleStyle={ButtonStyle.TextButtonStyle}
             />
           </ButtonView>
         </ScrollView>

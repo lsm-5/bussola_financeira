@@ -46,3 +46,21 @@ export const NumericInputView = styled.View`
 export const TextError = styled.Text`
   color: #ff6666;
 `;
+
+export const ButtonStyle = {
+  SaveButtonStyle: {
+    backgroundColor: '#33cc99',
+    borderColor: '#33cc99',
+    height: 46,
+    width: 120,
+  },
+  TextButtonStyle: {
+    fontSize: 18,
+  },
+  CancelButtonStyle: {
+    backgroundColor: '#FF6666',
+    borderColor: '#FF6666',
+    height: 46,
+    width: 120,
+  },
+};

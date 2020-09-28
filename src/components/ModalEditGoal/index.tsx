@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import Modal from 'react-native-modal';
 import PickerDate from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,6 +7,7 @@ import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import {Button} from 'react-native-elements';
 import {format} from 'date-fns';
 import {useNavigation} from '@react-navigation/native';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 import {useGoals} from '../../hooks/goals';
 
@@ -35,11 +36,14 @@ import {
   NumericInputView,
   TextInformation,
   TextError,
+  ViewRow,
+  ModalDropdownStyle,
+  ButtonStyle,
 } from './styles';
 
 import {Goals} from '../../interfaces/goals';
 
-import {colorsGoal, iconGoal} from '../OptionGoals';
+import {colorsGoal, iconGoal, categories} from '../OptionGoals';
 
 interface ModalEditGoalProps {
   showModal: boolean;
@@ -52,6 +56,8 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
   showCancelModal,
   Goal,
 }) => {
+  const scrollElem = useRef(null);
+
   const {navigate} = useNavigation();
   const {editGoals} = useGoals();
 
@@ -66,12 +72,13 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
   });
 
   const [icons, setIcons] = useState(() => {
-    return iconGoal.map((i) =>
+    return iconGoal.Todos.map((i) =>
       i.iconName === Goal.iconName
         ? {...i, enable: true}
         : {...i, enable: false},
     );
   });
+
   const [submitValidation, setSubmitValidation] = useState(false);
 
   const handleSelectIcon = useCallback(
@@ -86,6 +93,15 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
     },
     [icons],
   );
+
+  const handleSelectCategory = useCallback((nameCategory: string) => {
+    const categoryArray: [] = iconGoal[`${nameCategory}`];
+    setIcons(
+      categoryArray.map(
+        (item: any) => item.iconName && {...item, enable: false},
+      ),
+    );
+  }, []);
 
   const handleSelectColor = useCallback(
     (obj) => {
@@ -204,7 +220,25 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
             )}
           </ValueView>
           <IconContainerView>
-            <IconTitle>Icone</IconTitle>
+            <ViewRow>
+              <IconTitle>Ícone</IconTitle>
+              <ModalDropdown
+                onSelect={(index: number) => {
+                  handleSelectCategory(categories[index]);
+                  if (scrollElem !== null) {
+                    scrollElem.current?.scrollTo({y: 0, x: 0});
+                  }
+                }}
+                defaultValue="Selecione categoria"
+                options={categories}
+                textStyle={ModalDropdownStyle.TextStyle}
+                style={ModalDropdownStyle.ModalStyle}
+                dropdownTextHighlightStyle={
+                  ModalDropdownStyle.dropdownTextHighlightStyle
+                }
+                dropdownTextStyle={ModalDropdownStyle.dropdownTextStyle}
+              />
+            </ViewRow>
             <IconScrollView showsHorizontalScrollIndicator={false} horizontal>
               {icons.map((icon) => {
                 return (
@@ -241,25 +275,15 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
             <Button
               title="Alterar"
               onPress={() => handleSubmit() && navigate('Dashboard')}
-              buttonStyle={{
-                backgroundColor: '#33cc99',
-                borderColor: '#33cc99',
-                height: 46,
-                width: 120,
-              }}
-              titleStyle={{fontSize: 18}}
+              buttonStyle={ButtonStyle.SaveButtonStyle}
+              titleStyle={ButtonStyle.TextButtonStyle}
             />
 
             <Button
               title="Cancelar"
               onPress={showCancelModal}
-              buttonStyle={{
-                backgroundColor: '#FF6666',
-                borderColor: '#FF6666',
-                height: 46,
-                width: 120,
-              }}
-              titleStyle={{fontSize: 18}}
+              buttonStyle={ButtonStyle.CancelButtonStyle}
+              titleStyle={ButtonStyle.TextButtonStyle}
             />
           </ButtonView>
         </ScrollView>

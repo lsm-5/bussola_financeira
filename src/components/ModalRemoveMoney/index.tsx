@@ -14,6 +14,7 @@ import {
   ButtonView,
   NumericInputView,
   TextError,
+  ButtonStyle,
 } from './styles';
 
 interface ModalRemoveMoneyProps {
@@ -71,25 +72,15 @@ const ModalRemoveMoney: React.FC<ModalRemoveMoneyProps> = ({
           <Button
             title="Retirar"
             onPress={() => handleSubmit()}
-            buttonStyle={{
-              backgroundColor: '#33cc99',
-              borderColor: '#33cc99',
-              height: 46,
-              width: 120,
-            }}
-            titleStyle={{fontSize: 18}}
+            buttonStyle={ButtonStyle.SaveButtonStyle}
+            titleStyle={ButtonStyle.TextButtonStyle}
           />
 
           <Button
             title="Cancelar"
             onPress={showCancelModal}
-            buttonStyle={{
-              backgroundColor: '#FF6666',
-              borderColor: '#FF6666',
-              height: 46,
-              width: 120,
-            }}
-            titleStyle={{fontSize: 18}}
+            buttonStyle={ButtonStyle.CancelButtonStyle}
+            titleStyle={ButtonStyle.TextButtonStyle}
           />
         </ButtonView>
       </Container>
