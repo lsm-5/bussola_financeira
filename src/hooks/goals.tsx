@@ -200,7 +200,7 @@ const GoalsProvider: React.FC = ({children}) => {
 
         setTimeout(() => {
           setShowAnimation(false);
-        }, 5000);
+        }, 4000);
       } catch (err) {
         showMessage({
           message: 'Operação não pôde ser realizada',
