@@ -226,7 +226,7 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
                 onSelect={(index: number) => {
                   handleSelectCategory(categories[index]);
                   if (scrollElem !== null) {
-                    scrollElem.current?.scrollTo({y: 0, x: 0});
+                    scrollElem.current?.scrollTo({y: 0});
                   }
                 }}
                 defaultValue="Selecione categoria"
@@ -239,7 +239,10 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
                 dropdownTextStyle={ModalDropdownStyle.dropdownTextStyle}
               />
             </ViewRow>
-            <IconScrollView showsHorizontalScrollIndicator={false} horizontal>
+            <IconScrollView
+              showsHorizontalScrollIndicator
+              horizontal
+              ref={scrollElem}>
               {icons.map((icon) => {
                 return (
                   <TouchableOpacity
