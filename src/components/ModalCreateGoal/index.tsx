@@ -249,7 +249,7 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
             </ViewRow>
 
             <IconScrollView
-              showsHorizontalScrollIndicator
+              showsHorizontalScrollIndicator={false}
               horizontal
               ref={scrollEl}>
               {icons.map((icon) => {

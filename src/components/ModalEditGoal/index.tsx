@@ -240,7 +240,7 @@ const ModalEditGoal: React.FC<ModalEditGoalProps> = ({
               />
             </ViewRow>
             <IconScrollView
-              showsHorizontalScrollIndicator
+              showsHorizontalScrollIndicator={false}
               horizontal
               ref={scrollElem}>
               {icons.map((icon) => {
