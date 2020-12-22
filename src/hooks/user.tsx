@@ -22,7 +22,7 @@ const UserContext = createContext<UserContext | null>(null);
 const UserProvider: React.FC = ({children}) => {
   const [user, setUser] = useState<User>({
     name: 'Anônimo',
-    avatarUri: 'https://api.adorable.io/avatars/70/3@adorable.png',
+    avatarUri: 'https://icotar.com/initials/Anônimo.png?s=200',
   });
 
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -64,8 +64,18 @@ const UserProvider: React.FC = ({children}) => {
     );
   }, [theme]);
 
-  const addUserNameAndAvatar = useCallback(async (userSave) => {
-    setUser(userSave);
+  function checkIfAvatarNoChange(avatar:String){
+    if(avatar.includes("icotar.com")) return true
+    return false
+  }
+
+  const addUserNameAndAvatar = useCallback(async (userSave:User) => {
+
+    if(checkIfAvatarNoChange(user.avatarUri)){
+      setUser({name: userSave.name, avatarUri: `https://icotar.com/initials/${userSave.name}.png?s=200`})
+    }else {
+      setUser(userSave)
+    }
 
     try {
       await AsyncStorage.setItem(
