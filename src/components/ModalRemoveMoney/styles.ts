@@ -2,9 +2,9 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   width: 100%;
-  height: 230px;
+  height: 315px;
   background-color: ${(props) => props.theme.primary};
-  padding: 5px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
   border-radius: 8px;
 
   justify-content: center;
@@ -24,6 +24,16 @@ export const ValueView = styled.View`
 export const ValueText = styled.Text`
   color: #fff;
   font-size: 18px;
+`;
+
+export const TextInputDescrib = styled.TextInput`
+  border-color: #fff;
+  background-color: #fff;
+  height: 40px;
+  min-width: 180px;
+  border-width: 1px;
+  margin-top: 5px;
+  border-radius: 4px;
 `;
 
 export const ButtonView = styled.View`

@@ -15,6 +15,7 @@ import {
   NumericInputView,
   TextError,
   ButtonStyle,
+  TextInputDescrib,
 } from './styles';
 
 interface ModalAddMoneyProps {
@@ -29,6 +30,7 @@ const ModalAddMoney: React.FC<ModalAddMoneyProps> = ({
   idGoal,
 }) => {
   const {incrementGoals} = useGoals();
+  const [describe, setDescribe] = useState('');
   const [money, setMoney] = useState(0);
   const [submitValidation, setSubmitValidation] = useState(false);
   const {navigate} = useNavigation();
@@ -50,6 +52,14 @@ const ModalAddMoney: React.FC<ModalAddMoneyProps> = ({
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
       <Container>
         <Title>Adicionar Valor</Title>
+
+        <ValueView>
+          <ValueText>Descrição:</ValueText>
+          <TextInputDescrib
+            value={describe}
+            onChangeText={(text: string) => setDescribe(text)}
+          />
+        </ValueView>
 
         <ValueView>
           <ValueText>Valor:</ValueText>

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import * as Sentry from '@sentry/react';
-
 import {View} from 'react-native';
 import formatValue from '../../utils/formatValue';
 import {useGoals} from '../../hooks/goals';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   Container,
@@ -21,6 +21,7 @@ import {
   ViewTypeTransaction,
   TextValue,
   TextDate,
+  TouchableOpacityDescrib
 } from './styles';
 
 import BannerAdmob from '../../components/BannerAdmob';
@@ -43,8 +44,10 @@ const Historic: React.FC = () => {
           <TextTransactionTwo>Transação</TextTransactionTwo>
         </ViewTransaction>
 
+
         <TextTitleValue>Valor</TextTitleValue>
         <TextTitleDate>Data</TextTitleDate>
+        <TextTitleValue>Descrição</TextTitleValue>
       </ViewHeader>
       {historic && historic.length === 0 ? (
         <ViewEmpty>
@@ -60,11 +63,19 @@ const Historic: React.FC = () => {
                 style={{
                   width: 75,
                   alignItems: 'center',
+                  paddingLeft: 15,
                 }}>
                 <ViewTypeTransaction type={item.type} />
               </View>
               <TextValue>{formatValue(item.value)}</TextValue>
               <TextDate>{item.date}</TextDate>
+              <TouchableOpacityDescrib onPress={() => {}}>
+                <Icon
+                  name="file-document-outline"
+                  size={25}
+                  color={'#777'}
+                />
+              </TouchableOpacityDescrib>
             </ViewCard>
           )}
         />

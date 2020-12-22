@@ -37,7 +37,9 @@ export const ViewTitle = styled.View`
   padding-left: 2%;
 `;
 
-export const ViewTransaction = styled.View``;
+export const ViewTransaction = styled.View`
+  padding-left: 15px;
+`;
 
 export const TextTransactionOne = styled.Text`
   color: #fff;
@@ -112,6 +114,11 @@ export const TextValue = styled.Text`
   color: #777;
   width: 100px;
   text-align: center;
+`;
+
+export const TouchableOpacityDescrib = styled.TouchableOpacity`
+  width: 100px;
+  align-items: center;
 `;
 
 export const TextDate = styled.Text`

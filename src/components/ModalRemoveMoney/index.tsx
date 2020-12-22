@@ -15,6 +15,7 @@ import {
   NumericInputView,
   TextError,
   ButtonStyle,
+  TextInputDescrib,
 } from './styles';
 
 interface ModalRemoveMoneyProps {
@@ -30,6 +31,7 @@ const ModalRemoveMoney: React.FC<ModalRemoveMoneyProps> = ({
 }) => {
   const {decrementGoals} = useGoals();
   const {navigate} = useNavigation();
+  const [describe, setDescribe] = useState('');
 
   const [money, setMoney] = useState(0);
   const [submitValidation, setSubmitValidation] = useState(false);
@@ -51,6 +53,14 @@ const ModalRemoveMoney: React.FC<ModalRemoveMoneyProps> = ({
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
       <Container>
         <Title>Remover Valor</Title>
+
+        <ValueView>
+          <ValueText>Descrição:</ValueText>
+          <TextInputDescrib
+            value={describe}
+            onChangeText={(text: string) => setDescribe(text)}
+          />
+        </ValueView>
 
         <ValueView>
           <ValueText>Valor:</ValueText>
