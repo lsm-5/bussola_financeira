@@ -127,3 +127,7 @@ export const TextDate = styled.Text`
   width: 50px;
   text-align: center;
 `;
+
+export const ViewDefault = styled.View`
+  width: 100px;
+`;

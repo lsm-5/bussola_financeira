@@ -30,7 +30,7 @@ const ModalAddMoney: React.FC<ModalAddMoneyProps> = ({
   idGoal,
 }) => {
   const {incrementGoals} = useGoals();
-  const [describe, setDescribe] = useState('');
+  const [describe, setDescribe] = useState(null);
   const [money, setMoney] = useState(0);
   const [submitValidation, setSubmitValidation] = useState(false);
   const {navigate} = useNavigation();
@@ -43,10 +43,10 @@ const ModalAddMoney: React.FC<ModalAddMoneyProps> = ({
     }
 
     setSubmitValidation(false);
-    incrementGoals(idGoal, money);
+    incrementGoals(idGoal, money, describe);
     showCancelModal();
     navigate('Dashboard');
-  }, [idGoal, incrementGoals, money, showCancelModal, navigate]);
+  }, [idGoal, incrementGoals, money, showCancelModal, navigate, describe]);
 
   return (
     <Modal isVisible={showModal} swipeDirection="down" animationInTiming={1500}>
@@ -56,7 +56,7 @@ const ModalAddMoney: React.FC<ModalAddMoneyProps> = ({
         <ValueView>
           <ValueText>Descrição:</ValueText>
           <TextInputDescrib
-            value={describe}
+            value={describe === null ? '' : describe}
             onChangeText={(text: string) => setDescribe(text)}
           />
         </ValueView>

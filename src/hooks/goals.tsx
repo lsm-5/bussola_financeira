@@ -25,8 +25,16 @@ interface GoalsContext {
   addGoals(item: GoalsSave): Promise<void>;
   editGoals(item: GoalsEdit): Promise<void>;
   removeGoals(id: string): Promise<void>;
-  incrementGoals(id: string, money: number): Promise<void>;
-  decrementGoals(id: string, money: number): Promise<void>;
+  incrementGoals(
+    id: string,
+    money: number,
+    describe: string | null,
+  ): Promise<void>;
+  decrementGoals(
+    id: string,
+    money: number,
+    describe: string | null,
+  ): Promise<void>;
   setHistoric(historic: TransactionsObject[]): void;
   getHistoric(): TransactionsObject[];
   showAnimation: boolean;
@@ -141,7 +149,7 @@ const GoalsProvider: React.FC = ({children}) => {
   );
 
   const incrementGoals = useCallback(
-    async (id, money) => {
+    async (id, money, describe) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
@@ -179,6 +187,7 @@ const GoalsProvider: React.FC = ({children}) => {
             type: 'income',
             value: money,
             date: `${format(new Date(), 'dd/MM')}`,
+            describe,
           });
         } else {
           goalsArray[indexGoals].transactions = [
@@ -187,6 +196,7 @@ const GoalsProvider: React.FC = ({children}) => {
               type: 'income',
               value: money,
               date: `${format(new Date(), 'dd/MM')}`,
+              describe,
             },
           ];
         }
@@ -212,7 +222,7 @@ const GoalsProvider: React.FC = ({children}) => {
   );
 
   const decrementGoals = useCallback(
-    async (id, money) => {
+    async (id, money, describe) => {
       const indexGoals = goals.findIndex((g) => g.id === id);
 
       if (indexGoals === -1) {
@@ -247,6 +257,7 @@ const GoalsProvider: React.FC = ({children}) => {
             type: 'outcome',
             value: money,
             date: `${format(new Date(), 'dd/MM')}`,
+            describe,
           });
         } else {
           goalsArray[indexGoals].transactions = [
@@ -255,6 +266,7 @@ const GoalsProvider: React.FC = ({children}) => {
               type: 'outcome',
               value: money,
               date: `${format(new Date(), 'dd/MM')}`,
+              describe,
             },
           ];
         }

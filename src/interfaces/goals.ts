@@ -3,6 +3,7 @@ export interface TransactionsObject {
   type: 'income' | 'outcome';
   value: number;
   date: string;
+  describe: string;
 }
 
 export interface Goals {

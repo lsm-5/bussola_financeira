@@ -1,5 +1,7 @@
 import React, {useState, useCallback, useRef} from 'react';
 import {ScrollView, TouchableOpacity} from 'react-native';
+import {AdMobInterstitial} from 'react-native-admob';
+import Config from 'react-native-config';
 
 import Modal from 'react-native-modal';
 import PickerDate from 'react-native-datepicker';
@@ -151,6 +153,12 @@ const ModalCreateGoal: React.FC<ModalCreateGoalProps> = ({
     setSubmitValidation(false);
     showCancelModal();
     clearFields();
+
+    // Display an interstitial banner admob
+    AdMobInterstitial.setAdUnitID(`${Config.ADMOB_BANNER_GOAL_ID}`);
+    AdMobInterstitial.requestAd()
+      .then(() => AdMobInterstitial.showAd())
+      .catch((error: string) => Sentry.captureException(error));
   }, [
     colors,
     icons,
