@@ -64,17 +64,19 @@ const UserProvider: React.FC = ({children}) => {
     );
   }, [theme]);
 
-  function checkIfAvatarNoChange(avatar:String){
-    if(avatar.includes("icotar.com")) return true
-    return false
+  function checkIfAvatarNoChange(avatar: string) {
+    if (avatar.includes('icotar.com')) return true;
+    return false;
   }
 
-  const addUserNameAndAvatar = useCallback(async (userSave:User) => {
-
-    if(checkIfAvatarNoChange(user.avatarUri)){
-      setUser({name: userSave.name, avatarUri: `https://icotar.com/initials/${userSave.name}.png?s=200`})
-    }else {
-      setUser(userSave)
+  const addUserNameAndAvatar = useCallback(async (userSave: User) => {
+    if (checkIfAvatarNoChange(userSave.avatarUri)) {
+      setUser({
+        name: userSave.name,
+        avatarUri: `https://icotar.com/initials/${userSave.name}.png?s=200`,
+      });
+    } else {
+      setUser(userSave);
     }
 
     try {
